@@ -59,7 +59,7 @@ label:hover {
     transition-duration: 0.4s;
 }
 
-input[id="submit"] {
+input[type="submit"] {
     color: white;
     height: 60px;
     width: 250px;
@@ -81,7 +81,7 @@ input[id="submit"] {
     border:0cm
 }
 
-input[id="submit"]:hover {
+input[type="submit"]:hover {
     color: #5D3FD3;
     height: 60px;
     width: 250px;
@@ -102,6 +102,7 @@ input[id="submit"]:hover {
     transition-duration: 0.4s;
     border:0cm
 }
+
 h1 {
     color: #5D3FD3;
     position: absolute;
@@ -130,86 +131,8 @@ h1 {
     align-items: center;
     font-family: "Montserrat", sans-serif;
     font-size: x-large;
-
-}
-h2 {
-    color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    display: flex;
-    left: 0;
-    right: 0;
-    bottom: 10%;
-    top: 0;
-    justify-content: center;
-    align-items: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: x-large;
-
-}
-input[id="download"] {
-    color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: -6%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
 }
 
-input[id="download"]:hover {
-    color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: -6%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-input[id="name"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 3%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
 </style>
 
 </head>
@@ -221,10 +144,5 @@ input[id="name"] {
         <input type="file" name="file" id="file" required hidden></input>
         <input id="submit" type="submit" value="Upload"></input>
     </form>
-    <h2>Download your files!</h2>
-    <form action="/download/" method="post", enctype="multipart/form-data">
-        <input id="name" type="text"required placeholder="Your file name"></input>
-        <input id="download" type="submit" value="Download"></input>
-        </form>
 </body>
 </html>
