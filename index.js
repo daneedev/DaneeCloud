@@ -5,6 +5,13 @@ const removeaccents = require("remove-accents")
 const app = express();
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
+var RateLimit = require('express-rate-limit');
+var limiter = RateLimit({
+  windowMs: 1*60*1000, // 1 minute
+  max: 60
+});
+
+app.use(limiter);
 
 app.get("/", function (req, res) {
   res.sendFile(__dirname + "/html/index.html" )
