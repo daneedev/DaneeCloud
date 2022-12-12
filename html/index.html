@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css//style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <title>DaneeCloud</title>
+<style>body {
+    background-color: whitesmoke;
+    padding: 0;
+    margin: 0;
+}
+
+
+label {
+    color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+}
+label:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+}
+
+input[id="submit"] {
+    color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 20%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+input[id="submit"]:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 20%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+h1 {
+    color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 45%;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: xxx-large;
+
+}
+.subtitle {
+    color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 40%;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+
+}
+h2 {
+    color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 10%;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+
+}
+input[id="download"] {
+    color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: -6%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+input[id="download"]:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: -6%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+input[id="name"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 3%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+</style>
+
+</head>
+<body>
+    <h1>DaneeCloud</h1>
+    <h2 class="subtitle">Upload your files!</h2>
+    <form action="/upload/" method="post", enctype="multipart/form-data">
+        <label for="file"><span class="material-icons">upload_file</span>&nbsp;Choose file to upload</label>
+        <input type="file" name="file" id="file" required hidden></input>
+        <input id="submit" type="submit" value="Upload"></input>
+    </form>
+    <h2>Download your files!</h2>
+    <form action="/download/" method="post", enctype="multipart/form-data">
+        <input id="name" type="text"required placeholder="Your file name"></input>
+        <input id="download" type="submit" value="Download"></input>
+        </form>
+</body>
+</html>
