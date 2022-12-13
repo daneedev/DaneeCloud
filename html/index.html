@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,9 +12,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <title>DaneeCloud</title>
 <style>body {
-    background-color: whitesmoke;
+    background-color: #d2d3db;
     padding: 0;
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 
@@ -38,6 +41,7 @@ label {
     border-radius: 24px;
     transition-duration: 0.4s;
 }
+
 label:hover {
     color: #5D3FD3;
     height: 60px;
@@ -118,6 +122,7 @@ h1 {
     font-size: xxx-large;
 
 }
+
 .subtitle {
     color: #5D3FD3;
     position: absolute;
@@ -132,17 +137,76 @@ h1 {
     font-family: "Montserrat", sans-serif;
     font-size: x-large;
 }
+.download {
+    color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+.download:hover {
+color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
 
+.footer {
+            position: fixed;
+            padding: 10px 10px 0px 10px;
+            bottom: 0;
+            width: 100%;
+            /* Height of the footer*/
+            height: 40px;
+            background: black;
+            color: white;
+            font-family: "Montserrat", sans-serif;
+            text-align: center;
+        }
 </style>
 
 </head>
 <body>
     <h1>DaneeCloud</h1>
-    <h2 class="subtitle">Upload your files!</h2>
+    <h2 class="subtitle">Upload & Download your files!</h2>
     <form action="/upload/" method="post", enctype="multipart/form-data">
         <label for="file"><span class="material-icons">upload_file</span>&nbsp;Choose file to upload</label>
         <input type="file" name="file" id="file" required hidden></input>
         <input id="submit" type="submit" value="Upload"></input>
     </form>
+    <button type="submit" class="download" onclick="/download/"><span class="material-icons">cloud_download</span>&nbsp;Download your files!</button>
+    <footer>
+        <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>
+    
+    </footer>
 </body>
 </html>
