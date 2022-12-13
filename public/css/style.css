@@ -1,17 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css//style.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <title>DaneeCloud</title>
-<style>body {
+body {
     background-color: #d2d3db;
     padding: 0;
     margin: 0;
@@ -63,7 +50,7 @@ label:hover {
     transition-duration: 0.4s;
 }
 
-input[type="submit"] {
+.upload {
     color: white;
     height: 60px;
     width: 250px;
@@ -85,7 +72,7 @@ input[type="submit"] {
     border:0cm
 }
 
-input[type="submit"]:hover {
+.upload:hover {
     color: #5D3FD3;
     height: 60px;
     width: 250px;
@@ -145,7 +132,7 @@ h1 {
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: 10%;
+    bottom: -1%;
     left: 0;
     right: 0;
     font-size: 20px;
@@ -166,7 +153,7 @@ color: #5D3FD3;
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: 10%;
+    bottom: -1%;
     left: 0;
     right: 0;
     font-size: 20px;
@@ -192,21 +179,25 @@ color: #5D3FD3;
             font-family: "Montserrat", sans-serif;
             text-align: center;
         }
-</style>
 
-</head>
-<body>
-    <h1>DaneeCloud</h1>
-    <h2 class="subtitle">Upload & Download your files!</h2>
-    <form action="/upload/" method="post", enctype="multipart/form-data">
-        <label for="file"><span class="material-icons">upload_file</span>&nbsp;Choose file to upload</label>
-        <input type="file" name="file" id="file" required hidden></input>
-        <input id="submit" type="submit" value="Upload"></input>
-    </form>
-    <button type="submit" class="download" onclick="/download/"><span class="material-icons">cloud_download</span>&nbsp;Download your files!</button>
-    <footer>
-        <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>
-    
-    </footer>
-</body>
-</html>
+input[type="text"] {
+    color: black;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 8%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}

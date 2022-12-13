@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <title>DaneeCloud</title>
+
+</head>
+<body>
+    <h1>DaneeCloud</h1>
+    <h2 class="subtitle">Upload & Download your files!</h2>
+    <form action="/upload/" method="post", enctype="multipart/form-data">
+        <label for="file"><span class="material-icons">upload_file</span>&nbsp;Choose file to upload</label>
+        <input type="file" name="file" id="file" required hidden></input>
+        <button type="submit" class="upload" id="submit"><span class="material-icons">cloud_upload</span>&nbsp;Upload</button>
+    </form>
+    <form action="/dwnl" enctype="multipart/form-data">
+        <input type="text", id="downloadfile", name="downloadfile" placeholder="Your file name"></input>
+        <button type="submit" class="download"><span class="material-icons">cloud_download</span>&nbsp;Download</button>
+    </form>
+    <footer>
+        <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>
+    
+    </footer>
+</body>
+</html>
