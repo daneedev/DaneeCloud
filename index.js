@@ -21,7 +21,7 @@ app.get("/", function (req, res) {
 
 
 app.post('/upload', upload.single('file'), function (req, res) {
-  const name = req.file.originalname.replace(" ", "_")
+  const name = sanitize(req.file.originalname.replace(" ", "_"))
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
   } else {
