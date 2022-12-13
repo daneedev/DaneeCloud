@@ -132,7 +132,7 @@ h1 {
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: -1%;
+    bottom: 0%;
     left: 0;
     right: 0;
     font-size: 20px;
@@ -153,7 +153,7 @@ color: #5D3FD3;
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: -1%;
+    bottom: 0%;
     left: 0;
     right: 0;
     font-size: 20px;
@@ -188,7 +188,7 @@ input[type="text"] {
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: 8%;
+    bottom: 10%;
     left: 0;
     right: 0;
     font-size: 20px;
@@ -201,3 +201,14 @@ input[type="text"] {
     transition-duration: 0.4s;
     border:0cm
 }
+
+::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+  :-moz-placeholder {
+    text-align: center;
+  }
+  :-ms-input-placeholder {  
+    text-align: center; 
+ }
