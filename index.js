@@ -10,6 +10,8 @@ var limiter = RateLimit({
   windowMs: 1*60*1000, // 1 minute
   max: 60
 });
+var sanitize = require("sanitize-filename");
+
 
 app.use(limiter);
 
@@ -41,7 +43,7 @@ app.post('/upload', upload.single('file'), function (req, res) {
         <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
             <title>DaneeCloud</title>
         <style>body {
-            background-color: whitesmoke;
+            background-color: #d2d3db;
             padding: 0;
             margin: 0;
         }
@@ -157,15 +159,15 @@ app.post('/upload', upload.single('file'), function (req, res) {
 
 // This route will serve the uploaded files
 app.get('/download/:filename', (req, res) => {
-  // The filename is available in the `req.params` object
-  fs.readFile(__dirname + "/uploads/" + req.params.filename, (err, data) => {
+  const filename = sanitize(req.params.filename)
+  fs.readFile( __dirname + "/uploads/" + filename, (err, data) =>{
     if (err) {
-      res.send("No file exist with this name!")
+      res.send("No file found!")
     } else {
       res.contentType('application/octet-stream');
-      res.send(data);
+      res.send(data)
     }
-  });
+  })
 });
 
 // Start the server on port 3000
