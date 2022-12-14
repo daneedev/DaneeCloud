@@ -11,6 +11,7 @@ var limiter = RateLimit({
   max: 60
 });
 var sanitize = require("sanitize-filename");
+const config = require("./config.json")
 app.use(express.static(__dirname + "/public/"))
 
 app.use(limiter);
@@ -27,7 +28,7 @@ app.post('/upload', upload.single('file'), function (req, res) {
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
   } else {
-    fs.writeFile(__dirname + "/uploads/" + name, req.file.buffer, err => {
+    fs.writeFile(__dirname + config.uploadsfolder + name, req.file.buffer, err => {
       if (err) {
         res.send(err);
       } else {
@@ -321,19 +322,21 @@ input[type="submit"]:hover {
  </footer>
  </body>
  </html>`
-  fs.readFile( __dirname + "/uploads/" + downloadfile, (err, data) =>{
+  fs.readFile( __dirname + config.uploadsfolder + downloadfile, (err, data) =>{
     if (err) {
       res.send(html)
     } else {
       res.contentType('application/octet-stream');
       res.send(data)
-      
+      if (config.deleteafterdownload == true) {
+        fs.unlinkSync(__dirname + config.uploadsfolder + downloadfile)
+      }
     }
   })
 });
 
 // Start the server on port 3000
-app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+app.listen(config.port, () => {
+  console.log(`Server listening on port ${config.port}`);
 });
 
