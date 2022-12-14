@@ -212,3 +212,33 @@ input[type="text"] {
   :-ms-input-placeholder {  
     text-align: center; 
  }
+
+ @media only screen and (max-width: 768px) {
+    h1 {
+        bottom: 55%;
+    }
+    .subtitle {
+        bottom: 45%;
+    }
+    label { 
+        bottom: 35%;
+    }
+    label:hover {
+        bottom: 35%;
+    }
+    .upload {
+        bottom: 20%;
+    }
+    .upload:hover {
+        bottom: 20%;
+    }
+    input[type="text"] {
+        bottom: 5%;
+    }
+    .download {
+        bottom: -10%;
+    }
+    .download:hover {
+        bottom: -10%;
+    }
+  }
