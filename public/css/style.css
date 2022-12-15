@@ -221,24 +221,24 @@ input[type="text"] {
         bottom: 45%;
     }
     label { 
-        bottom: 35%;
+        bottom: 33%;
     }
     label:hover {
-        bottom: 35%;
+        bottom: 33%;
     }
     .upload {
-        bottom: 20%;
+        bottom: 15%;
     }
     .upload:hover {
-        bottom: 20%;
+        bottom: 15%;
     }
     input[type="text"] {
-        bottom: 5%;
+        bottom: -3%;
     }
     .download {
-        bottom: -10%;
+        bottom: -21%;
     }
     .download:hover {
-        bottom: -10%;
+        bottom: -21%;
     }
   }
