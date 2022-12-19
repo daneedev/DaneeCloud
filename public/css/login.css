@@ -7,93 +7,6 @@ body {
     flex-direction: column;
 }
 
-
-label[for="file"] {
-    color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 30%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-}
-
-label[for="file"]:hover {
-    color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 30%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-}
-
-.upload {
-    color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 20%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-.upload:hover {
-    color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 20%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
 h1 {
     color: #5D3FD3;
     position: absolute;
@@ -124,36 +37,43 @@ h1 {
     font-family: "Montserrat", sans-serif;
     font-size: x-large;
 }
-.download {
+
+.footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 40px;
+    background: black;
     color: white;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+}
+
+label[for="name"] {
+    color: #5D3FD3;
     height: 60px;
     width: 250px;
-    background-color: #5D3FD3;
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: 0%;
+    bottom: 30%;
     left: 0;
     right: 0;
     font-size: 20px;
     display: flex;
     justify-content: center;
-    align-items: center;
-    cursor: pointer;
     font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
 }
-.download:hover {
-color: #5D3FD3;
+input[id="name"] {
     height: 60px;
     width: 250px;
     background-color: white;
     position: absolute;
     margin: auto;
     top: 0;
-    bottom: 0%;
+    bottom: 25%;
     left: 0;
     right: 0;
     font-size: 20px;
@@ -166,22 +86,22 @@ color: #5D3FD3;
     transition-duration: 0.4s;
     border:0cm
 }
-
-.footer {
-            position: fixed;
-            padding: 10px 10px 0px 10px;
-            bottom: 0;
-            width: 100%;
-            /* Height of the footer*/
-            height: 40px;
-            background: black;
-            color: white;
-            font-family: "Montserrat", sans-serif;
-            text-align: center;
-        }
-
-input[type="text"] {
-    color: black;
+label[for="password"] {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    font-family: "Montserrat", sans-serif;
+}
+input[id="password"] {
     height: 60px;
     width: 250px;
     background-color: white;
@@ -202,43 +122,46 @@ input[type="text"] {
     border:0cm
 }
 
-::-webkit-input-placeholder {
-    text-align: center;
-  }
-  
-  :-moz-placeholder {
-    text-align: center;
-  }
-  :-ms-input-placeholder {  
-    text-align: center; 
- }
+button[id="login"] {
+    color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
 
- @media only screen and (max-width: 768px) {
-    h1 {
-        bottom: 55%;
-    }
-    .subtitle {
-        bottom: 45%;
-    }
-    label { 
-        bottom: 33%;
-    }
-    label:hover {
-        bottom: 33%;
-    }
-    .upload {
-        bottom: 15%;
-    }
-    .upload:hover {
-        bottom: 15%;
-    }
-    input[type="text"] {
-        bottom: -3%;
-    }
-    .download {
-        bottom: -21%;
-    }
-    .download:hover {
-        bottom: -21%;
-    }
-  }
+button[id="login"]:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}

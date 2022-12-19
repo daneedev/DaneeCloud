@@ -12,14 +12,59 @@ var limiter = RateLimit({
 });
 var sanitize = require("sanitize-filename");
 const config = require("./config.json")
-app.use(express.static(__dirname + "/public/"))
+const mongoose = require("mongoose")
+const bcrypt = require("bcrypt")
+const passport = require("passport")
+const flash = require("express-flash")
+const session = require("express-session")
+// PASSPORT & SESSION
 
+const initializePassport = require("./passportconfig")
+initializePassport(passport)
+app.use(flash())
+app.use(session())
+
+// DATABASE
+
+const users = require("./models/users");
+const passport = require('passport');
+mongoose.connect(config.mongo_srv, {
+}).then(() =>[
+  console.log('Connected to the database!')
+]).catch((err) =>{
+  console.log('Failed connect to the database!')
+})
+
+app.use(express.static(__dirname + "/public/"))
+app.set("view-engine", "ejs")
+app.use(express.urlencoded({ extended: false}))
 app.use(limiter);
 
 app.get("/", function (req, res) {
+  res.render(__dirname + "/views/index.ejs" )
+})
 
+app.get("/register", function (req, res) {
+  res.render(__dirname + "/views/register.ejs")
+})
 
-  res.sendFile(__dirname + "/public/html/index.html" )
+app.get("/login", function (req, res) {
+  res.render(__dirname + "/views/login.ejs")
+})
+
+app.post("/register", async function (req, res) {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    const user = new users({
+      username: req.body.name,
+      email: req.body.email,
+      password: hashedPassword
+    })
+    user.save()
+    res.redirect("/login")
+  } catch {
+    res.redirect("/register")
+  }
 })
 
 
