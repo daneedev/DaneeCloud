@@ -13,7 +13,179 @@
     <title>DaneeCloud | Log In</title>
 </head>
 <body>
+    <style>
+        body {
+    background-color: #d2d3db;
+    padding: 0;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 45%;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: xxx-large;
+
+}
+
+.subtitle {
+    color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    display: flex;
+    left: 0;
+    right: 0;
+    bottom: 40%;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+}
+
+.footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 40px;
+    background: black;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+}
+
+label[for="name"] {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 30%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    font-family: "Montserrat", sans-serif;
+}
+input[id="name"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 25%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+label[for="password"] {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 15%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    font-family: "Montserrat", sans-serif;
+}
+input[id="password"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 10%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+button[id="login"] {
+    color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+button[id="login"]:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0%;
+    left: 0;
+    right: 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+    </style>
     <h1>DaneeCloud</h1>
+    <% if (messages.error) {%>
+    <%= messages.error %>
+    <% } %>  
     <h2 class="subtitle">Log In</h2>
     <form action="/login" method="post">
         <label for="name"><span class="material-icons">account_circle</span>&nbsp;Username</label>

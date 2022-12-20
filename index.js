@@ -17,18 +17,31 @@ const bcrypt = require("bcrypt")
 const passport = require("passport")
 const flash = require("express-flash")
 const session = require("express-session")
-// PASSPORT & SESSION
+const methodOverride = require("method-override")
 
+app.use(methodOverride("_method"))
+
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config()
+}
+
+// PASSPORT & SESSION
 const initializePassport = require("./passportconfig")
 initializePassport(passport)
 app.use(flash())
-app.use(session())
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 // DATABASE
 
 const users = require("./models/users");
-const passport = require('passport');
-mongoose.connect(config.mongo_srv, {
+mongoose.connect(process.env.mongo_srv, {
 }).then(() =>[
   console.log('Connected to the database!')
 ]).catch((err) =>{
@@ -40,25 +53,23 @@ app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
 app.use(limiter);
 
-app.get("/", function (req, res) {
+app.get("/", checkAuth ,function (req, res) {
   res.render(__dirname + "/views/index.ejs" )
 })
 
-app.get("/register", function (req, res) {
+// REGISTER
+app.get("/register", checkNotAuth,  function (req, res) {
   res.render(__dirname + "/views/register.ejs")
 })
 
-app.get("/login", function (req, res) {
-  res.render(__dirname + "/views/login.ejs")
-})
-
-app.post("/register", async function (req, res) {
+app.post("/register", checkNotAuth, async function (req, res) {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const user = new users({
       username: req.body.name,
       email: req.body.email,
-      password: hashedPassword
+      password: hashedPassword,
+      id: Date.now().toString()
     })
     user.save()
     res.redirect("/login")
@@ -67,6 +78,45 @@ app.post("/register", async function (req, res) {
   }
 })
 
+// LOGIN
+
+app.get("/login", checkNotAuth, function (req, res) {
+  res.render(__dirname + "/views/login.ejs")
+})
+
+app.post("/login", checkNotAuth, passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  failureFlash: true
+}))
+
+// LOG OUT
+
+app.delete("/logout", (req, res) => {
+  req.logOut( (err) => {
+    if (err) return console.log(err)
+  })
+  res.redirect("/login")
+})
+
+// CHECK IF USER IS LOGGED IN
+
+function checkAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next()
+  }
+
+  res.redirect("/login")
+}
+
+// CHECK IF USER IS NOT LOGGED IN
+
+function checkNotAuth(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/")
+  }
+  next()
+}
 
 app.post('/upload', upload.single('file'), function (req, res) {
   const name = sanitize(req.file.originalname.replace(" ", "_"))
