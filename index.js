@@ -126,6 +126,10 @@ function checkNotAuth(req, res, next) {
   next()
 }
 
+
+
+// UPLOAD
+
 app.post('/upload', upload.single('file'), function (req, res) {
   const name = sanitize(req.file.originalname.replace(" ", "_"))
   if (removeaccents.has(name)) {
@@ -145,12 +149,15 @@ app.post('/upload', upload.single('file'), function (req, res) {
   }
 });
 
+// DOWNLOAD REDIRECT
+
 app.get("/dwnl", function (req, res) {
   const file = req.query.downloadfile
   res.redirect("/download/" + file)
 })
 
-// This route will serve the uploaded files
+// DOWNLOAD
+
 app.get('/download/:downloadfile',  (req, res) => {
   const downloadfile = sanitize(req.params.downloadfile)
   fs.readFile( __dirname + config.uploadsfolder + downloadfile, (err, data) =>{
@@ -166,7 +173,6 @@ app.get('/download/:downloadfile',  (req, res) => {
   })
 });
 
-// Start the server on port 3000
 app.listen(config.port, () => {
   console.log(`Server listening on port ${config.port}`);
 });
