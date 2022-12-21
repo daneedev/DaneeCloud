@@ -181,6 +181,44 @@ button[id="login"]:hover {
     transition-duration: 0.4s;
     border:0cm
 }
+
+::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+  :-moz-placeholder {
+    text-align: center;
+  }
+  :-ms-input-placeholder {  
+    text-align: center; 
+ }
+
+ @media only screen and (max-width: 768px) {
+    h1 {
+        bottom: 55%;
+    }
+    .subtitle {
+        bottom: 45%;
+    }
+    label[for="name"] { 
+        bottom: 30%;
+    }
+    input[id="name"] {
+        bottom: 20%;
+    }
+    label[for="password"] { 
+        bottom: 3%;
+    }
+    input[id="password"] { 
+        bottom: -5%;
+    }
+    button[id="login"] { 
+        bottom: -25%;
+    }
+    button[id="login"]:hover { 
+        bottom: -25%;
+    }
+ }
     </style>
     <h1>DaneeCloud</h1>
     <% if (messages.error) {%>

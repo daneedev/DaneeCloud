@@ -120,12 +120,54 @@
       font-family: "Montserrat", sans-serif;
       text-align: center;
   }
+
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+  :-moz-placeholder {
+    text-align: center;
+  }
+  :-ms-input-placeholder {  
+    text-align: center; 
+ }
+
+ @media only screen and (max-width: 768px) {
+    h1 {
+        bottom: 55%;
+    }
+    .subtitle {
+        bottom: 45%;
+    }
+    label { 
+        bottom: 33%;
+    }
+    label:hover {
+        bottom: 33%;
+    }
+    .upload {
+        bottom: 15%;
+    }
+    .upload:hover {
+        bottom: 15%;
+    }
+    input[type="text"] {
+        bottom: -3%;
+    }
+    .download {
+        bottom: -21%;
+    }
+    .download:hover {
+        bottom: -21%;
+    }
+ }
+
         </style>
         
         </head>
         <body>
             <h1>DaneeCloud</h1>
-            <h2>Upload your files!</h2>
+            <h2>Upload & Download your files!</h2>
             <h3><%- message %> </h3>
             <form action="/">
             <input type="submit" href="/" value="Back to home page"></input>
