@@ -65,6 +65,13 @@ app.get("/register", checkNotAuth,  function (req, res) {
 app.post("/register", checkNotAuth, async function (req, res) {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
+    const usernameExist = await users.findOne({ username: req.body.name})
+    const emailExist = await users.findOne({ email: req.body.email})
+    if (usernameExist) {
+      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`})
+    } else if (emailExist) { 
+      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`})
+    } else {
     const user = new users({
       username: req.body.name,
       email: req.body.email,
@@ -73,6 +80,7 @@ app.post("/register", checkNotAuth, async function (req, res) {
     })
     user.save()
     res.redirect("/login")
+  }
   } catch {
     res.redirect("/register")
   }
@@ -123,13 +131,17 @@ app.post('/upload', upload.single('file'), function (req, res) {
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
   } else {
-    fs.writeFile(__dirname + config.uploadsfolder + name, req.file.buffer, err => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`})
-      }
-    });
+    if (fs.readdirSync(__dirname + "/uploads/").includes(name)) {
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`})
+    } else {
+      fs.writeFile(__dirname + config.uploadsfolder + name, req.file.buffer, err => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`})
+        }
+      });
+    }
   }
 });
 
