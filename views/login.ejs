@@ -16,8 +16,6 @@
     <style>
         body {
     background-color: #d2d3db;
-    padding: 0;
-    margin: 0;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -25,15 +23,8 @@
 
 h1 {
     color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    display: flex;
-    left: 0;
-    right: 0;
-    bottom: 45%;
-    top: 0;
-    justify-content: center;
-    align-items: center;
+    margin-top: 10%;
+    text-align: center;
     font-family: "Montserrat", sans-serif;
     font-size: xxx-large;
 
@@ -41,15 +32,8 @@ h1 {
 
 .subtitle {
     color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    display: flex;
-    left: 0;
-    right: 0;
-    bottom: 40%;
-    top: 0;
-    justify-content: center;
-    align-items: center;
+    margin-top: -5px;
+    text-align: center;
     font-family: "Montserrat", sans-serif;
     font-size: x-large;
 }
@@ -69,33 +53,25 @@ h1 {
 
 label[for="name"] {
     color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 30%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
+    margin-top: 5px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
     display: flex;
     justify-content: center;
-    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+
 }
+
 input[id="name"] {
     height: 60px;
     width: 250px;
     background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 25%;
-    left: 0;
-    right: 0;
     font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -104,33 +80,23 @@ input[id="name"] {
 }
 label[for="password"] {
     color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 15%;
-    left: 0;
-    right: 0;
-    font-size: 20px;
+    margin-top: 10px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
     display: flex;
     justify-content: center;
-    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
 }
 input[id="password"] {
     height: 60px;
     width: 250px;
     background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 10%;
-    left: 0;
-    right: 0;
     font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -143,16 +109,13 @@ button[id="login"] {
     height: 60px;
     width: 250px;
     background-color: #5D3FD3;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0%;
-    left: 0;
-    right: 0;
     font-size: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -165,16 +128,13 @@ button[id="login"]:hover {
     height: 60px;
     width: 250px;
     background-color: white;
-    position: absolute;
-    margin: auto;
-    top: 0;
-    bottom: 0%;
-    left: 0;
-    right: 0;
     font-size: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: auto;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -182,6 +142,13 @@ button[id="login"]:hover {
     border:0cm
 }
 
+a {
+    color: #5D3FD3;
+    margin: auto;
+    font-family: "Montserrat", sans-serif;
+    font-size: medium;
+    margin-top: 10px;
+}
 ::-webkit-input-placeholder {
     text-align: center;
   }
@@ -193,32 +160,7 @@ button[id="login"]:hover {
     text-align: center; 
  }
 
- @media only screen and (max-width: 768px) {
-    h1 {
-        bottom: 55%;
-    }
-    .subtitle {
-        bottom: 45%;
-    }
-    label[for="name"] { 
-        bottom: 30%;
-    }
-    input[id="name"] {
-        bottom: 20%;
-    }
-    label[for="password"] { 
-        bottom: 3%;
-    }
-    input[id="password"] { 
-        bottom: -5%;
-    }
-    button[id="login"] { 
-        bottom: -25%;
-    }
-    button[id="login"]:hover { 
-        bottom: -25%;
-    }
- }
+
     </style>
     <h1>DaneeCloud</h1>
     <% if (messages.error) {%>
@@ -232,6 +174,7 @@ button[id="login"]:hover {
         <input type="password", id="password", name="password" required></input>
         <button type="submit" id="login"><span class="material-icons">login</span>&nbsp;Log In</button>
     </form>
+    <a href="/register">Haven't account yet?</a>
     <footer>
         <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>
     
