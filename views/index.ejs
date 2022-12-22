@@ -61,6 +61,45 @@
     border:0cm
 }
 
+
+.myfiles {
+    color: white;
+    height: 60px;
+    width: 125px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 140px;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.myfiles:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 125px;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 140px;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
 label[for="file"] {
     color: white;
     height: 60px;
@@ -234,9 +273,11 @@ input[type="text"] {
  }
 
     </style>
-    <div class="phone">
         <form action="/logout?_method=DELETE" method="POST">
             <button type="submit" class="logout">Log Out</button>
+        </form>
+        <form action="/myfiles", method="get">
+            <button type="submit" class="myfiles">My Files</button>
         </form>
     <h1>DaneeCloud</h1>
     <h2 class="subtitle">Upload & Download your files!</h2>
@@ -249,13 +290,9 @@ input[type="text"] {
         <input type="text", id="downloadfile", name="downloadfile" placeholder="Your file name" required></input>
         <button type="submit" class="download"><span class="material-icons">cloud_download</span>&nbsp;Download</button>
     </form>
-    <form action="/myfiles", method="get">
-        
-    </form>
     <footer>
         <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>
     
     </footer>
-</div>
 </body>
 </html>

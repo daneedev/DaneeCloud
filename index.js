@@ -76,9 +76,11 @@ app.post("/register", checkNotAuth, async function (req, res) {
       username: req.body.name,
       email: req.body.email,
       password: hashedPassword,
-      id: Date.now().toString()
+      id: Date.now().toString(),
+      files: []
     })
     user.save()
+    fs.mkdirSync(__dirname + "/uploads/" + req.body.name)
     res.redirect("/login")
   }
   } catch {
@@ -126,23 +128,49 @@ function checkNotAuth(req, res, next) {
   next()
 }
 
+// MY FILES
 
+app.get("/myfiles", checkAuth, async function (req, res) {
+  const user = await users.findOne({username: req.user.username})
+  const files = user.files
+  res.render(__dirname + "/views/myfiles.ejs", {files: files})
+})
+
+// DELETE FILE
+
+app.get("/delete/:file", checkAuth, function (req, res) {
+  const file = req.params.file
+  fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + file, async (err, data) =>{
+    if (err) {
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`})
+    } else {
+      fs.unlinkSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file)
+      const user = await users.findOne({ username: req.user.username})
+      user.files.pull(file)
+      user.save()
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">delete</span>&nbsp;File ${file} deleted succesfully!`})
+    }
+  })
+})
 
 // UPLOAD
 
-app.post('/upload', upload.single('file'), function (req, res) {
+app.post('/upload', upload.single('file'), checkAuth, function (req, res) {
   const name = sanitize(req.file.originalname.replace(" ", "_"))
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
   } else {
-    if (fs.readdirSync(__dirname + "/uploads/").includes(name)) {
+    if (fs.readdirSync(__dirname + "/uploads/" + `${req.user.username}/`).includes(name)) {
       res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`})
     } else {
-      fs.writeFile(__dirname + config.uploadsfolder + name, req.file.buffer, err => {
+      fs.writeFile(__dirname + config.uploadsfolder + `${req.user.username}/` +  name, req.file.buffer, async  err => {
         if (err) {
           res.send(err);
         } else {
           res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`})
+          const user = await users.findOne({username: req.user.username})
+          user.files.push(name)
+          user.save()
         }
       });
     }
@@ -151,16 +179,16 @@ app.post('/upload', upload.single('file'), function (req, res) {
 
 // DOWNLOAD REDIRECT
 
-app.get("/dwnl", function (req, res) {
+app.get("/dwnl", checkAuth, function (req, res) {
   const file = req.query.downloadfile
   res.redirect("/download/" + file)
 })
 
 // DOWNLOAD
 
-app.get('/download/:downloadfile',  (req, res) => {
+app.get('/download/:downloadfile',  checkAuth, (req, res) => {
   const downloadfile = sanitize(req.params.downloadfile)
-  fs.readFile( __dirname + config.uploadsfolder + downloadfile, (err, data) =>{
+  fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + downloadfile, (err, data) =>{
     if (err) {
       res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${downloadfile} not found!`})
     } else {

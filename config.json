@@ -1,5 +1,4 @@
 {
     "port": 5026,
-    "deleteafterdownload": false,
     "uploadsfolder": "/uploads/"
 }
