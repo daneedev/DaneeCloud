@@ -156,7 +156,7 @@ app.get("/delete/:file", checkAuth, function (req, res) {
 // UPLOAD
 
 app.post('/upload', upload.single('file'), checkAuth, function (req, res) {
-  const name = sanitize(req.file.originalname.replace(" ", "_"))
+  const name = sanitize(req.file.originalname.replace(/ /g, "_"))
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
   } else {
