@@ -148,9 +148,31 @@ app.get("/delete/:file", checkAuth, function (req, res) {
       const user = await users.findOne({ username: req.user.username})
       user.files.pull(file)
       user.save()
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">delete</span>&nbsp;File ${file} deleted succesfully!`})
+      res.redirect("/myfiles")
     }
   })
+})
+
+// RENAME FILE
+
+app.get("/rename/:file", checkAuth, function (req, res) {
+  const file = req.params.file
+  if (fs.readdirSync(__dirname + config.uploadsfolder + `${req.user.username}/`).includes(file)) {
+    res.render(__dirname + "/views/rename.ejs", { file: file})
+  } else {
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`})
+  }
+})
+
+app.post("/rename/:file", checkAuth, async function (req, res) {
+  const oldname = req.params.file
+  const newname = req.body.newname
+  fs.renameSync(__dirname + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + config.uploadsfolder + `${req.user.username}/` + newname)
+  const user = await users.findOne({ username: req.user.username})
+  user.files.pull(oldname)
+  user.files.push(newname)
+  user.save()
+  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`})
 })
 
 // UPLOAD
@@ -160,7 +182,7 @@ app.post('/upload', upload.single('file'), checkAuth, function (req, res) {
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
   } else {
-    if (fs.readdirSync(__dirname + "/uploads/" + `${req.user.username}/`).includes(name)) {
+    if (fs.readdirSync(__dirname + config.uploadsfolder + `${req.user.username}/`).includes(name)) {
       res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`})
     } else {
       fs.writeFile(__dirname + config.uploadsfolder + `${req.user.username}/` +  name, req.file.buffer, async  err => {
@@ -194,9 +216,6 @@ app.get('/download/:downloadfile',  checkAuth, (req, res) => {
     } else {
       res.contentType('application/octet-stream');
       res.send(data)
-      if (config.deleteafterdownload == true) {
-        fs.unlinkSync(__dirname + config.uploadsfolder + downloadfile)
-      }
     }
   })
 });

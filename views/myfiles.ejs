@@ -96,16 +96,49 @@ a {
     text-align: center;
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
-    display: block;
+    display: inline-block;
 }
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  margin-left: auto;
+    margin-right: auto;
+}
+
+td, th {
+  border: 1px solid #5D3FD3;
+  text-align: left;
+  padding: 8px;
+  text-align: center;
+  color: #5D3FD3;
+  font-family: "Montserrat", sans-serif;
+}
+
     </style>
     <h1>DaneeCloud</h1>
     <h2>My Files</h2>
-    <h3><span class="material-icons">delete</span>Click on file to delete it.</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>File name</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    
       <% for (let file of files) { %>
-        <% let link = "/delete/" + file %> 
-        <a href=<%= link %>><%= file %></a>
+        <% let link = "/delete/" + file %>
+        <% let link2 = "/rename/" + file %>
+        <% let link3 = "/download/" + file %> 
+        <tr>
+          <td><%= file %></td>
+          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
       <% } %>
+          
+    </tr>
+    </tbody>
+    </table>
       <form action="/">
         <input type="submit" href="/" value="Back to home page"></input>
         </form>
