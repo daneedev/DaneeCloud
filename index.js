@@ -53,8 +53,15 @@ app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
 app.use(limiter);
 
-app.get("/", checkAuth ,function (req, res) {
-  res.render(__dirname + "/views/index.ejs" )
+app.get("/", checkAuth ,async function (req, res) {
+  const user = await users.findOne({username: req.user.username})
+  let isAdmin;
+  if (user.isAdmin == true) {
+    isAdmin = true
+  } else {
+    isAdmin = false
+  }
+  res.render(__dirname + "/views/index.ejs", {isAdmin: isAdmin, username: req.user.username} )
 })
 
 // REGISTER
@@ -77,7 +84,8 @@ app.post("/register", checkNotAuth, async function (req, res) {
       email: req.body.email,
       password: hashedPassword,
       id: Date.now().toString(),
-      files: []
+      files: [],
+      isAdmin: false
     })
     user.save()
     fs.mkdirSync(__dirname + "/uploads/" + req.body.name)
@@ -174,6 +182,59 @@ app.post("/rename/:file", checkAuth, async function (req, res) {
   user.save()
   res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`})
 })
+
+// ADMIN PANEL
+
+app.get("/admin/", checkAuth, async function (req, res) {
+  const user = await users.findOne({ username: req.user.username})
+  const allusers = await users.find()
+  if (user.isAdmin) {
+    res.render(__dirname + "/views/admin.ejs", {users: allusers})
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+  }
+})
+
+// DELETE ACCOUNT
+
+app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
+  const account = req.params.account
+  const loggeduser = await users.findOne({username: req.user.username})
+  if (loggeduser.isAdmin) {
+    const usertodelete = await users.findOneAndRemove({ username: account})
+    fs.rmdirSync(__dirname + config.uploadsfolder + `${account}/`)
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`})
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+  }
+})
+
+// ADD ADMIN
+
+app.get("/addadmin/:account", checkAuth, async function (req, res) {
+  const account = req.params.account
+  const loggeduser = await users.findOne({username: req.user.username})
+  if (loggeduser.isAdmin) {
+    const user = await users.findOneAndUpdate({ username: account}, {isAdmin: true})
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} is now admin.`})
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+  }
+})
+
+// REMOVE ADMIN
+
+app.get("/removeadmin/:account", checkAuth, async function (req, res) {
+  const account = req.params.account
+  const loggeduser = await users.findOne({username: req.user.username})
+  if (loggeduser.isAdmin) {
+    const user = await users.findOneAndUpdate({ username: account}, {isAdmin: false})
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} isn't admin now.`})
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+  }
+})
+
 
 // UPLOAD
 

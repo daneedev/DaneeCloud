@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../css/login.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <title>DaneeCloud | Admin</title>
+</head>
+<body>
+    <style>
+        body {
+            background-color: #d2d3db;
+            padding: 0;
+            margin: 0;
+        }
+               h1 {
+    color: #5D3FD3;
+    margin-top: 10%;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: xxx-large;
+
+}
+        h2 {
+            color: #5D3FD3;
+    margin-top: -5px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+        
+        }
+        h3 {
+            color: #5D3FD3;
+    margin-top: -5px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+        
+        }
+
+        input[type="submit"] {
+        color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+    }
+    
+    input[type="submit"]:hover {
+        color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+    }
+        .footer {
+    position: fixed;
+    padding: 10px 10px 0px 10px;
+    bottom: 0;
+    width: 100%;
+    /* Height of the footer*/
+    height: 40px;
+    background: black;
+    color: white;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+}
+a {
+  color: #5D3FD3;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+    display: inline-block;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  margin-left: auto;
+    margin-right: auto;
+}
+
+td, th {
+  border: 1px solid #5D3FD3;
+  text-align: left;
+  padding: 8px;
+  text-align: center;
+  color: #5D3FD3;
+  font-family: "Montserrat", sans-serif;
+}
+
+    </style>
+    <h1>DaneeCloud</h1>  
+    <h2 class="subtitle">Admin Panel</h2>
+    <table>
+        <thead>
+        <tr>
+          <th>Account username</th>
+          <th>Is admin?</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+        <% for (let user of users) { %>
+          <% let link = "/deleteaccount/" + user.username %>
+          <% let link2 = "/addadmin/" + user.username %>
+          <% let link3 = "/removeadmin/" + user.username %> 
+          <% let isadmin; %> 
+          <% if (user.isAdmin) { %>
+            <% isadmin = "Yes" %>
+          <% } else { %>
+            <% isadmin = "No" %>
+            <% } %>    
+          <tr>
+            <td><%= user.username %></td>
+            <td><%= isadmin %> </td>
+            <% if (isadmin == "No") { %> 
+            <td><a href=<%= link2 %>><span class="material-icons">arrow_upward</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
+            <% } else {%> 
+                <td><a href=<%= link3 %>><span class="material-icons">arrow_downward</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
+                <% } %> 
+            <% } %>
+            
+      </tr>
+      </tbody>
+      </table>
+      <form action="/">
+        <input type="submit" href="/" value="Back to home page"></input>
+        </form>
+    <footer>
+        <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>
+    
+    </footer>
+</body>
+</html>

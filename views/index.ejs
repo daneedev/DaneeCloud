@@ -99,6 +99,43 @@
     transition-duration: 0.4s;
     border:0cm
 }
+.admin {
+    color: white;
+    height: 60px;
+    width: 125px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 280px;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.admin:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 125px;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 280px;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
 
 label[for="file"] {
     color: white;
@@ -242,9 +279,14 @@ input[type="text"] {
         </form>
         <form action="/myfiles", method="get">
             <button type="submit" class="myfiles">My Files</button>
-        </form>
+        </form> 
+        <% if (isAdmin == true) { %>  
+        <form action="/admin", method="get">
+            <button type="submit" class="admin">Admin Panel</button>
+        </form> 
+        <% } %>
     <h1>DaneeCloud</h1>
-    <h2 class="subtitle">Upload & Download your files!</h2>
+    <h2 class="subtitle">Welcome, <%= username %>!</h2>
     <form action="/upload/" method="post", enctype="multipart/form-data">
         <label for="file"><span class="material-icons">upload_file</span>&nbsp;Choose file to upload</label>
         <input type="file" name="file" id="file" required hidden></input>
