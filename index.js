@@ -19,6 +19,7 @@ const flash = require("express-flash")
 const session = require("express-session")
 const methodOverride = require("method-override")
 
+
 app.use(methodOverride("_method"))
 
 if (process.env.NODE_ENV !== "production") {
@@ -32,7 +33,7 @@ app.use(flash())
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }))
 
 app.use(passport.initialize())
@@ -88,7 +89,7 @@ app.post("/register", checkNotAuth, async function (req, res) {
       isAdmin: false
     })
     user.save()
-    fs.mkdirSync(__dirname + "/uploads/" + req.body.name)
+    fs.mkdirSync(__dirname + "/uploads/" + sanitize(req.body.name))
     res.redirect("/login")
   }
   } catch {
@@ -147,7 +148,7 @@ app.get("/myfiles", checkAuth, async function (req, res) {
 // DELETE FILE
 
 app.get("/delete/:file", checkAuth, function (req, res) {
-  const file = req.params.file
+  const file = sanitize(req.params.file)
   fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + file, async (err, data) =>{
     if (err) {
       res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`})
@@ -174,7 +175,7 @@ app.get("/rename/:file", checkAuth, function (req, res) {
 
 app.post("/rename/:file", checkAuth, async function (req, res) {
   const oldname = req.params.file
-  const newname = req.body.newname
+  const newname = sanitize(req.body.newname)
   fs.renameSync(__dirname + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + config.uploadsfolder + `${req.user.username}/` + newname)
   const user = await users.findOne({ username: req.user.username})
   user.files.pull(oldname)
