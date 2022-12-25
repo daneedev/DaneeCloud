@@ -174,7 +174,7 @@ app.get("/rename/:file", checkAuth, function (req, res) {
 })
 
 app.post("/rename/:file", checkAuth, async function (req, res) {
-  const oldname = req.params.file
+  const oldname = sanitize(req.params.file)
   const newname = sanitize(req.body.newname)
   fs.renameSync(__dirname + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + config.uploadsfolder + `${req.user.username}/` + newname)
   const user = await users.findOne({ username: req.user.username})
@@ -199,7 +199,7 @@ app.get("/admin/", checkAuth, async function (req, res) {
 // DELETE ACCOUNT
 
 app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
-  const account = req.params.account
+  const account = sanitize(req.params.account)
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
     const usertodelete = await users.findOneAndRemove({ username: account})
@@ -220,7 +220,7 @@ app.get("/renameaccount/:account", checkAuth, function (req, res) {
 
 app.post("/renameaccount/:account", checkAuth, async function (req, res) {
   const account = req.params.account
-  const newaccountname = req.body.newname
+  const newaccountname = sanitize(req.body.newname)
   const loggeduser = await users.findOne({ username: req.user.username})
   if (loggeduser.isAdmin) {
     const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname})
