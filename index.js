@@ -224,6 +224,7 @@ app.post("/renameaccount/:account", checkAuth, async function (req, res) {
   const loggeduser = await users.findOne({ username: req.user.username})
   if (loggeduser.isAdmin) {
     const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname})
+    fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been renamed to ${newaccountname}`})
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
