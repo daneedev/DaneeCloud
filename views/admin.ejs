@@ -134,6 +134,7 @@ td, th {
           <% let link = "/deleteaccount/" + user.username %>
           <% let link2 = "/addadmin/" + user.username %>
           <% let link3 = "/removeadmin/" + user.username %> 
+          <% let link4 = "/renameaccount/" + user.username %> 
           <% let isadmin; %> 
           <% if (user.isAdmin) { %>
             <% isadmin = "Yes" %>
@@ -144,9 +145,9 @@ td, th {
             <td><%= user.username %></td>
             <td><%= isadmin %> </td>
             <% if (isadmin == "No") { %> 
-            <td><a href=<%= link2 %>><span class="material-icons">arrow_upward</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
+            <td><a href=<%= link2 %>><span class="material-icons">arrow_upward</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
             <% } else {%> 
-                <td><a href=<%= link3 %>><span class="material-icons">arrow_downward</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
+                <td><a href=<%= link3 %>><span class="material-icons">arrow_downward</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
                 <% } %> 
             <% } %>
             

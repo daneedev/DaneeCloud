@@ -210,6 +210,27 @@ app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
   }
 })
 
+// RENAME ACCOUNT
+
+app.get("/renameaccount/:account", checkAuth, function (req, res) {
+  const account = req.params.account
+  res.render(__dirname + "/views/renameaccount.ejs", { account: account})
+})
+
+
+app.post("/renameaccount/:account", checkAuth, async function (req, res) {
+  const account = req.params.account
+  const newaccountname = req.body.newname
+  const loggeduser = await users.findOne({ username: req.user.username})
+  if (loggeduser.isAdmin) {
+    const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons>cloud_done</span>User ${account} has been renamed to ${usertorename}`})
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+  }
+})
+
+
 // ADD ADMIN
 
 app.get("/addadmin/:account", checkAuth, async function (req, res) {
