@@ -219,7 +219,7 @@ app.get("/renameaccount/:account", checkAuth, function (req, res) {
 
 
 app.post("/renameaccount/:account", checkAuth, async function (req, res) {
-  const account = req.params.account
+  const account = sanitize(req.params.account)
   const newaccountname = sanitize(req.body.newname)
   const loggeduser = await users.findOne({ username: req.user.username})
   if (loggeduser.isAdmin) {
