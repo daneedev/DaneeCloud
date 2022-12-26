@@ -304,6 +304,12 @@ app.get('/download/:downloadfile',  checkAuth, (req, res) => {
   })
 });
 
+// 404  PAGE
+
+app.get("/*", async function (req, res) {
+  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - Page not found!`})
+})
+
 app.listen(config.port, () => {
   console.log(`Server listening on port ${config.port}`);
 });
