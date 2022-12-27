@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <title>DaneeCloud | Rename account</title>
+    <title><%= cloudname %> | Rename account</title>
 </head>
 <body>
     <style>
@@ -130,7 +130,7 @@ button[id="rename"]:hover {
 
 
     </style>
-    <h1>DaneeCloud</h1>
+    <h1><%= cloudname %></h1>
     <h2 class="subtitle">Rename <%= account %> </h2>
     <% let renameurl =  "/renameaccount/" + account%> 
     <form action=<%= renameurl %> method="post">

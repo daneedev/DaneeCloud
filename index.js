@@ -62,12 +62,12 @@ app.get("/", checkAuth ,async function (req, res) {
   } else {
     isAdmin = false
   }
-  res.render(__dirname + "/views/index.ejs", {isAdmin: isAdmin, username: req.user.username} )
+  res.render(__dirname + "/views/index.ejs", {isAdmin: isAdmin, username: req.user.username, cloudname: config.cloudname} )
 })
 
 // REGISTER
 app.get("/register", checkNotAuth,  function (req, res) {
-  res.render(__dirname + "/views/register.ejs")
+  res.render(__dirname + "/views/register.ejs", { cloudname: config.cloudname})
 })
 
 app.post("/register", checkNotAuth, async function (req, res) {
@@ -76,9 +76,9 @@ app.post("/register", checkNotAuth, async function (req, res) {
     const usernameExist = await users.findOne({ username: req.body.name})
     const emailExist = await users.findOne({ email: req.body.email})
     if (usernameExist) {
-      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`})
+      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`,  cloudname: config.cloudname})
     } else if (emailExist) { 
-      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`})
+      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`,  cloudname: config.cloudname})
     } else {
     const user = new users({
       username: req.body.name,
@@ -100,7 +100,7 @@ app.post("/register", checkNotAuth, async function (req, res) {
 // LOGIN
 
 app.get("/login", checkNotAuth, function (req, res) {
-  res.render(__dirname + "/views/login.ejs")
+  res.render(__dirname + "/views/login.ejs", { cloudname: config.cloudname })
 })
 
 app.post("/login", checkNotAuth, passport.authenticate("local", {
@@ -142,7 +142,7 @@ function checkNotAuth(req, res, next) {
 app.get("/myfiles", checkAuth, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   const files = user.files
-  res.render(__dirname + "/views/myfiles.ejs", {files: files})
+  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname})
 })
 
 // DELETE FILE
@@ -151,7 +151,7 @@ app.get("/delete/:file", checkAuth, function (req, res) {
   const file = sanitize(req.params.file)
   fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + file, async (err, data) =>{
     if (err) {
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`})
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
     } else {
       fs.unlinkSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file)
       const user = await users.findOne({ username: req.user.username})
@@ -167,9 +167,9 @@ app.get("/delete/:file", checkAuth, function (req, res) {
 app.get("/rename/:file", checkAuth, function (req, res) {
   const file = req.params.file
   if (fs.readdirSync(__dirname + config.uploadsfolder + `${req.user.username}/`).includes(file)) {
-    res.render(__dirname + "/views/rename.ejs", { file: file})
+    res.render(__dirname + "/views/rename.ejs", { file: file,  cloudname: config.cloudname})
   } else {
-    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`})
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
   }
 })
 
@@ -181,7 +181,7 @@ app.post("/rename/:file", checkAuth, async function (req, res) {
   user.files.pull(oldname)
   user.files.push(newname)
   user.save()
-  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`})
+  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`,  cloudname: config.cloudname})
 })
 
 // ADMIN PANEL
@@ -190,9 +190,9 @@ app.get("/admin/", checkAuth, async function (req, res) {
   const user = await users.findOne({ username: req.user.username})
   const allusers = await users.find()
   if (user.isAdmin) {
-    res.render(__dirname + "/views/admin.ejs", {users: allusers})
+    res.render(__dirname + "/views/admin.ejs", {users: allusers,  cloudname: config.cloudname})
   } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
 })
 
@@ -204,9 +204,9 @@ app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
   if (loggeduser.isAdmin) {
     const usertodelete = await users.findOneAndRemove({ username: account})
     fs.rmdirSync(__dirname + config.uploadsfolder + `${account}/`)
-    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`})
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`,  cloudname: config.cloudname})
   } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
 })
 
@@ -214,7 +214,7 @@ app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
 
 app.get("/renameaccount/:account", checkAuth, function (req, res) {
   const account = req.params.account
-  res.render(__dirname + "/views/renameaccount.ejs", { account: account})
+  res.render(__dirname + "/views/renameaccount.ejs", { account: account,  cloudname: config.cloudname})
 })
 
 
@@ -225,9 +225,9 @@ app.post("/renameaccount/:account", checkAuth, async function (req, res) {
   if (loggeduser.isAdmin) {
     const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname})
     fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been renamed to ${newaccountname}`})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been renamed to ${newaccountname}`,  cloudname: config.cloudname})
   } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
 })
 
@@ -239,9 +239,9 @@ app.get("/addadmin/:account", checkAuth, async function (req, res) {
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
     const user = await users.findOneAndUpdate({ username: account}, {isAdmin: true})
-    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} is now admin.`})
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} is now admin.`,  cloudname: config.cloudname})
   } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
 })
 
@@ -252,9 +252,9 @@ app.get("/removeadmin/:account", checkAuth, async function (req, res) {
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
     const user = await users.findOneAndUpdate({ username: account}, {isAdmin: false})
-    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} isn't admin now.`})
+    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} isn't admin now.`,  cloudname: config.cloudname})
   } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
 })
 
@@ -267,13 +267,13 @@ app.post('/upload', upload.single('file'), checkAuth, function (req, res) {
     res.send("Please upload files without accents.")
   } else {
     if (fs.readdirSync(__dirname + config.uploadsfolder + `${req.user.username}/`).includes(name)) {
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`})
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`,  cloudname: config.cloudname})
     } else {
       fs.writeFile(__dirname + config.uploadsfolder + `${req.user.username}/` +  name, req.file.buffer, async  err => {
         if (err) {
           res.send(err);
         } else {
-          res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`})
+          res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`,  cloudname: config.cloudname})
           const user = await users.findOne({username: req.user.username})
           user.files.push(name)
           user.save()
@@ -296,7 +296,7 @@ app.get('/download/:downloadfile',  checkAuth, (req, res) => {
   const downloadfile = sanitize(req.params.downloadfile)
   fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + downloadfile, (err, data) =>{
     if (err) {
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${downloadfile} not found!`})
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${downloadfile} not found!`,  cloudname: config.cloudname})
     } else {
       res.contentType('application/octet-stream');
       res.send(data)
@@ -307,7 +307,7 @@ app.get('/download/:downloadfile',  checkAuth, (req, res) => {
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
-  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - Page not found!`})
+  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - Page not found!`,  cloudname: config.cloudname})
 })
 
 app.listen(config.port, () => {

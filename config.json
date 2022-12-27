@@ -1,4 +1,5 @@
 {
+    "cloudname": "DaneeCloud",
     "port": 5026,
     "uploadsfolder": "/uploads/"
 }
