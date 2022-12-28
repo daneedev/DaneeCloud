@@ -122,21 +122,26 @@ td, th {
       <thead>
       <tr>
         <th>File name</th>
+        <th>Size</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-    
-      <% for (let file of files) { %>
+      <% files.forEach((file) => { %> 
+        <tr>
         <% let link = "/delete/" + file %>
         <% let link2 = "/rename/" + file %>
         <% let link3 = "/download/" + file %> 
-        <tr>
+        <% let size = fs.statSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
           <td><%= file %></td>
+          <% if (size.toFixed(2) > 1024) { %>
+            <td><%= size.toFixed(2) / 1000 %> GB </td>
+          <% } else { %> 
+          <td><%= size.toFixed(2) %> MB </td>
+          <% } %> 
           <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
-      <% } %>
-          
-    </tr>
+        </tr>
+        <% }) %> 
     </tbody>
     </table>
       <form action="/">

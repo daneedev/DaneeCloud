@@ -142,7 +142,7 @@ function checkNotAuth(req, res, next) {
 app.get("/myfiles", checkAuth, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   const files = user.files
-  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname})
+  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname})
 })
 
 // DELETE FILE
