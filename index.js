@@ -21,7 +21,6 @@ const methodOverride = require("method-override")
 const isimg = require("is-image")
 const path = require("path")
 
-app.use(express.static("/views/"))
 
 app.use(methodOverride("_method"))
 
@@ -52,10 +51,43 @@ mongoose.connect(process.env.mongo_srv, {
   console.log('Failed connect to the database!')
 })
 
-app.use(express.static(__dirname + "/public/"))
+app.get("/files/:username/:file", checkAuth, function (req, res) {
+  if (req.params.username == req.user.username) {
+    const file = sanitize(req.params.file)
+    if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
+      const requestedfile = fs.readFileSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + file)
+      res.send(requestedfile)
+    } else {
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
+    }
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+  }
+})
+
+
+app.use("/files/", checkAuth, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
 app.use(limiter);
+
+function checkIfUserHaveRights(req, res) {
+  if (req.params.username == req.user.username) {
+    const file = sanitize(req.params.file)
+    if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
+      const requestedfile = fs.readFileSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + file)
+      res.send(requestedfile)
+    } else {
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
+    }
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+  }
+}
+
+
+
+
 
 app.get("/", checkAuth ,async function (req, res) {
   const user = await users.findOne({username: req.user.username})
@@ -145,7 +177,7 @@ function checkNotAuth(req, res, next) {
 app.get("/myfiles", checkAuth, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   const files = user.files
-  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg})
+  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer})
 })
 
 // DELETE FILE
@@ -316,4 +348,3 @@ app.get("/*", async function (req, res) {
 app.listen(config.port, () => {
   console.log(`Server listening on port ${config.port}`);
 });
-

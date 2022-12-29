@@ -115,7 +115,8 @@ td, th {
   font-family: "Montserrat", sans-serif;
 }
 img {
-  width: 200px;
+  width:40px;
+  height: auto;
 }
     </style>
     <h1><%= cloudname %> </h1>
@@ -136,9 +137,8 @@ img {
         <% let link2 = "/rename/" + file %>
         <% let link3 = "/download/" + file %> 
         <% let size = fs.statSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
-        <% if (isImg(__dirname + config.uploadsfolder + `${req.user.username}/` + file)) { %>
-        <% let imgdir = __dirname + config.uploadsfolder + `${req.user.username}/` + file %> 
-        <td><img src="/uploads/daneeskripter/cat.jpg" width="42" height="42"/></td>
+        <% if (isImg(__dirname + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
+          <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
         <% } else { %>
           <td>-</td>
         <% } %>  
@@ -153,7 +153,6 @@ img {
         <% }) %> 
     </tbody>
     </table>
-    <img src="cat.jpg">
       <form action="/">
         <input type="submit" href="/" value="Back to home page"></input>
         </form>
