@@ -19,8 +19,7 @@ const flash = require("express-flash")
 const session = require("express-session")
 const methodOverride = require("method-override")
 const isimg = require("is-image")
-const path = require("path")
-
+const logger = require("./logger")
 
 app.use(methodOverride("_method"))
 
@@ -46,12 +45,12 @@ app.use(passport.session())
 const users = require("./models/users");
 mongoose.connect(process.env.mongo_srv, {
 }).then(() =>[
-  console.log('Connected to the database!')
+  logger.logSuccess("Connected to the database!")
 ]).catch((err) =>{
-  console.log('Failed connect to the database!')
+  logger.logError('Failed connect to the database!')
 })
 
-app.get("/files/:username/:file", checkAuth, function (req, res) {
+app.get("/files/:username/:file", checkAuth, checkVerify, function (req, res) {
   if (req.params.username == req.user.username) {
     const file = sanitize(req.params.file)
     if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
@@ -66,7 +65,7 @@ app.get("/files/:username/:file", checkAuth, function (req, res) {
 })
 
 
-app.use("/files/", checkAuth, express.static(__dirname + "/uploads/"))
+app.use("/files/", checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
 app.use(limiter);
@@ -75,7 +74,7 @@ app.use(limiter);
 
 
 
-app.get("/", checkAuth ,async function (req, res) {
+app.get("/", checkAuth , checkVerify, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   let isAdmin;
   if (user.isAdmin == true) {
@@ -107,7 +106,9 @@ app.post("/register", checkNotAuth, async function (req, res) {
       password: hashedPassword,
       id: Date.now().toString(),
       files: [],
-      isAdmin: false
+      isAdmin: false,
+      isVerified: false,
+      verifyCode: null
     })
     user.save()
     fs.mkdirSync(__dirname + "/uploads/" + sanitize(req.body.name))
@@ -130,11 +131,77 @@ app.post("/login", checkNotAuth, passport.authenticate("local", {
   failureFlash: true
 }))
 
+// CHECK IF USER IS VERIFIED
+
+async function checkVerify(req, res, next) {
+  const user = await users.findOne({username: req.user.username})
+  if (user.isVerified == true) {
+    return next()
+  } else {
+    res.redirect("/verify")
+  }
+}
+
+// CHECK IF USER IS NOT VERIFIED
+
+async function checkNotVerify(req, res, next) {
+  const user = await users.findOne({username: req.user.username})
+  if (user.isVerified == true) {
+    res.redirect("/")
+  } else {
+    next()
+  }
+}
+
+// EMAIL VERIFY
+const { transporter} = require("./smtpconfig")
+
+app.get("/verify", checkAuth, checkNotVerify, function (req, res) {
+    res.render(__dirname + "/views/verify.ejs", { cloudname: config.cloudname, req: req})
+})
+
+app.post("/verify", checkAuth, checkNotVerify, async function (req, res) {
+  const verifycode = Math.floor(Math.random() * 9000) + 1000
+  const addverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: verifycode.toString()}) 
+  transporter.sendMail({
+  from: {
+  name: config.cloudname + " | Verify",
+  address: "verify@cloud.daneeskripter.tk"
+  },
+  to: req.user.email,
+  subject: "Verify your account",
+  text: "Hello,\n please verify your account with this code: " + verifycode.toString() + "\n If you didn't registered on " + config.cloudurl + ", ignore this mail.\n\n\nRegards,\nVerification bot from " + config.cloudname
+  }, function (error, info) {
+  if (error) {
+  logger.logError(error)
+  } else {
+    logger.logInfo("Verification email has been sent to " + req.user.email)
+  }
+  })
+  res.redirect("/verifycode")
+
+})
+
+app.get("/verifycode", checkAuth, checkNotVerify, function (req, res) {
+  res.render(__dirname + "/views/verifycode.ejs", { cloudname: config.cloudname})
+})
+
+app.post("/verifycode", checkAuth, checkNotVerify, async function (req, res) {
+  const user = await users.findOne({ username: req.user.username})
+  if (user.verifyCode == req.body.code) {
+    const verifyuser = await users.findOneAndUpdate({username: req.user.username}, { isVerified: true})
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">verified</span>&nbsp;Your account has been successfully verified!`})
+    logger.logInfo("User " + req.user.username + " has been successfully verified!")
+  } else {
+    res.redirect("/verifycode")
+  }
+})
+
 // LOG OUT
 
 app.delete("/logout", (req, res) => {
   req.logOut( (err) => {
-    if (err) return console.log(err)
+    if (err) return logger.logError(err)
   })
   res.redirect("/login")
 })
@@ -160,7 +227,7 @@ function checkNotAuth(req, res, next) {
 
 // MY FILES
 
-app.get("/myfiles", checkAuth, async function (req, res) {
+app.get("/myfiles", checkAuth, checkVerify, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   const files = user.files
   res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer})
@@ -168,7 +235,7 @@ app.get("/myfiles", checkAuth, async function (req, res) {
 
 // DELETE FILE
 
-app.get("/delete/:file", checkAuth, function (req, res) {
+app.get("/delete/:file", checkAuth, checkVerify, function (req, res) {
   const file = sanitize(req.params.file)
   fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + file, async (err, data) =>{
     if (err) {
@@ -185,7 +252,7 @@ app.get("/delete/:file", checkAuth, function (req, res) {
 
 // RENAME FILE
 
-app.get("/rename/:file", checkAuth, function (req, res) {
+app.get("/rename/:file", checkAuth, checkVerify, function (req, res) {
   const file = req.params.file
   if (fs.readdirSync(__dirname + config.uploadsfolder + `${req.user.username}/`).includes(file)) {
     res.render(__dirname + "/views/rename.ejs", { file: file,  cloudname: config.cloudname})
@@ -194,7 +261,7 @@ app.get("/rename/:file", checkAuth, function (req, res) {
   }
 })
 
-app.post("/rename/:file", checkAuth, async function (req, res) {
+app.post("/rename/:file", checkAuth, checkVerify, async function (req, res) {
   const oldname = sanitize(req.params.file)
   const newname = sanitize(req.body.newname)
   fs.renameSync(__dirname + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + config.uploadsfolder + `${req.user.username}/` + newname)
@@ -207,7 +274,7 @@ app.post("/rename/:file", checkAuth, async function (req, res) {
 
 // ADMIN PANEL
 
-app.get("/admin/", checkAuth, async function (req, res) {
+app.get("/admin/", checkAuth, checkVerify, async function (req, res) {
   const user = await users.findOne({ username: req.user.username})
   const allusers = await users.find()
   if (user.isAdmin) {
@@ -219,7 +286,7 @@ app.get("/admin/", checkAuth, async function (req, res) {
 
 // DELETE ACCOUNT
 
-app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
+app.get("/deleteaccount/:account", checkAuth, checkVerify, async function (req, res) {
   const account = sanitize(req.params.account)
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
@@ -233,13 +300,13 @@ app.get("/deleteaccount/:account", checkAuth, async function (req, res) {
 
 // RENAME ACCOUNT
 
-app.get("/renameaccount/:account", checkAuth, function (req, res) {
+app.get("/renameaccount/:account", checkAuth, checkVerify, function (req, res) {
   const account = req.params.account
   res.render(__dirname + "/views/renameaccount.ejs", { account: account,  cloudname: config.cloudname})
 })
 
 
-app.post("/renameaccount/:account", checkAuth, async function (req, res) {
+app.post("/renameaccount/:account", checkAuth, checkVerify, async function (req, res) {
   const account = sanitize(req.params.account)
   const newaccountname = sanitize(req.body.newname)
   const loggeduser = await users.findOne({ username: req.user.username})
@@ -255,7 +322,7 @@ app.post("/renameaccount/:account", checkAuth, async function (req, res) {
 
 // ADD ADMIN
 
-app.get("/addadmin/:account", checkAuth, async function (req, res) {
+app.get("/addadmin/:account", checkAuth, checkVerify, async function (req, res) {
   const account = req.params.account
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
@@ -268,7 +335,7 @@ app.get("/addadmin/:account", checkAuth, async function (req, res) {
 
 // REMOVE ADMIN
 
-app.get("/removeadmin/:account", checkAuth, async function (req, res) {
+app.get("/removeadmin/:account", checkAuth, checkVerify, async function (req, res) {
   const account = req.params.account
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
@@ -282,7 +349,7 @@ app.get("/removeadmin/:account", checkAuth, async function (req, res) {
 
 // UPLOAD
 
-app.post('/upload', upload.single('file'), checkAuth, function (req, res) {
+app.post('/upload', upload.single('file'), checkAuth, checkVerify, function (req, res) {
   const name = sanitize(req.file.originalname.replace(/ /g, "_"))
   if (removeaccents.has(name)) {
     res.send("Please upload files without accents.")
@@ -306,14 +373,14 @@ app.post('/upload', upload.single('file'), checkAuth, function (req, res) {
 
 // DOWNLOAD REDIRECT
 
-app.get("/dwnl", checkAuth, function (req, res) {
+app.get("/dwnl", checkAuth, checkVerify, function (req, res) {
   const file = req.query.downloadfile
   res.redirect("/download/" + file)
 })
 
 // DOWNLOAD
 
-app.get('/download/:downloadfile',  checkAuth, (req, res) => {
+app.get('/download/:downloadfile',  checkAuth, checkVerify, (req, res) => {
   const downloadfile = sanitize(req.params.downloadfile)
   fs.readFile( __dirname + config.uploadsfolder + `${req.user.username}/` + downloadfile, (err, data) =>{
     if (err) {
@@ -332,5 +399,5 @@ app.get("/*", async function (req, res) {
 })
 
 app.listen(config.port, () => {
-  console.log(`Server listening on port ${config.port}`);
+  logger.logSuccess(`Server listening on port ${config.port}`);
 });

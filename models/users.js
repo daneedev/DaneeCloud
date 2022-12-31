@@ -6,7 +6,9 @@ const users = new mongoose.Schema({
     password: { type: String, require: true},
     id: { type: String, require: true},
     files: { type: Array},
-    isAdmin: { type: Boolean}
+    isAdmin: { type: Boolean},
+    isVerified: { type: Boolean},
+    verifyCode: { type: String}
 })
 
 const model = mongoose.model('users', users)
