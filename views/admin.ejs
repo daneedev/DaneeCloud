@@ -124,6 +124,8 @@ td, th {
         <thead>
         <tr>
           <th>Account username</th>
+          <th>Account email</th>
+          <th>Is verified?</th>
           <th>Is admin?</th>
           <th>Actions</th>
         </tr>
@@ -134,15 +136,23 @@ td, th {
           <% let link = "/deleteaccount/" + user.username %>
           <% let link2 = "/addadmin/" + user.username %>
           <% let link3 = "/removeadmin/" + user.username %> 
-          <% let link4 = "/renameaccount/" + user.username %> 
+          <% let link4 = "/editaccount/" + user.username %> 
           <% let isadmin; %> 
+          <% let isverified; %> 
           <% if (user.isAdmin) { %>
             <% isadmin = "Yes" %>
           <% } else { %>
             <% isadmin = "No" %>
             <% } %>    
+          <% if (user.isVerified) { %>
+            <% isverified = "Yes" %>
+          <% } else { %>  
+            <% isverified = "No" %>
+          <% } %>   
           <tr>
             <td><%= user.username %></td>
+            <td><%= user.email %> </td>
+            <td><%= isverified %> </td>
             <td><%= isadmin %> </td>
             <% if (isadmin == "No") { %> 
             <td><a href=<%= link2 %>><span class="material-icons">arrow_upward</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>

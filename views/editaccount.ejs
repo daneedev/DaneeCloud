@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Rename account</title>
+    <title><%= cloudname %> | Edit account</title>
 </head>
 <body>
     <style>
@@ -79,6 +79,22 @@ input[id="newname"] {
     border:0cm
 }
 
+input[id="newemail"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
 
 button[id="rename"] {
     color: white;
@@ -131,11 +147,13 @@ button[id="rename"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Rename <%= account %> </h2>
-    <% let renameurl =  "/renameaccount/" + account%> 
-    <form action=<%= renameurl %> method="post">
+    <h2 class="subtitle">Edit <%= account %> </h2>
+    <% let editurl =  "/editaccount/" + account%> 
+    <form action=<%= editurl %> method="post">
         <label for="newname"><span class="material-icons">edit</span>&nbsp;New account name</label>
         <input type="text", id="newname", name="newname" required></input>
+        <label for="newname"><span class="material-icons">edit</span>&nbsp;New account email</label>
+        <input type="email", id="newemail", name="newemail" required></input>
         <button type="submit" id="rename"><span class="material-icons">edit</span>&nbsp;Rename account</button>
     </form>
     <footer>

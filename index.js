@@ -306,26 +306,27 @@ app.get("/deleteaccount/:account", checkAuth, checkVerify, async function (req, 
   }
 })
 
-// RENAME ACCOUNT
+// EDIT ACCOUNT
 
-app.get("/renameaccount/:account", checkAuth, checkVerify, function (req, res) {
+app.get("/editaccount/:account", checkAuth, checkVerify, function (req, res) {
   const account = req.params.account
-  res.render(__dirname + "/views/renameaccount.ejs", { account: account,  cloudname: config.cloudname})
+  res.render(__dirname + "/views/editaccount.ejs", { account: account,  cloudname: config.cloudname})
 })
 
 
-app.post("/renameaccount/:account", checkAuth, checkVerify, async function (req, res) {
+app.post("/editaccount/:account", checkAuth, checkVerify, async function (req, res) {
   const account = sanitize(req.params.account)
   const newaccountname = sanitize(req.body.newname)
+  const newaccountemail = sanitize(req.body.newemail)
   const loggeduser = await users.findOne({ username: req.user.username})
   if (loggeduser.isAdmin) {
     const findusertorename = await users.findOne({username: account})
     if (!findusertorename) {
       res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
     } else {
-    const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname})
+    const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname, email: newaccountemail})
     fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been renamed to ${newaccountname}`,  cloudname: config.cloudname})
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} with ${findusertorename.email} email has been renamed to ${newaccountname} with ${newaccountemail} email`,  cloudname: config.cloudname})
     }
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
