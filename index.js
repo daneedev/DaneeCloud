@@ -50,11 +50,14 @@ mongoose.connect(process.env.mongo_srv, {
   logger.logError('Failed connect to the database!')
 })
 
-app.get("/files/:username/:file", checkAuth, checkVerify, function (req, res) {
+app.get("/files/:username/:file", checkAuth, checkVerify, limiter, function (req, res) {
   if (req.params.username == req.user.username) {
     const file = sanitize(req.params.file)
     if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
       const requestedfile = fs.readFileSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + file)
+      if (isimg(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + file)) {
+        res.setHeader("Content-Type", "image/png");
+      }
       res.send(requestedfile)
     } else {
       res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
@@ -65,7 +68,7 @@ app.get("/files/:username/:file", checkAuth, checkVerify, function (req, res) {
 })
 
 
-app.use("/files/", checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
+app.use("/files/", checkAuth, checkVerify, limiter, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
 app.use(limiter);
@@ -290,9 +293,14 @@ app.get("/deleteaccount/:account", checkAuth, checkVerify, async function (req, 
   const account = sanitize(req.params.account)
   const loggeduser = await users.findOne({username: req.user.username})
   if (loggeduser.isAdmin) {
-    const usertodelete = await users.findOneAndRemove({ username: account})
-    fs.rmdirSync(__dirname + config.uploadsfolder + `${account}/`)
-    res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`,  cloudname: config.cloudname})
+    const findusertodelete = await users.findOne({username: account})
+    if (!findusertodelete) {
+      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
+    } else {
+      const usertodelete = await users.findOneAndRemove({ username: account})
+      fs.rmdirSync(__dirname + config.uploadsfolder + `${account}/`)
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`,  cloudname: config.cloudname})
+    }
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
@@ -311,9 +319,14 @@ app.post("/renameaccount/:account", checkAuth, checkVerify, async function (req,
   const newaccountname = sanitize(req.body.newname)
   const loggeduser = await users.findOne({ username: req.user.username})
   if (loggeduser.isAdmin) {
+    const findusertorename = await users.findOne({username: account})
+    if (!findusertorename) {
+      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
+    } else {
     const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname})
     fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been renamed to ${newaccountname}`,  cloudname: config.cloudname})
+    }
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
