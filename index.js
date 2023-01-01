@@ -169,16 +169,19 @@ app.post("/verify", checkAuth, checkNotVerify, async function (req, res) {
   transporter.sendMail({
   from: {
   name: config.cloudname + " | Verify",
-  address: "verify@cloud.daneeskripter.tk"
+  address: "verify@" + config.cloudurl.split("https://")[1]
   },
   to: req.user.email,
   subject: "Verify your account",
-  text: "Hello,\n please verify your account with this code: " + verifycode.toString() + "\n If you didn't registered on " + config.cloudurl + ", ignore this mail.\n\n\nRegards,\nVerification bot from " + config.cloudname
+  text: "Hello,\n please verify your account with this code: " + verifycode.toString() + "\n If you didn't registered on " + config.cloudurl + ", ignore this mail.\nThe code will expire in next 10 minutes.\n\n\nRegards,\nVerification bot from " + config.cloudname
   }, function (error, info) {
   if (error) {
   logger.logError(error)
   } else {
     logger.logInfo("Verification email has been sent to " + req.user.email)
+    setTimeout(async () => {
+      const removeverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: null})
+    }, 600000);
   }
   })
   res.redirect("/verifycode")
