@@ -111,7 +111,8 @@ app.post("/register", checkNotAuth, async function (req, res) {
       files: [],
       isAdmin: false,
       isVerified: false,
-      verifyCode: null
+      verifyCode: null,
+      sharedFiles: []
     })
     user.save()
     fs.mkdirSync(__dirname + "/uploads/" + sanitize(req.body.name))
@@ -155,6 +156,51 @@ async function checkNotVerify(req, res, next) {
     next()
   }
 }
+
+
+// SHARED FILES
+
+app.get("/sf/:username/:file", async function (req, res) {
+  const user = await users.findOne({username: req.params.username})
+  if (!user) {
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No account with this username!`})
+  } else if (!user.sharedFiles.includes(req.params.file)) {
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No shared file found!`})
+  } else {
+    fs.readFile( __dirname + config.uploadsfolder + `${req.params.username}/` + req.params.file, (err, data) => {
+      if (err) {
+        logger.logError(err)
+      } else {
+        res.contentType('application/octet-stream');
+        res.send(data)
+      }
+    })
+  }
+})
+
+app.get("/addsf/:file",  checkAuth, checkVerify, async function (req, res) {
+  const file = req.params.file
+  const user = await users.findOne({username: req.user.username})
+  if (user.sharedFiles.includes(file)) {
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;This file is already shared!`})
+  } else {
+    user.sharedFiles.push(file)
+    user.save()
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as shared! <a href=${config.cloudurl}/sf/${req.user.username}/${file}>Link</a>`})
+  }
+})
+
+app.get("/rmsf/:file", checkAuth, checkVerify, async function (req, res) {
+  const file = req.params.file
+  const user = await users.findOne({username: req.user.username})
+  if (!user.sharedFiles.includes(file)) {
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} isnt shared!`})
+  } else {
+    user.sharedFiles.pull(file)
+    user.save()
+    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as not shared!`})
+  }
+})
 
 // EMAIL VERIFY
 const { transporter} = require("./smtpconfig")
@@ -236,7 +282,8 @@ function checkNotAuth(req, res, next) {
 app.get("/myfiles", checkAuth, checkVerify, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   const files = user.files
-  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer})
+  const sharedFiles = user.sharedFiles
+  res.render(__dirname + "/views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles})
 })
 
 // DELETE FILE
@@ -250,6 +297,9 @@ app.get("/delete/:file", checkAuth, checkVerify, function (req, res) {
       fs.unlinkSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file)
       const user = await users.findOne({ username: req.user.username})
       user.files.pull(file)
+      if (user.sharedFiles.includes(file)) {
+        user.sharedFiles.pull(file)
+      }
       user.save()
       res.redirect("/myfiles")
     }
@@ -274,6 +324,10 @@ app.post("/rename/:file", checkAuth, checkVerify, async function (req, res) {
   const user = await users.findOne({ username: req.user.username})
   user.files.pull(oldname)
   user.files.push(newname)
+  if (user.sharedFiles.includes(oldname)) {
+    user.sharedFiles.pull(oldname)
+    user.sharedFiles.push(newname)
+  }
   user.save()
   res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`,  cloudname: config.cloudname})
 })

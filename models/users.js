@@ -8,7 +8,8 @@ const users = new mongoose.Schema({
     files: { type: Array},
     isAdmin: { type: Boolean},
     isVerified: { type: Boolean},
-    verifyCode: { type: String}
+    verifyCode: { type: String},
+    sharedFiles: {type: Array}
 })
 
 const model = mongoose.model('users', users)

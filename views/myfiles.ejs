@@ -135,7 +135,9 @@ img {
         <tr>
         <% let link = "/delete/" + file %>
         <% let link2 = "/rename/" + file %>
-        <% let link3 = "/download/" + file %> 
+        <% let link3 = "/download/" + file %>
+        <% let link4 = "/addsf/" + file %> 
+        <% let link5 = "/rmsf/" + file %> 
         <% let size = fs.statSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
         <% if (isImg(__dirname + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
@@ -148,7 +150,11 @@ img {
           <% } else { %> 
           <td><%= size.toFixed(2) %> MB </td>
           <% } %> 
-          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
+          <% if (sharedFiles.includes(file)) { %> 
+          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link5 %>><span class="material-icons">stop_screen_share</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
+        <% } else { %>
+          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">screen_share</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td> 
+        <% } %> 
         </tr>
         <% }) %> 
     </tbody>
