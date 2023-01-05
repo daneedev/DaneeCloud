@@ -167,7 +167,7 @@ app.get("/sf/:username/:file", async function (req, res) {
   } else if (!user.sharedFiles.includes(req.params.file)) {
     res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No shared file found!`})
   } else {
-    fs.readFile( __dirname + config.uploadsfolder + `${req.params.username}/` + req.params.file, (err, data) => {
+    fs.readFile( __dirname + config.uploadsfolder + `${req.params.username}/` + sanitize(req.params.file), (err, data) => {
       if (err) {
         logger.logError(err)
       } else {
