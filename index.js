@@ -6,10 +6,6 @@ const app = express();
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
 var RateLimit = require('express-rate-limit');
-var limiter = RateLimit({
-  windowMs: 1*60*1000, // 1 minute
-  max: 60
-});
 var sanitize = require("sanitize-filename");
 const config = require("./config.json")
 const mongoose = require("mongoose")
@@ -50,7 +46,21 @@ mongoose.connect(process.env.mongo_srv, {
   logger.logError('Failed connect to the database!')
 })
 
-app.get("/files/:username/:file", checkAuth, checkVerify, limiter, function (req, res) {
+// RATE LIMITING
+const limiter = RateLimit({
+  windowMs: 15*60*1000, // 15 minute
+  max: 100
+});
+app.use(limiter);
+
+// AUTH LIMITING
+const AuthLimiter = RateLimit({
+  windowsMs: 15*60*1000, // 15 minutes
+  message: 'Too many accounts created from this IP, please try again after an 15 minutes',
+  max: 50
+})
+
+app.get("/files/:username/:file", AuthLimiter, checkAuth, checkVerify, limiter, function (req, res) {
   if (req.params.username == req.user.username) {
     const file = sanitize(req.params.file)
     if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
@@ -68,14 +78,9 @@ app.get("/files/:username/:file", checkAuth, checkVerify, limiter, function (req
 })
 
 
-app.use("/files/", checkAuth, checkVerify, limiter, express.static(__dirname + "/uploads/"))
+app.use("/files/", AuthLimiter, checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
-app.use(limiter);
-
-
-
-
 
 app.get("/", checkAuth , checkVerify, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
