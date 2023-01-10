@@ -121,9 +121,11 @@ app.post("/register", checkNotAuth, async function (req, res) {
     })
     user.save()
     fs.mkdirSync(__dirname + "/uploads/" + sanitize(req.body.name))
+    logger.logInfo(`User ${req.body.name} has been registered!`)
     res.redirect("/login")
   }
-  } catch {
+  } catch (err) {
+    logger.logError(`There is an error with registration: ${err}`)
     res.redirect("/register")
   }
 })
@@ -178,6 +180,7 @@ app.get("/sf/:username/:file", async function (req, res) {
       } else {
         res.contentType('application/octet-stream');
         res.send(data)
+        logger.logInfo(`Someone downloaded ${req.params.file} from ${req.params.username}`)
       }
     })
   }
@@ -192,6 +195,7 @@ app.get("/addsf/:file",  checkAuth, checkVerify, async function (req, res) {
     user.sharedFiles.push(file)
     user.save()
     res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as shared! <a href=${config.cloudurl}/sf/${req.user.username}/${file}>Link</a>`})
+    logger.logInfo(`${req.user.username} shared ${file}!`)
   }
 })
 
@@ -204,6 +208,7 @@ app.get("/rmsf/:file", checkAuth, checkVerify, async function (req, res) {
     user.sharedFiles.pull(file)
     user.save()
     res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as not shared!`})
+    logger.logInfo(`${req.user.username} set ${file} as not shared!`)
   }
 })
 
@@ -307,6 +312,7 @@ app.get("/delete/:file", checkAuth, checkVerify, function (req, res) {
       }
       user.save()
       res.redirect("/myfiles")
+      logger.logInfo(`${req.user.username} deleted ${file}!`)
     }
   })
 })
@@ -335,6 +341,7 @@ app.post("/rename/:file", checkAuth, checkVerify, async function (req, res) {
   }
   user.save()
   res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`,  cloudname: config.cloudname})
+  logger.logInfo(`${req.user.username} renamed ${oldname} to ${newname}!`)
 })
 
 // ADMIN PANEL
@@ -365,6 +372,7 @@ app.get("/deleteaccount/:account", checkAuth, checkVerify, async function (req, 
     }
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    logger.logInfo(`${req.user.username} deleted account ${account}!`)
   }
 })
 
@@ -389,7 +397,8 @@ app.post("/editaccount/:account", checkAuth, checkVerify, async function (req, r
     const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname, email: newaccountemail})
     fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} with ${findusertorename.email} email has been renamed to ${newaccountname} with ${newaccountemail} email`,  cloudname: config.cloudname})
-    }
+    logger.logInfo(`${account} with ${findusertorename.email} email has been renamed to ${newaccountname} with ${newaccountemail} email by ${req.user.username}`)
+  }
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
@@ -404,6 +413,7 @@ app.get("/addadmin/:account", checkAuth, checkVerify, async function (req, res) 
   if (loggeduser.isAdmin) {
     const user = await users.findOneAndUpdate({ username: account}, {isAdmin: true})
     res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} is now admin.`,  cloudname: config.cloudname})
+    logger.logInfo(`${req.user.username} set ${account} as admin!`)
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
@@ -417,6 +427,7 @@ app.get("/removeadmin/:account", checkAuth, checkVerify, async function (req, re
   if (loggeduser.isAdmin) {
     const user = await users.findOneAndUpdate({ username: account}, {isAdmin: false})
     res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} isn't admin now.`,  cloudname: config.cloudname})
+    logger.logInfo(`${req.user.username} remove admin from ${account}`)
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
@@ -441,6 +452,7 @@ app.post('/upload', upload.single('file'), checkAuth, checkVerify, function (req
           const user = await users.findOne({username: req.user.username})
           user.files.push(name)
           user.save()
+          logger.logInfo(`${req.user.username} uploaded ${name}!`)
         }
       });
     }
@@ -464,6 +476,7 @@ app.get('/download/:downloadfile',  checkAuth, checkVerify, (req, res) => {
     } else {
       res.contentType('application/octet-stream');
       res.send(data)
+      logger.logInfo(`${req.user.username} downloaded ${downloadfile}!`)
     }
   })
 });
