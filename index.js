@@ -16,6 +16,7 @@ const session = require("express-session")
 const methodOverride = require("method-override")
 const isimg = require("is-image")
 const logger = require("./logger")
+const updater = require("./updater")
 
 app.use(methodOverride("_method"))
 
@@ -486,6 +487,10 @@ app.get('/download/:downloadfile',  checkAuth, checkVerify, (req, res) => {
 app.get("/*", async function (req, res) {
   res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - Page not found!`,  cloudname: config.cloudname})
 })
+
+// CHECK FOR UPDATES
+
+updater.checkForUpdates()
 
 app.listen(config.port, () => {
   logger.logSuccess(`Server listening on port ${config.port}`);

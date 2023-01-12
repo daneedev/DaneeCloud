@@ -1,6 +1,6 @@
 {
   "name": "daneecloud",
-  "version": "1.0.0",
+  "version": "dev",
   "description": "Online filesystem",
   "main": "index.js",
   "scripts": {
@@ -26,6 +26,7 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "remove-accents": "^0.4.4",
+    "request": "^2.88.2",
     "sanitize-filename": "^1.6.3",
     "uuid": "^9.0.0"
   }
