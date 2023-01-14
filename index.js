@@ -57,7 +57,7 @@ app.use(limiter);
 // AUTH LIMITING
 const AuthLimiter = RateLimit({
   windowsMs: 15*60*1000, // 15 minutes
-  message: 'Too many accounts created from this IP, please try again after an 15 minutes',
+  message: 'Too many authantifications, please try again after an 15 minutes',
   max: 300
 })
 
@@ -179,7 +179,11 @@ app.get("/sf/:username/:file", async function (req, res) {
       if (err) {
         logger.logError(err)
       } else {
-        res.contentType('application/octet-stream');
+        if (isimg(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file))) {
+          res.setHeader("Content-Type", "image/png");
+        } else {
+          res.contentType('application/octet-stream');
+        }
         res.send(data)
         logger.logInfo(`Someone downloaded ${req.params.file} from ${req.params.username}`)
       }
