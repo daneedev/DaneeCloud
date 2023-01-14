@@ -10,7 +10,8 @@
       rel="stylesheet">
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+
     <title><%= cloudname %></title>
 </head>
 <body>
@@ -260,7 +261,44 @@ input[type="text"] {
     border:0cm
 }
 
+progress {
+	display:block;
+	width:300px;
+	height:50px;
+	margin-top: 10px;
+	background:none;
+	border: 0;
+	border-radius:50px;
+	text-align: left;
+	position:relative;
+    font-family:"Montserrat", sans-serif;
+    font-size:15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+progress::-webkit-progress-bar {
+	height:40px;
+	width:250px;
+	margin: auto;
+	background-color:whitesmoke;
+	border-radius:100px;
+}
+progress::-webkit-progress-value {
+	display:inline-block;
+	background: #5D3FD3;
+	border-radius:100px;
+}
 
+h3 {
+          color: #5D3FD3;;
+          display: flex;
+          margin-top: 20px;
+          justify-content: center;
+          align-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: large;
+      
+      }
 
 ::-webkit-input-placeholder {
     text-align: center;
@@ -273,7 +311,48 @@ input[type="text"] {
     text-align: center; 
  }
 
+
     </style>
+<script>
+function _(el) {
+  return document.getElementById(el);
+}
+
+function progressBar() {
+  var file = _("file").files[0];
+  // alert(file.name+" | "+file.size+" | "+file.type);
+  var formdata = new FormData();
+  formdata.append("file", file);
+  var ajax = new XMLHttpRequest();
+  ajax.upload.addEventListener("progress", progressHandler, false);
+  ajax.addEventListener("load", completeHandler, false);
+  ajax.addEventListener("error", errorHandler, false);
+  ajax.addEventListener("abort", abortHandler, false);
+  ajax.open("POST", "/upload/", true); 
+  ajax.send(formdata);
+}
+
+function progressHandler(event) {
+  var percent = (event.loaded / event.total) * 100;
+  _("progressBar").value = Math.round(percent);
+  _("status").innerHTML = Math.round(percent) + "%";
+}
+
+function completeHandler(event) {
+  _("status").innerHTML = event.target.responseText;
+  _("progressBar").value = 0; //wil clear progress bar after successful upload
+}
+
+function errorHandler(event) {
+  _("status").innerHTML = "Upload Failed";
+}
+
+function abortHandler(event) {
+  _("status").innerHTML = "Upload Aborted";
+}
+</script>
+
+
         <form action="/logout?_method=DELETE" method="POST">
             <button type="submit" class="logout">Log Out</button>
         </form>
@@ -286,11 +365,12 @@ input[type="text"] {
         </form> 
         <% } %>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Welcome, <%= username %>!</h2>
-    <form action="/upload/" method="post", enctype="multipart/form-data">
-        <label for="file"><span class="material-icons">upload_file</span>&nbsp;Choose file to upload</label>
-        <input type="file" name="file" id="file" required hidden></input>
-        <button type="submit" class="upload" id="submit"><span class="material-icons">cloud_upload</span>&nbsp;Upload</button>
+    <h2 class="subtitle">Welcome, <%= username %>!</h2> 
+    <form id="form" action="/upload/" method="post", enctype="multipart/form-data" target="_blank">
+        <label for="file" ><span class="material-icons">upload_file</span>&nbsp;Upload your file</label>
+        <input type="file" name="file" id="file" onchange="progressBar()" required hidden></input>
+        <progress id="progressBar" class="progressBar" value="0" max="100"></progress>
+        <h3 id="status"></h3>
     </form>
     <footer>
         <div class="footer">DaneeSkripter © 2022 - All rights reserved</div>

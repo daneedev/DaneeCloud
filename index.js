@@ -50,7 +50,7 @@ mongoose.connect(process.env.mongo_srv, {
 // RATE LIMITING
 const limiter = RateLimit({
   windowMs: 15*60*1000, // 15 minute
-  max: 100
+  max: 500
 });
 app.use(limiter);
 
@@ -58,7 +58,7 @@ app.use(limiter);
 const AuthLimiter = RateLimit({
   windowsMs: 15*60*1000, // 15 minutes
   message: 'Too many accounts created from this IP, please try again after an 15 minutes',
-  max: 50
+  max: 300
 })
 
 app.get("/files/:username/:file", AuthLimiter, checkAuth, checkVerify, limiter, function (req, res) {
@@ -443,13 +443,13 @@ app.post('/upload', upload.single('file'), checkAuth, checkVerify, function (req
     res.send("Please upload files without accents.")
   } else {
     if (fs.readdirSync(__dirname + config.uploadsfolder + `${req.user.username}/`).includes(name)) {
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`,  cloudname: config.cloudname})
+      res.render(__dirname + "/views/message2.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`,  cloudname: config.cloudname})
     } else {
       fs.writeFile(__dirname + config.uploadsfolder + `${req.user.username}/` +  name, req.file.buffer, async  err => {
         if (err) {
           res.send(err);
         } else {
-          res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`,  cloudname: config.cloudname})
+          res.render(__dirname + "/views/message2.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${name} uploaded succesfully!`,  cloudname: config.cloudname})
           const user = await users.findOne({username: req.user.username})
           user.files.push(name)
           user.save()
