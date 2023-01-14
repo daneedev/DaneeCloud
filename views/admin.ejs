@@ -29,7 +29,7 @@
 }
         h2 {
             color: #5D3FD3;
-    margin-top: -5px;
+    margin-top: 5px;
     text-align: center;
     font-family: "Montserrat", sans-serif;
     font-size: x-large;
@@ -97,7 +97,6 @@ a {
   color: #5D3FD3;
     text-align: center;
     font-family: "Montserrat", sans-serif;
-    font-size: 20px;
     display: inline-block;
 }
 
@@ -106,6 +105,7 @@ table {
   border-collapse: collapse;
   margin-left: auto;
     margin-right: auto;
+    margin-top: 20px;
 }
 
 td, th {
@@ -163,6 +163,39 @@ td, th {
             
       </tr>
       </tbody>
+      </table>
+      <h2>Stats</h2>
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Value</th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Ram Usage</td>
+            <td><%= Math.round(process.memoryUsage().heapUsed / 1024 / 1024) %> MB </td>
+          </tr>
+          <tr>
+            <td>CPU Usage</td> 
+            <td><%= cpuUsage.toString() %> % </td> 
+          </tr>
+          <tr>
+            <td>Uptime</td>
+            <td><%= ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true}) %></td> 
+          </tr>
+          <tr>
+            <td>Version</td>
+            <% if (packages.version == stableVersion) { %> 
+            <td><%= packages.version %> </td>
+            <% } else { %>
+              <td><%= packages.version %> | <a href="https://github.com/DaneeSkripter/DaneeCloud/releases">Update</a></td> 
+          <% } %> 
+          </tr>
+          <tr>
+            <td>Stable Version</td>
+            <td><%= stableVersion %> </td>
+          </tr>
+        </tbody>
       </table>
       <form action="/">
         <input type="submit" href="/" value="Back to home page"></input>

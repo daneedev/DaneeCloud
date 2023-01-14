@@ -16,7 +16,8 @@ const methodOverride = require("method-override")
 const isimg = require("is-image")
 const logger = require("./logger")
 const updater = require("./updater")
-
+const osu = require("node-os-utils")
+const ms = require("ms")
 app.use(methodOverride("_method"))
 
 if (process.env.NODE_ENV !== "production") {
@@ -347,10 +348,16 @@ app.post("/rename/:file", checkAuth, checkVerify, async function (req, res) {
 // ADMIN PANEL
 
 app.get("/admin/", checkAuth, checkVerify, async function (req, res) {
+  const request = require("request")
   const user = await users.findOne({ username: req.user.username})
   const allusers = await users.find()
   if (user.isAdmin) {
-    res.render(__dirname + "/views/admin.ejs", {users: allusers,  cloudname: config.cloudname})
+    const cpu = osu.cpu
+    cpu.usage().then((cpuUsage) => {
+      request.get("https://version.daneeskripter.tk/daneecloud/version.txt", function (error, response, body) {
+      res.render(__dirname + "/views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("./package.json"), stableVersion: body, ms: ms})
+      })
+    })
   } else {
     res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
