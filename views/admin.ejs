@@ -118,8 +118,38 @@ td, th {
 }
 
     </style>
-    <h1><%= cloudname %></h1>  
+    <h1><%= cloudname %></h1>
     <h2 class="subtitle">Admin Panel</h2>
+    <h2>Stats</h2>
+    <table>
+      <thead>
+        <th>Name</th>
+        <th>Value</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Ram Usage</td>
+          <td><%= Math.round(process.memoryUsage().heapUsed / 1024 / 1024) %> MB </td>
+        </tr>
+        <tr>
+          <td>CPU Usage</td> 
+          <td><%= cpuUsage.toString() %> % </td> 
+        </tr>
+        <tr>
+          <td>Uptime</td>
+          <td><%= ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true}) %></td> 
+        </tr>
+        <tr>
+          <td>Version</td>
+          <% if (packages.version == stableVersion) { %> 
+          <td><%= packages.version %> </td>
+          <% } else { %>
+            <td><%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/" + stableVersion %>><%= stableVersion %> available!</a></td> 
+        <% } %> 
+        </tr>
+      </tbody>
+    </table>
+    <h2>User management</h2>
     <table>
         <thead>
         <tr>
@@ -163,39 +193,6 @@ td, th {
             
       </tr>
       </tbody>
-      </table>
-      <h2>Stats</h2>
-      <table>
-        <thead>
-          <th>Name</th>
-          <th>Value</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Ram Usage</td>
-            <td><%= Math.round(process.memoryUsage().heapUsed / 1024 / 1024) %> MB </td>
-          </tr>
-          <tr>
-            <td>CPU Usage</td> 
-            <td><%= cpuUsage.toString() %> % </td> 
-          </tr>
-          <tr>
-            <td>Uptime</td>
-            <td><%= ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true}) %></td> 
-          </tr>
-          <tr>
-            <td>Version</td>
-            <% if (packages.version == stableVersion) { %> 
-            <td><%= packages.version %> </td>
-            <% } else { %>
-              <td><%= packages.version %> | <a href="https://github.com/DaneeSkripter/DaneeCloud/releases">Update</a></td> 
-          <% } %> 
-          </tr>
-          <tr>
-            <td>Stable Version</td>
-            <td><%= stableVersion %> </td>
-          </tr>
-        </tbody>
       </table>
       <form action="/">
         <input type="submit" href="/" value="Back to home page"></input>
