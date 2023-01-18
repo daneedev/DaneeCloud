@@ -335,7 +335,7 @@ app.get("/rename/:file", checkAuth, checkVerify, function (req, res) {
 
 app.post("/rename/:file", checkAuth, checkVerify, async function (req, res) {
   const oldname = sanitize(req.params.file)
-  const newname = sanitize(req.body.newname)
+  const newname = sanitize(req.body.newname.replace(/ /g, "_")) + "." + oldname.split(".").pop()
   fs.renameSync(__dirname + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + config.uploadsfolder + `${req.user.username}/` + newname)
   const user = await users.findOne({ username: req.user.username})
   user.files.pull(oldname)
