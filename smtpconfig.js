@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer")
 
 const transporter = nodemailer.createTransport({
-    host: "in-v3.mailjet.com",
+    host: process.env.smtp_host,
     port: 587,
     auth: {
       user: process.env.smtp_username,
