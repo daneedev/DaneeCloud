@@ -14,19 +14,20 @@ const flash = require("express-flash")
 const session = require("express-session")
 const methodOverride = require("method-override")
 const isimg = require("is-image")
-const logger = require("./logger")
-const updater = require("./updater")
+const logger = require("./handlers/logger")
+const updater = require("./handlers/updater")
 const osu = require("node-os-utils")
 const ms = require("ms")
 const isvid = require("is-video")
 app.use(methodOverride("_method"))
+const {checkAuth, checkNotAuth, checkVerify, checkNotVerify} = require("./handlers/authVerify")
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
 }
 
 // PASSPORT & SESSION
-const initializePassport = require("./passportconfig")
+const initializePassport = require("./handlers/passportconfig")
 initializePassport(passport)
 app.use(flash())
 app.use(session({
@@ -62,228 +63,39 @@ const AuthLimiter = RateLimit({
   max: 300
 })
 
-app.get("/files/:username/:file", AuthLimiter, checkAuth, checkVerify, limiter, function (req, res) {
-  if (req.params.username == req.user.username) {
-    const file = sanitize(req.params.file)
-    if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
-      const requestedfile = fs.readFileSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + file)
-      if (isimg(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + file)) {
-        res.setHeader("Content-Type", "image/png");
-      }
-      res.send(requestedfile)
-    } else {
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
-    }
-  } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
-  }
-})
+app.use("/files/", require("./routes/files"))
 
 
 app.use("/files/", AuthLimiter, checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
 app.use(express.urlencoded({ extended: false}))
 
-app.get("/", checkAuth , checkVerify, async function (req, res) {
-  const user = await users.findOne({username: req.user.username})
-  let isAdmin;
-  if (user.isAdmin == true) {
-    isAdmin = true
-  } else {
-    isAdmin = false
-  }
-  res.render(__dirname + "/views/index.ejs", {isAdmin: isAdmin, username: req.user.username, cloudname: config.cloudname} )
-})
+app.use("/", require("./routes/home"))
 
 // REGISTER
-app.get("/register", checkNotAuth,  function (req, res) {
-  res.render(__dirname + "/views/register.ejs", { cloudname: config.cloudname})
-})
-
-app.post("/register", checkNotAuth, async function (req, res) {
-  try {
-    const hashedPassword = await bcrypt.hash(req.body.password, 10)
-    const usernameExist = await users.findOne({ username: req.body.name})
-    const emailExist = await users.findOne({ email: req.body.email})
-    if (usernameExist) {
-      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`,  cloudname: config.cloudname})
-    } else if (emailExist) { 
-      res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`,  cloudname: config.cloudname})
-    } else {
-    const user = new users({
-      username: req.body.name,
-      email: req.body.email,
-      password: hashedPassword,
-      id: Date.now().toString(),
-      files: [],
-      isAdmin: false,
-      isVerified: false,
-      verifyCode: null,
-      sharedFiles: []
-    })
-    user.save()
-    fs.mkdirSync(__dirname + "/uploads/" + sanitize(req.body.name))
-    logger.logInfo(`User ${req.body.name} has been registered!`)
-    res.redirect("/login")
-  }
-  } catch (err) {
-    logger.logError(`There is an error with registration: ${err}`)
-    res.redirect("/register")
-  }
-})
+app.use("/register", require("./routes/register"))
 
 // LOGIN
 
-app.get("/login", checkNotAuth, function (req, res) {
-  res.render(__dirname + "/views/login.ejs", { cloudname: config.cloudname })
-})
-
-app.post("/login", checkNotAuth, passport.authenticate("local", {
-  successRedirect: "/",
-  failureRedirect: "/login",
-  failureFlash: true
-}))
-
-// CHECK IF USER IS VERIFIED
-
-async function checkVerify(req, res, next) {
-  const user = await users.findOne({username: req.user.username})
-  if (user.isVerified == true) {
-    return next()
-  } else {
-    res.redirect("/verify")
-  }
-}
-
-// CHECK IF USER IS NOT VERIFIED
-
-async function checkNotVerify(req, res, next) {
-  const user = await users.findOne({username: req.user.username})
-  if (user.isVerified == true) {
-    res.redirect("/")
-  } else {
-    next()
-  }
-}
-
+app.use("/login", require("./routes/login"))
 
 // SHARED FILES
 
-app.get("/sf/:username/:file", async function (req, res) {
-  const user = await users.findOne({username: req.params.username})
-  if (!user) {
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No account with this username!`})
-  } else if (!user.sharedFiles.includes(req.params.file)) {
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No shared file found!`})
-  } else {
-    fs.readFile( __dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file), (err, data) => {
-      if (err) {
-        logger.logError(err)
-      } else {
-        if (isimg(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file))) {
-          res.setHeader("Content-Type", "image/png");
-          res.send(data)
-        } else if (isvid(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file))) {
-          const vidtag = req.params.file.split(".").pop()
-          res.render(__dirname + "/views/video.ejs", {file: req.params.file, vidtag: vidtag, cloudname: config.cloudname, username: req.params.username})
-        } else {
-          res.contentType('application/octet-stream');
-          res.send(data)
-        }
-        //logger.logInfo(`Someone downloaded ${req.params.file} from ${req.params.username}`)
-      }
-    })
-  }
-})
+app.use("/sf/", require("./routes/sharedFiles").sf)
 
-app.get("/addsf/:file",  checkAuth, checkVerify, async function (req, res) {
-  const file = req.params.file
-  const user = await users.findOne({username: req.user.username})
-  if (user.sharedFiles.includes(file)) {
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;This file is already shared!`})
-  } else {
-    user.sharedFiles.push(file)
-    user.save()
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as shared! <a href=${config.cloudurl}/sf/${req.user.username}/${file}>Link</a>`})
-    logger.logInfo(`${req.user.username} shared ${file}!`)
-  }
-})
+app.use("/addsf/", require("./routes/sharedFiles").addsf)
 
-app.get("/rmsf/:file", checkAuth, checkVerify, async function (req, res) {
-  const file = req.params.file
-  const user = await users.findOne({username: req.user.username})
-  if (!user.sharedFiles.includes(file)) {
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} isnt shared!`})
-  } else {
-    user.sharedFiles.pull(file)
-    user.save()
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as not shared!`})
-    logger.logInfo(`${req.user.username} set ${file} as not shared!`)
-  }
-})
+app.use("/rmsf/", require("./routes/sharedFiles").rmsf)
 
 // PLAY VIDEO
 
-app.get("/playvideo/:username/:file", checkAuth, checkVerify, function (req, res) {
-  if (req.params.username == req.user.username) {
-    const file = sanitize(req.params.file)
-    if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
-      const vidtag = file.split(".").pop()
-      res.render(__dirname + "/views/video.ejs", {file: file, vidtag: vidtag, cloudname: config.cloudname, username: req.user.username})
-    } else {
-      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
-    }
-  } else {
-    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
-  }
-})
+app.use("/playvideo/", require("./routes/vidplayer"))
 
 // EMAIL VERIFY
-const { transporter} = require("./smtpconfig")
 
-app.get("/verify", checkAuth, checkNotVerify, function (req, res) {
-    res.render(__dirname + "/views/verify.ejs", { cloudname: config.cloudname, req: req})
-})
+app.use("/verify", require("./routes/emailVerify").ver)
 
-app.post("/verify", checkAuth, checkNotVerify, async function (req, res) {
-  const verifycode = Math.floor(Math.random() * 9000) + 1000
-  const addverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: verifycode.toString()}) 
-  transporter.sendMail({
-  from: {
-  name: config.cloudname + " | Verify",
-  address: "verify@" + config.cloudurl.split("https://")[1]
-  },
-  to: req.user.email,
-  subject: "Verify your account",
-  text: "Hello,\n please verify your account with this code: " + verifycode.toString() + "\n If you didn't registered on " + config.cloudurl + ", ignore this mail.\nThe code will expire in next 10 minutes.\n\n\nRegards,\nVerification bot from " + config.cloudname
-  }, function (error, info) {
-  if (error) {
-  logger.logError(error)
-  } else {
-    logger.logInfo("Verification email has been sent to " + req.user.email)
-    setTimeout(async () => {
-      const removeverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: null})
-    }, 600000);
-  }
-  })
-  res.redirect("/verifycode")
-
-})
-
-app.get("/verifycode", checkAuth, checkNotVerify, function (req, res) {
-  res.render(__dirname + "/views/verifycode.ejs", { cloudname: config.cloudname})
-})
-
-app.post("/verifycode", checkAuth, checkNotVerify, async function (req, res) {
-  const user = await users.findOne({ username: req.user.username})
-  if (user.verifyCode == req.body.code) {
-    const verifyuser = await users.findOneAndUpdate({username: req.user.username}, { isVerified: true})
-    res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">verified</span>&nbsp;Your account has been successfully verified!`})
-    logger.logInfo("User " + req.user.username + " has been successfully verified!")
-  } else {
-    res.redirect("/verifycode")
-  }
-})
+app.use("/verifycode", require("./routes/emailVerify").verCode)
 
 // LOG OUT
 
@@ -293,25 +105,6 @@ app.delete("/logout", (req, res) => {
   })
   res.redirect("/login")
 })
-
-// CHECK IF USER IS LOGGED IN
-
-function checkAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next()
-  }
-
-  res.redirect("/login")
-}
-
-// CHECK IF USER IS NOT LOGGED IN
-
-function checkNotAuth(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.redirect("/")
-  }
-  next()
-}
 
 // MY FILES
 
