@@ -19,6 +19,7 @@
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
     "is-image": "^3.1.0",
+    "is-video": "^1.0.1",
     "method-override": "^3.0.0",
     "mongoose": "^6.8.4",
     "ms": "^2.1.3",

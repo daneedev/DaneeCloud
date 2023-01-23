@@ -18,6 +18,7 @@ const logger = require("./logger")
 const updater = require("./updater")
 const osu = require("node-os-utils")
 const ms = require("ms")
+const isvid = require("is-video")
 app.use(methodOverride("_method"))
 
 if (process.env.NODE_ENV !== "production") {
@@ -181,11 +182,15 @@ app.get("/sf/:username/:file", async function (req, res) {
       } else {
         if (isimg(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file))) {
           res.setHeader("Content-Type", "image/png");
+          res.send(data)
+        } else if (isvid(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file))) {
+          const vidtag = req.params.file.split(".").pop()
+          res.render(__dirname + "/views/video.ejs", {file: req.params.file, vidtag: vidtag, cloudname: config.cloudname, username: req.params.username})
         } else {
           res.contentType('application/octet-stream');
+          res.send(data)
         }
-        res.send(data)
-        logger.logInfo(`Someone downloaded ${req.params.file} from ${req.params.username}`)
+        //logger.logInfo(`Someone downloaded ${req.params.file} from ${req.params.username}`)
       }
     })
   }
@@ -214,6 +219,22 @@ app.get("/rmsf/:file", checkAuth, checkVerify, async function (req, res) {
     user.save()
     res.render(__dirname + "/views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as not shared!`})
     logger.logInfo(`${req.user.username} set ${file} as not shared!`)
+  }
+})
+
+// PLAY VIDEO
+
+app.get("/playvideo/:username/:file", checkAuth, checkVerify, function (req, res) {
+  if (req.params.username == req.user.username) {
+    const file = sanitize(req.params.file)
+    if (fs.readdirSync(__dirname + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
+      const vidtag = file.split(".").pop()
+      res.render(__dirname + "/views/video.ejs", {file: file, vidtag: vidtag, cloudname: config.cloudname, username: req.user.username})
+    } else {
+      res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
+    }
+  } else {
+    res.render(__dirname + "/views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
   }
 })
 
