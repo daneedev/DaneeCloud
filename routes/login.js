@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const {checkAuth, checkVerify, checkNotAuth, checkNotVerify} = require("../handlers/authVerify")
-const users = require("../models/users");
 const config = require("../config.json")
 const passport = require("passport")
 

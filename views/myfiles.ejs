@@ -140,8 +140,8 @@ img {
         <% let link4 = "/addsf/" + file %> 
         <% let link5 = "/rmsf/" + file %> 
         <% let isShared; %> 
-        <% let size = fs.statSync(__dirname + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
-        <% if (isImg(__dirname + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
+        <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
+        <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
         <% } else { %>
           <td>-</td>

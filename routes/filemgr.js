@@ -8,6 +8,7 @@ const config = require("../config.json")
 const logger = require("../handlers/logger")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
+const isimg = require("is-image")
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
@@ -37,6 +38,31 @@ router2.get("/:file", checkAuth, checkVerify, function (req, res) {
     })
   })
 
+router3.get("/:file", checkAuth, checkVerify, function (req, res) {
+  const file = req.params.file
+  if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/`).includes(file)) {
+    res.render(__dirname + "/../views/rename.ejs", { file: file,  cloudname: config.cloudname})
+  } else {
+    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
+  }
+})
+
+router3.post("/:file", checkAuth, checkVerify, async function (req, res) {
+  const oldname = sanitize(req.params.file)
+  const newname = sanitize(req.body.newname.replace(/ /g, "_")) + "." + oldname.split(".").pop()
+  fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + newname)
+  const user = await users.findOne({ username: req.user.username})
+  user.files.pull(oldname)
+  user.files.push(newname)
+  if (user.sharedFiles.includes(oldname)) {
+    user.sharedFiles.pull(oldname)
+    user.sharedFiles.push(newname)
+  }
+  user.save()
+  res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;File ${oldname} has been renamed to ${newname}`,  cloudname: config.cloudname})
+  logger.logInfo(`${req.user.username} renamed ${oldname} to ${newname}!`)
+})
 
 module.exports.myfiles = router
 module.exports.del = router2
+module.exports.ren = router3
