@@ -139,11 +139,14 @@ img {
         <% let link3 = "/download/" + file %>
         <% let link4 = "/addsf/" + file %> 
         <% let link5 = "/rmsf/" + file %> 
+        <% let link6 = "/playvideo/" + `${req.user.username}/` + file %> 
         <% let isShared; %> 
         <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
         <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
-        <% } else { %>
+        <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
+          <td><a href=<%= link6 %> ><span class="material-icons">play_circle</span></a></td>
+          <% } else { %>
           <td>-</td>
         <% } %>  
         <td><%= file %></td>

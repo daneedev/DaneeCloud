@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const {checkAuth, checkVerify, checkNotAuth} = require("../handlers/authVerify")
 const config = require("../config.json")
+const sanitize = require("sanitize-filename")
+const fs = require("fs")
 
 router.get("/:username/:file", checkAuth, checkVerify, function (req, res) {
     if (req.params.username == req.user.username) {
