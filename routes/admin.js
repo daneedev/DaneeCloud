@@ -38,7 +38,7 @@ router2.get("/:account", checkAuth, checkVerify, async function (req, res) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
       } else {
         const usertodelete = await users.findOneAndRemove({ username: account})
-        fs.rmdirSync(__dirname + config.uploadsfolder + `${account}/`)
+        fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${account}/`)
         res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`,  cloudname: config.cloudname})
       }
     } else {

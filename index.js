@@ -114,7 +114,7 @@ app.use("/admin/", require("./routes/admin").admin)
 
 // DELETE ACCOUNT
 
-app.use("/delaccount/", require("./routes/admin").del)
+app.use("/deleteaccount/", require("./routes/admin").del)
 
 // EDIT ACCOUNT
 
