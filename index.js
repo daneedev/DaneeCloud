@@ -1,22 +1,14 @@
 const express = require('express');
-const multer = require('multer');
-const fs = require('fs');
 const app = express();
-const upload = multer()
 var RateLimit = require('express-rate-limit');
-var sanitize = require("sanitize-filename");
 const config = require("./config.json")
 const mongoose = require("mongoose")
-const bcrypt = require("bcrypt")
 const passport = require("passport")
 const flash = require("express-flash")
 const session = require("express-session")
 const methodOverride = require("method-override")
-const isimg = require("is-image")
 const logger = require("./handlers/logger")
 const updater = require("./handlers/updater")
-const ms = require("ms")
-const isvid = require("is-video")
 app.use(methodOverride("_method"))
 const {checkAuth, checkNotAuth, checkVerify, checkNotVerify} = require("./handlers/authVerify")
 
