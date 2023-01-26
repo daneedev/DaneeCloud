@@ -10,6 +10,8 @@ const config = require("../config.json")
 const logger = require("../handlers/logger")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
+const osu = require("node-os-utils")
+const ms = require("ms")
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
     const request = require("request")
@@ -19,7 +21,7 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
       const cpu = osu.cpu
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.tk/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("./package.json"), stableVersion: body, ms: ms})
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms})
         })
       })
     } else {

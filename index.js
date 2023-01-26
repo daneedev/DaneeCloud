@@ -1,7 +1,6 @@
 const express = require('express');
 const multer = require('multer');
 const fs = require('fs');
-const removeaccents = require("remove-accents")
 const app = express();
 const upload = multer()
 var RateLimit = require('express-rate-limit');
@@ -16,7 +15,6 @@ const methodOverride = require("method-override")
 const isimg = require("is-image")
 const logger = require("./handlers/logger")
 const updater = require("./handlers/updater")
-const osu = require("node-os-utils")
 const ms = require("ms")
 const isvid = require("is-video")
 app.use(methodOverride("_method"))

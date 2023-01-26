@@ -6,8 +6,9 @@ const config = require("../config.json")
 const logger = require("../handlers/logger")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
+const multer = require("multer")
 const upload = multer()
-
+const removeaccents = require("remove-accents")
 
 router.post("/", upload.single('file'), checkAuth, checkVerify, function (req, res) {
     const name = sanitize(req.file.originalname.replace(/ /g, "_"))
