@@ -1,6 +1,6 @@
 {
     "cloudname": "DaneeCloud",
-    "cloudurl": "https://cloud.daneeskripter.tk",
+    "cloudurl": "https://cloud.daneeskripter.dev",
     "port": 5026,
     "uploadsfolder": "/uploads/",
     "logtofile": false
