@@ -1,4 +1,6 @@
 # DaneeCloud
+![](/img/js.svg)
+![](/img/mongodb.svg)
 ## About
 DaneeCloud is website, you can upload and download your files, manage your uploaded files. All features here:
 - Uploading & Downloading files
