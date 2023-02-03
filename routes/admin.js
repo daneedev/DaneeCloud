@@ -20,7 +20,7 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
     if (user.isAdmin) {
       const cpu = osu.cpu
       cpu.usage().then((cpuUsage) => {
-        request.get("https://version.daneeskripter.tk/daneecloud/version.txt", function (error, response, body) {
+        request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
         res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms})
         })
       })
