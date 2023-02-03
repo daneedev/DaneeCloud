@@ -17,4 +17,4 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 https://docs.daneeskripter.dev/daneecloud/install
 
 ## License
-**MIT**
+**[MIT](/LICENSE)**
