@@ -118,9 +118,52 @@ img {
   width:40px;
   height: auto;
 }
+
+progress {
+	display:block;
+	width:300px;
+	height:50px;
+	margin-top: 10px;
+	background:none;
+	border: 0;
+	border-radius:50px;
+	text-align: left;
+	position:relative;
+    font-family:"Montserrat", sans-serif;
+    font-size:15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+progress::-webkit-progress-bar {
+	height:40px;
+	width:250px;
+	margin: auto;
+	background-color:whitesmoke;
+	border-radius:100px;
+}
+progress::-webkit-progress-value {
+	display:inline-block;
+	background: #5D3FD3;
+	border-radius:100px;
+}
+
+p {
+  color: #5D3FD3;
+  text-align: center;
+  font-family: "Montserrat", sans-serif;
+  font-size: 20px;
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
     </style>
     <h1><%= cloudname %> </h1>
     <h2>My Files</h2>
+    <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
+    <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <table>
       <thead>
       <tr>

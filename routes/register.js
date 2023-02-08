@@ -7,6 +7,7 @@ const logger = require("../handlers/logger")
 const bcrypt = require("bcrypt")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
+const storagePlans = require("../models/storagePlans")
 
 router.get("/", checkNotAuth, function (req, res) {
     res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname})
@@ -22,6 +23,7 @@ router.post("/", checkNotAuth, async function (req, res) {
         } else if (emailExist) { 
           res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`,  cloudname: config.cloudname})
         } else {
+        const storagePlan = await storagePlans.findOne({ isEnabled: true})
         const user = new users({
           username: req.body.name,
           email: req.body.email,
@@ -31,7 +33,9 @@ router.post("/", checkNotAuth, async function (req, res) {
           isAdmin: false,
           isVerified: false,
           verifyCode: null,
-          sharedFiles: []
+          sharedFiles: [],
+          usedStorage: 0,
+          maxStorage: storagePlan.maxStorage
         })
         user.save()
         fs.mkdirSync(__dirname + "/../uploads/" + sanitize(req.body.name))

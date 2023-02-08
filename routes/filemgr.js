@@ -10,12 +10,14 @@ const fs = require("fs")
 const sanitize = require("sanitize-filename")
 const isimg = require("is-image")
 const isvid = require("is-video")
+const storagePlans = require("../models/storagePlans")
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
+    const storagePlan = await storagePlans.findOne({isEnabled: true})
     const files = user.files
     const sharedFiles = user.sharedFiles
-    res.render(__dirname + "/../views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid})
+    res.render(__dirname + "/../views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: storagePlan.maxStorage, usedStorage: user.usedStorage})
   })
 
 
@@ -26,8 +28,10 @@ router2.get("/:file", checkAuth, checkVerify, function (req, res) {
       if (err) {
         res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
       } else {
-        fs.unlinkSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)
         const user = await users.findOne({ username: req.user.username})
+        const filesize = Math.floor(fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024))
+        const updateStorage = await users.findOneAndUpdate({ username: req.user.username}, {usedStorage: user.usedStorage - filesize})
+        fs.unlinkSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)
         user.files.pull(file)
         if (user.sharedFiles.includes(file)) {
           user.sharedFiles.pull(file)

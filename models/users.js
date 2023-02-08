@@ -9,7 +9,9 @@ const users = new mongoose.Schema({
     isAdmin: { type: Boolean},
     isVerified: { type: Boolean},
     verifyCode: { type: String},
-    sharedFiles: {type: Array}
+    sharedFiles: {type: Array},
+    usedStorage: { type: Number},
+    maxStorage: { type: Number}
 })
 
 const model = mongoose.model('users', users)
