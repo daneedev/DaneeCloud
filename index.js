@@ -142,6 +142,10 @@ app.use("/dwnl/", require("./routes/download").dwnl)
 
 app.use("/download/", require("./routes/download").download)
 
+// ROLES
+
+app.use("/updaterole/", require("./routes/roles").updaterole)
+
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
@@ -159,6 +163,7 @@ if (!findUserRole) {
     maxStorage: 128
   })
   userRole.save()
+  logger.logWarn("There wasn't role in database for user, so I created one.")
 }  
 if (!findAdminRole) {
   const adminRole = new roles({
@@ -166,6 +171,7 @@ if (!findAdminRole) {
     maxStorage: 256
   })
   adminRole.save()
+  logger.logWarn("There wasn't role in database for admin, so I created one.")
 }
 }
 

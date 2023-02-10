@@ -19,12 +19,11 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
     const user = await users.findOne({ username: req.user.username})
     const allusers = await users.find()
     if (user.role == "admin") {
-      const storagePlans = await storagePlansModel.find()
       const roles = await rolesModel.find()
       const cpu = osu.cpu
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, plans: storagePlans, roles: roles})
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles})
         })
       })
     } else {

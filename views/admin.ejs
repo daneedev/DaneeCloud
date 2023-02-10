@@ -132,20 +132,9 @@ td, th {
   font-family: "Montserrat", sans-serif;
 }
 
-.storageplantext {
-    color: #5D3FD3;
-    margin-top: 10px;
-    text-align: right;
-    margin-left: auto;
-    margin-right: 225px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-
-}
-
 .storageplans {
   text-align: right;
-  margin-right: 335px;
+  margin-right: 380px;
   margin-top: 100px;
 }
 
@@ -169,7 +158,7 @@ select {
     width: 250px;
     background-color: #5D3FD3;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 25px;
     display: flex;
     justify-content: center;
     margin-left: auto;
@@ -187,7 +176,7 @@ select {
     width: 250px;
     background-color: white;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 25px;
     display: flex;
     justify-content: center;
     margin-left: auto;
@@ -197,6 +186,33 @@ select {
     border-radius: 24px;
     transition-duration: 0.4s;
     border:0cm
+}
+
+input[id="maxStorage"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 300px;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.mb {
+  color: #5D3FD3;
+    margin-top: -40px;
+    text-align: right;
+    margin-left: auto;
+    margin-right: 245px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
 }
     </style>
     <h1><%= cloudname %></h1>
@@ -269,20 +285,15 @@ select {
       </tr>
       </tbody>
       </table>
-      <h2 class="storageplans">Storage Plans</h2>
-      <p class="storageplantext">Choose to storage plan for each role.</label>
-      <form action="/setstorageplan">
-        <select name="storageplan">
-          <% for (let plan of plans) { %>        
-          <option value=<%= plan.name %>><%= plan.name %> | <%= plan.maxStorage %> MB</option>
+      <h2 class="storageplans">Roles</h2>
+      <form action="/updaterole/" method="get">
+        <select name="role">
+          <% for (let role of roles) { %>        
+          <option value=<%= role.name %>><%= role.name %> | <%= role.maxStorage %> MB</option>
           <% } %>
         </select>
-        <select name="roles">
-          <% for (let role of roles) { %>
-            <option value=<%= role.name %>><%= role.name %></option>
-          <% } %>
-        </select>
-        <input type="submit" class="setasdefault" value="Set"></input>
+        <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input><h2 class="mb">MB</h2>
+        <input type="submit" class="setasdefault" value="Update role"></input>
       </form> 
       <form action="/">
         <input type="submit" class="back" href="/" value="Back to home page"></input>
