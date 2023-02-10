@@ -9,7 +9,7 @@ const sanitize = require("sanitize-filename")
 const multer = require("multer")
 const upload = multer()
 const removeaccents = require("remove-accents")
-const storagePlans = require("../models/storagePlans")
+const roles = require("../models/roles")
 
 router.post("/", upload.single('file'), checkAuth, checkVerify, async function (req, res) {
     const name = sanitize(req.file.originalname.replace(/ /g, "_"))
@@ -19,9 +19,9 @@ router.post("/", upload.single('file'), checkAuth, checkVerify, async function (
       if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/`).includes(name)) {
         res.render(__dirname + "/../views/message2.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`,  cloudname: config.cloudname})
       } else {
-        const storagePlan = await storagePlans.findOne({isEnabled: true})
+        const role = await roles.findOne({role: user.role})
         const user = await users.findOne({username: req.user.username})
-        if (req.file.size / (1024 * 1024).toFixed(2) + user.usedStorage > storagePlan.maxStorage) {
+        if (req.file.size / (1024 * 1024).toFixed(2) + user.usedStorage > role.maxStorage) {
           res.render(__dirname + "/../views/message2.ejs", {message: `<span class="material-icons">storage</span>&nbsp;You have reached your storage limit! Try delete some files.`,  cloudname: config.cloudname})
         } else {
         fs.writeFile(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` +  name, req.file.buffer, async  err => {

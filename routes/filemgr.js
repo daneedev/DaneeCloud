@@ -10,14 +10,14 @@ const fs = require("fs")
 const sanitize = require("sanitize-filename")
 const isimg = require("is-image")
 const isvid = require("is-video")
-const storagePlans = require("../models/storagePlans")
+const roles = require("../models/roles")
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
-    const storagePlan = await storagePlans.findOne({isEnabled: true})
+    const role = await roles.findOne({name: user.role})
     const files = user.files
     const sharedFiles = user.sharedFiles
-    res.render(__dirname + "/../views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: storagePlan.maxStorage, usedStorage: user.usedStorage})
+    res.render(__dirname + "/../views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: role.maxStorage, usedStorage: user.usedStorage})
   })
 
 

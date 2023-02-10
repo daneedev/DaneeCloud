@@ -11,6 +11,7 @@ const logger = require("./handlers/logger")
 const updater = require("./handlers/updater")
 app.use(methodOverride("_method"))
 const {checkAuth, checkNotAuth, checkVerify, checkNotVerify} = require("./handlers/authVerify")
+const roles = require("./models/roles")
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
@@ -147,6 +148,28 @@ app.get("/*", async function (req, res) {
   res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - Page not found!`,  cloudname: config.cloudname})
 })
 
+// CHECK IF DEFAULT ROLES ARE IN DB
+async function roleCheck() {
+const findUserRole = await roles.findOne({name: "user"})
+const findAdminRole = await roles.findOne({name: "admin"})
+
+if (!findUserRole) {
+  const userRole = new roles({
+    name: "user",
+    maxStorage: 128
+  })
+  userRole.save()
+}  
+if (!findAdminRole) {
+  const adminRole = new roles({
+    name: "admin",
+    maxStorage: 256
+  })
+  adminRole.save()
+}
+}
+
+roleCheck()
 // CHECK FOR UPDATES
 
 updater.checkForUpdates()

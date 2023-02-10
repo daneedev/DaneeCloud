@@ -6,12 +6,11 @@ const users = new mongoose.Schema({
     password: { type: String, require: true},
     id: { type: String, require: true},
     files: { type: Array},
-    isAdmin: { type: Boolean},
     isVerified: { type: Boolean},
     verifyCode: { type: String},
     sharedFiles: {type: Array},
     usedStorage: { type: Number},
-    maxStorage: { type: Number}
+    role: { type: String}
 })
 
 const model = mongoose.model('users', users)

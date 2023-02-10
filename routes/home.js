@@ -7,7 +7,7 @@ const config = require("../config.json")
 router.get("/", checkAuth , checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
     let isAdmin;
-    if (user.isAdmin == true) {
+    if (user.role == "admin") {
       isAdmin = true
     } else {
       isAdmin = false
