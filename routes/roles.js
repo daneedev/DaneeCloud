@@ -41,6 +41,17 @@ router3.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) 
     res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Role ${req.body.role} has been deleted!`,  cloudname: config.cloudname})
 })
 
+router4.get("/:username", checkAuth, checkVerify, checkAdmin, async function (req, res) {
+    const findRoles = await roles.find()
+    const user = req.params.username
+    res.render(__dirname + "/../views/editrole.ejs", {cloudname: config.cloudname, roles: findRoles, user: user})
+})
+
+router4.post("/:username", checkAuth, checkVerify, checkAdmin, async function (req, res) {
+    const changeUserRole = await users.findOneAndUpdate({username: req.params.username}, {role: req.body.role})
+    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${req.params.username}'s role has been changed to ${req.body.role}!`,  cloudname: config.cloudname})
+})
 module.exports.updaterole = router
 module.exports.addrole = router2
 module.exports.delrole = router3
+module.exports.editrole = router4
