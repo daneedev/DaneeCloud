@@ -2,8 +2,6 @@ const express = require('express')
 const router = express.Router()
 const router2 = express.Router()
 const router3 = express.Router()
-const router4 = express.Router()
-const router5 = express.Router()
 const {checkAuth, checkVerify} = require("../handlers/authVerify")
 const users = require("../models/users");
 const config = require("../config.json")
@@ -75,32 +73,6 @@ router3.post("/:account", checkAuth, checkVerify, async function (req, res) {
     }
   })
 
-router4.get("/:account", checkAuth, checkVerify, async function (req, res) {
-    const account = req.params.account
-    const loggeduser = await users.findOne({username: req.user.username})
-    if (loggeduser.isAdmin) {
-      const user = await users.findOneAndUpdate({ username: account}, {isAdmin: true})
-      res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} is now admin.`,  cloudname: config.cloudname})
-      logger.logInfo(`${req.user.username} set ${account} as admin!`)
-    } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
-    }
-  })
-
-router5.get("/:account", checkAuth, checkVerify, async function (req, res) {
-    const account = req.params.account
-    const loggeduser = await users.findOne({username: req.user.username})
-    if (loggeduser.isAdmin) {
-      const user = await users.findOneAndUpdate({ username: account}, {isAdmin: false})
-      res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} isn't admin now.`,  cloudname: config.cloudname})
-      logger.logInfo(`${req.user.username} remove admin from ${account}`)
-    } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
-    }
-  })
-
 module.exports.admin = router
 module.exports.del = router2
 module.exports.edit = router3
-module.exports.addadmin = router4
-module.exports.remadmin = router5

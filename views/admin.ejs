@@ -147,11 +147,84 @@ select {
   font-family: "Montserrat", sans-serif;
   text-align: center;
   font-size: 20px;
+  margin-top: 10px;
   margin-left: auto;
   margin-right: 300px;
   display: flex;
 }
+.add {
+  color: white;
+    height: 30px;
+    width: 30px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    margin-top: -50px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 340px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
 
+.add:hover {
+  color: #5D3FD3;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: -50px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 340px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+
+}
+
+.del {
+  color: white;
+    height: 30px;
+    width: 30px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    margin-top: -30px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 300px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.del:hover {
+  color: #5D3FD3;
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: -30px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: 300px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+
+}
 .setasdefault {
   color: white;
     height: 60px;
@@ -214,6 +287,9 @@ input[id="maxStorage"] {
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
 }
+
+
+.material-icons.md-36 { font-size: 36px;   margin-top: 20px;}
     </style>
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Admin Panel</h2>
@@ -261,8 +337,7 @@ input[id="maxStorage"] {
       
         <% for (let user of users) { %>
           <% let link = "/deleteaccount/" + user.username %>
-          <% let link2 = "/addadmin/" + user.username %>
-          <% let link3 = "/removeadmin/" + user.username %> 
+          <% let link2 = "/editrole/" + user.username %> 
           <% let link4 = "/editaccount/" + user.username %> 
           <% let isverified; %>    
           <% if (user.isVerified) { %>
@@ -274,18 +349,19 @@ input[id="maxStorage"] {
             <td><%= user.username %></td>
             <td><%= user.email %> </td>
             <td><%= isverified %> </td>
-            <td><%= user.role %> </td>
-            <% if (user.role !== "admin") { %> 
-            <td><a href=<%= link2 %>><span class="material-icons">arrow_upward</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
-            <% } else {%> 
-                <td><a href=<%= link3 %>><span class="material-icons">arrow_downward</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
-                <% } %> 
-            <% } %>
+            <td><%= user.role %> </td> 
+            <td><a href=<%= link2 %>><span class="material-icons">contact_mail</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>            <% } %>
             
       </tr>
       </tbody>
       </table>
       <h2 class="storageplans">Roles</h2>
+      <form action="/addrole/">
+      <button class="add"><span class="material-icons">add</span></a></button>
+    </form>
+    <form action="/delrole/">
+      <button class="del"><span class="material-icons">remove</span></a></button>
+    </form>
       <form action="/updaterole/" method="get">
         <select name="role">
           <% for (let role of roles) { %>        

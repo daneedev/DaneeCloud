@@ -121,15 +121,6 @@ app.use("/deleteaccount/", require("./routes/admin").del)
 
 app.use("/editaccount/", require("./routes/admin").edit)
 
-// ADD ADMIN
-
-app.use("/addadmin/", require("./routes/admin").addadmin)
-
-// REMOVE ADMIN
-
-app.use("/removeadmin/", require("./routes/admin").remadmin)
-
-
 // UPLOAD
 
 app.use("/upload/", require("./routes/upload"))
@@ -146,6 +137,9 @@ app.use("/download/", require("./routes/download").download)
 
 app.use("/updaterole/", require("./routes/roles").updaterole)
 
+app.use("/addrole/", require("./routes/roles").addrole)
+
+app.use("/delrole/", require("./routes/roles").delrole)
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
