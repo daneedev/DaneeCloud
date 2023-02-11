@@ -311,6 +311,13 @@ h3 {
     text-align: center; 
  }
 
+ .storage {
+    color: #5D3FD3;
+    margin-top: -5px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 20px;
+ }
 
     </style>
 <script>
@@ -366,6 +373,8 @@ function abortHandler(event) {
         <% } %>
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Welcome, <%= username %>!</h2> 
+    <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
+    <h3 class="storage"><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <form id="form" action="/upload/" method="post", enctype="multipart/form-data" target="_blank">
         <label for="file" ><span class="material-icons">upload_file</span>&nbsp;Upload your file</label>
         <input type="file" name="file" id="file" onchange="progressBar()" required hidden></input>
