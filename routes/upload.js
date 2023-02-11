@@ -19,8 +19,8 @@ router.post("/", upload.single('file'), checkAuth, checkVerify, async function (
       if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/`).includes(name)) {
         res.render(__dirname + "/../views/message2.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;File ${name} already exist!`,  cloudname: config.cloudname})
       } else {
-        const role = await roles.findOne({role: user.role})
         const user = await users.findOne({username: req.user.username})
+        const role = await roles.findOne({role: user.role})
         if (req.file.size / (1024 * 1024).toFixed(2) + user.usedStorage > role.maxStorage) {
           res.render(__dirname + "/../views/message2.ejs", {message: `<span class="material-icons">storage</span>&nbsp;You have reached your storage limit! Try delete some files.`,  cloudname: config.cloudname})
         } else {
