@@ -37,8 +37,14 @@ router3.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
 })
 
 router3.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
-    const deleteRole = await roles.findOneAndDelete({ name: req.body.role})
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Role ${req.body.role} has been deleted!`,  cloudname: config.cloudname})
+    if (req.body.role == "admin") {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;You can't delete admin role!`,  cloudname: config.cloudname})
+    } else if (req.body.role == "user") {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;You can't delete user role!`,  cloudname: config.cloudname})
+    } else {
+        const deleteRole = await roles.findOneAndDelete({ name: req.body.role})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Role ${req.body.role} has been deleted!`,  cloudname: config.cloudname})
+    }
 })
 
 router4.get("/:username", checkAuth, checkVerify, checkAdmin, async function (req, res) {
