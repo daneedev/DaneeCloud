@@ -1,6 +1,6 @@
 {
   "name": "daneecloud",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Online filesystem",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,7 @@
     "express-flash": "^0.0.2",
     "express-rate-limit": "^6.7.0",
     "express-session": "^1.17.3",
+    "is-audio": "^0.0.0",
     "is-image": "^3.1.0",
     "is-video": "^1.0.1",
     "method-override": "^3.0.0",

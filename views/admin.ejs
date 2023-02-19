@@ -40,13 +40,15 @@
     }
 
     .stats {
-      margin-left: 300px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
     }
 
     .usr {
-      text-align: right;
-      margin-right: 300px;
-      margin-top: -230px;
+      text-align: center;
+      margin-right: auto;
+      margin-top: 25px;
     }
 
         .back {
@@ -55,7 +57,7 @@
     width: 250px;
     background-color: #5D3FD3;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,7 +76,7 @@
     width: 250px;
     background-color: white;
     font-size: 20px;
-    margin-top: 10px;
+    margin-top: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -115,12 +117,12 @@ table {
 
 .usrtable {
     margin-left: auto;
-    margin-right: 100px;
+    margin-right: auto;
 }
 
 .statstable {
     margin-right: auto;
-    margin-left: 235px;
+    margin-left: auto;
 }
 
 td, th {
@@ -133,9 +135,9 @@ td, th {
 }
 
 .storageplans {
-  text-align: right;
-  margin-right: 380px;
-  margin-top: 100px;
+  text-align: center;
+  margin-right: auto;
+  margin-top: 25px;
 }
 
 select {
@@ -149,20 +151,20 @@ select {
   font-size: 20px;
   margin-top: 10px;
   margin-left: auto;
-  margin-right: 300px;
+  margin-right: auto;
   display: flex;
 }
 .add {
   color: white;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 125px;
     background-color: #5D3FD3;
     font-size: 20px;
-    margin-top: -50px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     margin-left: auto;
-    margin-right: 340px;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -172,34 +174,33 @@ select {
 
 .add:hover {
   color: #5D3FD3;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 125px;
     background-color: white;
     font-size: 20px;
-    margin-top: -50px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     margin-left: auto;
-    margin-right: 340px;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
     transition-duration: 0.4s;
     border:0cm
-
 }
 
 .del {
   color: white;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 135px;
     background-color: #5D3FD3;
     font-size: 20px;
-    margin-top: -30px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     margin-left: auto;
-    margin-right: 300px;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -209,21 +210,20 @@ select {
 
 .del:hover {
   color: #5D3FD3;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 135px;
     background-color: white;
     font-size: 20px;
-    margin-top: -30px;
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     margin-left: auto;
-    margin-right: 300px;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
     transition-duration: 0.4s;
     border:0cm
-
 }
 .setasdefault {
   color: white;
@@ -235,7 +235,7 @@ select {
     display: flex;
     justify-content: center;
     margin-left: auto;
-    margin-right: 300px;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -253,7 +253,7 @@ select {
     display: flex;
     justify-content: center;
     margin-left: auto;
-    margin-right: 300px;
+    margin-right: auto;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -268,7 +268,7 @@ input[id="maxStorage"] {
     font-size: 20px;
     margin-top: 10px;
     margin-left: auto;
-    margin-right: 300px;
+    margin-right: auto;
     display: block;
     text-align: center;
     cursor: pointer;
@@ -281,9 +281,9 @@ input[id="maxStorage"] {
 .mb {
   color: #5D3FD3;
     margin-top: -40px;
-    text-align: right;
-    margin-left: auto;
-    margin-right: 245px;
+    text-align: center;
+    margin-left: 300px;
+    margin-right: auto;
     font-family: "Montserrat", sans-serif;
     font-size: 20px;
 }
@@ -357,10 +357,10 @@ input[id="maxStorage"] {
       </table>
       <h2 class="storageplans">Roles</h2>
       <form action="/addrole/">
-      <button class="add"><span class="material-icons">add</span></a></button>
+      <input type="submit" class="add" value="Add role"></input>
     </form>
     <form action="/delrole/">
-      <button class="del"><span class="material-icons">remove</span></a></button>
+      <input type="submit" class="del" value="Remove role"></input>
     </form>
       <form action="/updaterole/" method="get">
         <select name="role">

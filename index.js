@@ -142,6 +142,11 @@ app.use("/addrole/", require("./routes/roles").addrole)
 app.use("/delrole/", require("./routes/roles").delrole)
 
 app.use("/editrole/", require("./routes/roles").editrole)
+
+// AUDIO PLAYER
+
+app.use("/playaudio/", require("./routes/audioplayer"))
+
 // 404  PAGE
 
 app.get("/*", async function (req, res) {

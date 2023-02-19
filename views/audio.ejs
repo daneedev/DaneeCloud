@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../css//style.css">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+            <title<%= cloudname %></title>
+        <style>body {
+            background-color: #d2d3db;
+            padding: 0;
+            margin: 0;
+        }
+        
+
+        
+        h1 {
+    color: #5D3FD3;
+    margin-top: 10%;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: xxx-large;
+
+}
+        h2 {
+            color: #5D3FD3;
+    margin-top: -5px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+        
+        }
+      
+      h3 {
+          color: #5D3FD3;;
+          display: flex;
+          margin-top: 20px;
+          justify-content: center;
+          align-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: large;
+      
+      }
+      input[type="submit"] {
+        color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+    }
+    
+    input[type="submit"]:hover {
+        color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+    }
+    .footer {
+      position: fixed;
+      padding: 10px 10px 0px 10px;
+      bottom: 0;
+      width: 100%;
+      /* Height of the footer*/
+      height: 40px;
+      background: black;
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      text-align: center;
+  }
+
+audio {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    display: block;
+}
+
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+  :-moz-placeholder {
+    text-align: center;
+  }
+  :-ms-input-placeholder {  
+    text-align: center; 
+ }
+
+        </style>
+        
+        </head>
+        <body>
+            <h1><%= cloudname %></h1>
+            <h2>Upload & Download your files!</h2>
+            <audio controls preload="metadata">
+                <source src=<%= "/files/" + username + "/" + file %>>
+            </audio>
+            <form action="/">
+            <input type="submit" href="/" value="Back to home page"></input>
+            </form>
+            <footer>
+            <div class="footer">DaneeSkripter © 2022 - 2023 All rights reserved</div>
+        
+        </footer>
+        </body>
+        </html>
