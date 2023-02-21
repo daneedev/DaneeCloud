@@ -17,7 +17,7 @@ router.post("/", checkAuth, checkNotVerify, async function (req, res) {
     transporter.sendMail({
     from: {
     name: config.cloudname + " | Verify",
-    address: "verify@" + config.cloudurl.split("https://")[1]
+    address: process.env.emailSender
     },
     to: req.user.email,
     subject: "Verify your account",
