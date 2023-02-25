@@ -14,6 +14,9 @@ router.get("/", checkNotAuth, function (req, res) {
 
 router.post("/", checkNotAuth, async function (req, res) {
     try {
+      if (req.body.password.length < 8) {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname})
+      } else {
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const usernameExist = await users.findOne({ username: req.body.name})
         const emailExist = await users.findOne({ email: req.body.email})
@@ -40,6 +43,7 @@ router.post("/", checkNotAuth, async function (req, res) {
         logger.logInfo(`User ${req.body.name} has been registered!`)
         res.redirect("/login")
       }
+    }
       } catch (err) {
         logger.logError(`There is an error with registration: ${err}`)
         res.redirect("/register")
