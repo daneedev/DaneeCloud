@@ -14,6 +14,12 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - Account registration & login
 - Logs everything into file
 
+## Preview
+![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudhome.png)
+![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudfiles.png)
+![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudadmin.png)
+*Sorry for black boxes, I don't have much time to take photos*
+
 ## Installation
 https://docs.daneeskripter.dev/daneecloud/install
 
