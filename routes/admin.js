@@ -32,7 +32,7 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
 router2.get("/:account", checkAuth, checkVerify, async function (req, res) {
     const account = sanitize(req.params.account)
     const loggeduser = await users.findOne({username: req.user.username})
-    if (loggeduser.isAdmin) {
+    if (loggeduser.role == "admin") {
       const findusertodelete = await users.findOne({username: account})
       if (!findusertodelete) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
@@ -58,7 +58,7 @@ router3.post("/:account", checkAuth, checkVerify, async function (req, res) {
     const newaccountname = sanitize(req.body.newname)
     const newaccountemail = sanitize(req.body.newemail)
     const loggeduser = await users.findOne({ username: req.user.username})
-    if (loggeduser.isAdmin) {
+    if (loggeduser.role == "admin") {
       const findusertorename = await users.findOne({username: account})
       if (!findusertorename) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
