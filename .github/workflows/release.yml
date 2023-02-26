@@ -35,7 +35,7 @@ jobs:
         id: changelog
         uses: TriPSs/conventional-changelog-action@v3
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TOKEN }}
           version-file: "./package.json,./package-lock.json"
           git-branch: "release-from-${{ github.sha }}"
           skip-on-empty: false
@@ -46,21 +46,21 @@ jobs:
         id: create-pr
         run: gh pr create --base main --head release-from-${{ github.sha }} --title 'Merge new release into main' --body 'Created by Github action'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN }}
 
       # merge PR using GitHub CLI
       - name: merge PR with release info
         id: merge-pr
         run: gh pr merge --admin --merge --subject 'Merge release info' --delete-branch
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TOKEN }}
 
       # release info is now in main so we can continue as before
       - name: create release with last commit
         uses: actions/create-release@v1
         if: steps.changelog.outputs.skipped == 'false'
         env:
-          GITHUB_TOKEN: ${{ secrets.CHANGELOG_RELEASE }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
         with:
           tag_name: ${{ steps.changelog.outputs.tag }}
           release_name: ${{ steps.changelog.outputs.tag }}
