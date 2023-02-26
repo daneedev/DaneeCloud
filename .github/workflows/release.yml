@@ -21,7 +21,7 @@ jobs:
           branch: "release-from-${{ github.sha }}"
           sha: "${{ github.sha }}"
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
 
       # check out the repository afterwards
       - uses: actions/checkout@v3
