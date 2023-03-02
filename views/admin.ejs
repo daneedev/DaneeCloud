@@ -315,9 +315,9 @@ input[id="maxStorage"] {
         <tr>
           <td>Version</td>
           <% if (packages.version == stableVersion) { %> 
-          <td><%= packages.version %> </td>
+          <td>v<%= packages.version %> </td>
           <% } else { %>
-            <td><%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/" + stableVersion %>><%= stableVersion %> available!</a></td> 
+            <td>v<%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/" + stableVersion %>>v<%= stableVersion %> available!</a></td> 
         <% } %> 
         </tr>
       </tbody>
