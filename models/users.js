@@ -10,7 +10,8 @@ const users = new mongoose.Schema({
     verifyCode: { type: String},
     sharedFiles: {type: Array},
     usedStorage: { type: Number},
-    role: { type: String}
+    role: { type: String},
+    ip: { type: String}
 })
 
 const model = mongoose.model('users', users)

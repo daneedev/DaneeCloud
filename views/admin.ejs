@@ -329,6 +329,7 @@ input[id="maxStorage"] {
           <th>Account username</th>
           <th>Account email</th>
           <th>Is verified?</th>
+          <th>IP address</th>
           <th>Role</th>
           <th>Actions</th>
         </tr>
@@ -349,10 +350,16 @@ input[id="maxStorage"] {
             <td><%= user.username %></td>
             <td><%= user.email %> </td>
             <td><%= isverified %> </td>
+            <% if (config.registerip) { %>
+            <td><%= user.ip %></td>
+            <% } else { %>
+              <td>-</td>
+            <% } %>
             <td><%= user.role %> </td> 
             <td><a href=<%= link2 %>><span class="material-icons">contact_mail</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>            <% } %>
             
-      </tr>
+          </tr>
+          
       </tbody>
       </table>
       <h2 class="storageplans">Roles</h2>

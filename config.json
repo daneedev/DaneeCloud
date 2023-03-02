@@ -3,5 +3,6 @@
     "cloudurl": "https://cloud.daneeskripter.dev",
     "port": 5026,
     "uploadsfolder": "/uploads/",
-    "logtofile": false
+    "logtofile": false,
+    "registerip": true
 }

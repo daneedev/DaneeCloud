@@ -9,7 +9,7 @@ const fs = require("fs")
 const sanitize = require("sanitize-filename")
 
 router.get("/", checkNotAuth, function (req, res) {
-    res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname})
+  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname})
 })
 
 router.post("/", checkNotAuth, async function (req, res) {
@@ -17,15 +17,36 @@ router.post("/", checkNotAuth, async function (req, res) {
       if (req.body.password.length < 8) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname})
       } else {
+        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const usernameExist = await users.findOne({ username: req.body.name})
         const emailExist = await users.findOne({ email: req.body.email})
+        const ipExist = await users.findOne({ip: ip})
         if (usernameExist) {
           res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`,  cloudname: config.cloudname})
         } else if (emailExist) { 
           res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`,  cloudname: config.cloudname})
+        } else  if (ipExist && config.registerip) { 
+          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this IP address already exists!`,  cloudname: config.cloudname})
         } else {
+          if (config.registerip) {
           const user = new users({
+          username: req.body.name,
+          email: req.body.email,
+          password: hashedPassword,
+          id: Date.now().toString(),
+          files: [],
+          isAdmin: false,
+          isVerified: false,
+          verifyCode: null,
+          sharedFiles: [],
+          usedStorage: 0,
+          role: "user",
+          ip: ip
+        })
+        user.save()
+      } else {
+        const user = new users({
           username: req.body.name,
           email: req.body.email,
           password: hashedPassword,
@@ -39,6 +60,7 @@ router.post("/", checkNotAuth, async function (req, res) {
           role: "user"
         })
         user.save()
+      }
         fs.mkdirSync(__dirname + "/../uploads/" + sanitize(req.body.name))
         logger.logInfo(`User ${req.body.name} has been registered!`)
         res.redirect("/login")
