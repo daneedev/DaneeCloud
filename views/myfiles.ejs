@@ -184,6 +184,8 @@ p {
         <% let link5 = "/rmsf/" + file %> 
         <% let link6 = "/playvideo/" + `${req.user.username}/` + file %> 
         <% let link7 = "/playaudio/" + `${req.user.username}/` + file %>
+        <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file %>
+        <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file %>
         <% let isShared; %> 
         <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
         <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
@@ -191,8 +193,8 @@ p {
         <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <% if (file.split(".").pop() == "mkv") {%> 
             <td>Not supported</td>
-          <% } else { %> 
-          <td><a href=<%= link6 %> ><span class="material-icons">play_circle</span></a></td>
+          <% } else { %>
+          <td><a href=<%= link6 %> ><span class="material-icons">play_circle</span></a>&nbsp;<a href=<%= link8 %>><span class="material-icons">subtitles</span></a>&nbsp;<a href=<%= link9 %>><span class="material-icons">subtitles_off</span></a></td>
           <% } %> 
           <% } else if (isAudio(file)) { %>
           <td><a href=<%= link7 %>><span class="material-icons">headphones</span></a></td>

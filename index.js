@@ -80,7 +80,7 @@ app.use("/rmsf/", require("./routes/sharedFiles").rmsf)
 
 // PLAY VIDEO
 
-app.use("/playvideo/", require("./routes/vidplayer"))
+app.use("/playvideo/", require("./routes/vidplayer").player)
 
 // EMAIL VERIFY
 
@@ -146,6 +146,14 @@ app.use("/editrole/", require("./routes/roles").editrole)
 // AUDIO PLAYER
 
 app.use("/playaudio/", require("./routes/audioplayer"))
+
+// ADD SUBTITLES
+
+app.use("/addsubtitles/", require("./routes/vidplayer").subtitles)
+
+// REMOVE SUBTITLES
+
+app.use("/rmsubtitles/", require("./routes/vidplayer").rmsubtitles)
 
 // 404  PAGE
 

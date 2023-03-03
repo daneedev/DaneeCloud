@@ -123,6 +123,8 @@ video {
             <h2>Upload & Download your files!</h2>
            <video width="650" height="450" controls preload="metadata">
                 <source src=<%= "/files/" + username + "/" + file %>   type=<%= "video/" + vidtag%> >
+                <track label="None" kind="subtitles" default>
+                <track label=<%= subtitles.subtitlename%> kind="subtitles" src=<%= subtitles.subtitleurl%>/>
             </video>
             <form action="/">
             <input type="submit" href="/" value="Back to home page"></input>
