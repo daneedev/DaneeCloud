@@ -16,6 +16,7 @@ jobs:
         uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.TOKEN }}
+          AUTHOR: "daneeskripter"
           output-file: "CHANGELOG.MD"
 
       - name: Create Release
