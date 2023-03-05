@@ -14,6 +14,7 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - Email verify system
 - Account registration & login
 - Logs everything into file
+- IP register (no alt accounts)
 
 ## Preview
 ![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudhome.png)
