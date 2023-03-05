@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.0...v1.3.1) (2023-03-05)
+
+
+### Bug Fixes
+
+* update link bug fix ([574bd26](https://github.com/DaneeSkripter/DaneeCloud/commit/574bd26c884bd0955f19b9124b7cd23f29aa7a25))
+
+
+
 # [1.3.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.2.3...v1.3.0) (2023-03-03)
 
 
