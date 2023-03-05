@@ -8,11 +8,13 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - Renaming & Deleting uploaded files
 - Showing preview at pictures
 - Online video player (mkv not supported)
+- Subtitles in videos
 - Online audio player
 - Admin panel
 - Email verify system
 - Account registration & login
 - Logs everything into file
+- IP register (no alt accounts)
 
 ## Preview
 ![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudhome.png)
