@@ -5,7 +5,7 @@ const config = require("./config.json")
 const mongoose = require("mongoose")
 const passport = require("passport")
 const flash = require("express-flash")
-const session = require("express-session")
+const session = require("cookie-session")
 const methodOverride = require("method-override")
 const logger = require("./handlers/logger")
 const updater = require("./handlers/updater")
@@ -17,6 +17,8 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
 }
 
+const domain = config.cloudurl.split("//")
+const expires = new Date(Date.now() + 86400000)
 // PASSPORT & SESSION
 const initializePassport = require("./handlers/passportconfig")
 initializePassport(passport)
@@ -25,6 +27,12 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    secure: true,
+    httpOnly: true,
+    domain: domain[1],
+    expires: expires
+  }
 }))
 
 app.use(passport.initialize())
