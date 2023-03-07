@@ -18,20 +18,20 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const domain = config.cloudurl.split("//")
-const expires = new Date(Date.now() + 86400000)
 // PASSPORT & SESSION
 const initializePassport = require("./handlers/passportconfig")
 initializePassport(passport)
 app.use(flash())
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  name: "logincookie",
+  keys: [process.env.SESSION_SECRET],
   resave: false,
   saveUninitialized: false,
   cookie: {
     secure: true,
     httpOnly: true,
     domain: domain[1],
-    expires: expires
+    maxAge: 86400000
   }
 }))
 
