@@ -16,6 +16,9 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - Logs everything into file
 - IP register (no alt accounts)
 
+### Updates
+- You can look what changed [here](https://github.com/DaneeSkripter/DaneeCloud/blob/main/CHANGELOG.MD)
+
 ## Preview
 ![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudhome.png)
 ![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudfiles.png)
