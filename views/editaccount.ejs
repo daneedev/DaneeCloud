@@ -148,7 +148,7 @@ button[id="rename"]:hover {
     </style>
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Edit <%= account %> </h2>
-    <% let editurl =  "/editaccount/" + account%> 
+    <% let editurl = editaccurl + account%> 
     <form action=<%= editurl %> method="post">
         <label for="newname"><span class="material-icons">edit</span>&nbsp;New account name</label>
         <input type="text", id="newname", name="newname" required></input>

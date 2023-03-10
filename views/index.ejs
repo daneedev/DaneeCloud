@@ -24,6 +24,83 @@
     display: flex;
     flex-direction: column;
 }
+
+.editaccount {
+    color: white;
+    height: 60px;
+    width: 125px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: auto;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.editaccount:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 125px;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    margin-right: auto;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.delaccount {
+    color: white;
+    height: 60px;
+    width: 125px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 135px;
+    margin-right: auto;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
+.delaccount:hover {
+    color: #5D3FD3;
+    height: 60px;
+    width: 125px;
+    background-color: white;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 135px;
+    margin-right: auto;
+    margin-top: -60px;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
 .logout {
     color: white;
     height: 60px;
@@ -359,7 +436,6 @@ function abortHandler(event) {
 }
 </script>
 
-
         <form action="/logout?_method=DELETE" method="POST">
             <button type="submit" class="logout">Log Out</button>
         </form>
@@ -371,6 +447,12 @@ function abortHandler(event) {
             <button type="submit" class="admin">Admin Panel</button>
         </form> 
         <% } %>
+        <form action="/editmyaccount">
+            <button type="submit" class="editaccount">Edit account</button>
+        </form>
+        <form action="/delmyaccount">
+            <button type="submit" class="delaccount">Delete account</button>
+        </form>
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Welcome, <%= username %>!</h2> 
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>

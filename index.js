@@ -163,6 +163,12 @@ app.use("/addsubtitles/", require("./routes/vidplayer").subtitles)
 
 app.use("/rmsubtitles/", require("./routes/vidplayer").rmsubtitles)
 
+// ACCOUNT MANAGMENT
+
+app.use("/editmyaccount/", require("./routes/accountmgr").edit)
+
+app.use("/delmyaccount/", require("./routes/accountmgr").delete)
+
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
