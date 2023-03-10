@@ -9,7 +9,7 @@ router.get("/", checkAuth , checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
     const role = await roles.findOne({name: user.role})
     if (!user.ip && config.registerip) {
-      const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+      const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
       await user.updateOne({ip: ip})
     }
     let isAdmin;

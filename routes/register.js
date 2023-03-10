@@ -17,7 +17,7 @@ router.post("/", checkNotAuth, async function (req, res) {
       if (req.body.password.length < 8) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname})
       } else {
-        const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
         const usernameExist = await users.findOne({ username: req.body.name})
         const emailExist = await users.findOne({ email: req.body.email})
