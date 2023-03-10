@@ -1,3 +1,18 @@
+# [1.4.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.2...v1.4.0) (2023-03-10)
+
+
+### Bug Fixes
+
+* deleted depracted way to collect ip address ([b4c0dea](https://github.com/DaneeSkripter/DaneeCloud/commit/b4c0dea73dbbdf819b1e6d0cc1da1544df7f8c18))
+* passport 0.6 not working ([99101b1](https://github.com/DaneeSkripter/DaneeCloud/commit/99101b1920859fa875725e7d2dd4611429c0dd34))
+
+
+### Features
+
+* User's account managment ([c5faaab](https://github.com/DaneeSkripter/DaneeCloud/commit/c5faaaba20550220b7e5f15f71d916e557523150))
+
+
+
 ## [1.3.2](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.1...v1.3.2) (2023-03-07)
 
 
