@@ -169,6 +169,10 @@ app.use("/editmyaccount/", require("./routes/accountmgr").edit)
 
 app.use("/delmyaccount/", require("./routes/accountmgr").delete)
 
+// API
+
+app.use("/api/", require("./routes/api"))
+
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
