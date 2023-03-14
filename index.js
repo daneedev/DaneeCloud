@@ -171,7 +171,11 @@ app.use("/delmyaccount/", require("./routes/accountmgr").delete)
 
 // API
 
-app.use("/api/", require("./routes/api"))
+app.use("/api/", require("./routes/api").api)
+
+app.use("/addapikey/", require("./routes/api").addkey)
+
+app.use("/delapikey/", require("./routes/api").delkey)
 
 // 404  PAGE
 

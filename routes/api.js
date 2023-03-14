@@ -1,5 +1,7 @@
 const express = require("express") 
 const router = express.Router()
+const router2 = express.Router()
+const router3 = express.Router()
 const users = require("../models/users");
 const config = require("../config.json")
 const logger = require("../handlers/logger")
@@ -7,8 +9,12 @@ const fs = require("fs")
 const sanitize = require("sanitize-filename")
 const apiKeys = require("../models/apiKeys")
 const bcrypt = require("bcrypt")
-const config = require("../config.json")
 const roles = require("../models/roles")
+const { transporter } = require("../handlers/smtpconfig")
+const osu = require("node-os-utils")
+const ms = require("ms")
+const packages = require("../package.json");
+const { checkAuth, checkVerify } = require("../handlers/authVerify");
 
 router.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
@@ -25,6 +31,68 @@ async function keyAuth(req, res, next) {
         res.status(401).json({error: "Error 401 - Unauthorized"})
     }
 }
+
+function makeid(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < length) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
+
+// ADD API KEY
+
+router2.get("/", checkAuth, checkVerify, async function (req, res) {
+    const user = await users.findOne({username: req.user.username})
+    if (user.role == "admin") {
+        res.render(__dirname + "/../views/addapikey.ejs", {cloudname: config.cloudname})
+    } else {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    }
+})
+
+router2.post("/", checkAuth, checkVerify, async function (req, res) {
+    const user = await users.findOne({username: req.user.username})
+    const apiKeyName = req.body.name
+    const apiKey = makeid(25)
+    if (user.role == "admin") {
+        const findAPIKey = await apiKeys.findOne({ name: apiKeyName})
+        if (findAPIKey) {
+            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 409 - API Key already exist`,  cloudname: config.cloudname})
+        } else {
+            const ApiKey = new apiKeys({
+                name: apiKeyName,
+                apiKey: apiKey.toString()
+            })
+            ApiKey.save()
+            res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;API Key with name ${apiKeyName} was generated: ${apiKey.toString()} (!! WARNING: YOU WON'T SEE THIS KEY AGAIN!!)`,  cloudname: config.cloudname})
+        }
+    } else {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    }
+})
+
+// DELETE API KEY
+
+router3.get("/:name", checkAuth, checkVerify, async function (req, res) {
+    const user = await users.findOne({username: req.user.username})
+    const apiKeyName = req.params.name
+    const findApiKey = await apiKeys.findOne({name: apiKeyName})
+    if (user.role == "admin") {
+        if (!findApiKey) {
+            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - API key not found`,  cloudname: config.cloudname})
+        } else {
+                const deleteApiKey = await apiKeys.findOneAndRemove({ name: apiKeyName})
+                res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;API Key with name ${apiKeyName} was deleted!`,  cloudname: config.cloudname})
+            }
+    } else {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    }
+})
 
 // API: USER
 
@@ -102,6 +170,50 @@ router.post("/user/edit/", keyAuth, async function (req, res) {
 
 })
 
+router.post("/user/role", keyAuth, async function (req, res) {
+    const rolename = req.query.name
+    const username = req.query.username
+    const findUser = await users.findOne({username: username})
+    const findRole = await roles.findOne({name: rolename})
+    if (findUser) {
+        if (!findRole) {
+            res.status(404).json({error: "Error 404 - Role not found"})
+        } else {
+        const updateUser = await users.findOneAndUpdate({username: username}, {role: rolename})
+        res.status(201).json({msg: "Response 201 - User role changed"})
+        logger.logInfo(`Role of user ${username} was changed to ${rolename} via API`)
+        }
+    } else {
+        res.status(404).json({error: "Error 404 - User not found"})
+    }
+})
+
+router.post("/user/verify", keyAuth, async function (req, res) {
+    const username = req.query.username
+    const verifycode = Math.floor(Math.random() * 9000) + 1000
+    const addverifycode = await users.findOneAndUpdate({username: username}, {verifyCode: verifycode.toString()}) 
+    const user = await users.findOne({ username: username})
+    transporter.sendMail({
+        from: {
+        name: config.cloudname + " | Verify",
+        address: process.env.emailSender
+        },
+        to: user.email,
+        subject: "Verify your account",
+        text: "Hello,\n please verify your account with this code: " + verifycode.toString() + "\n If you didn't registered on " + config.cloudurl + ", ignore this mail.\nThe code will expire in next 10 minutes.\n\n\nRegards,\nVerification bot from " + config.cloudname
+        }, function (error, info) {
+        if (error) {
+        logger.logError(error)
+        } else {
+          logger.logInfo("Verification email has been sent to " + user.email)
+          setTimeout(async () => {
+            const removeverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: null})
+          }, 600000);
+        }
+        })
+        res.status(200).json({msg: "Verification email has been sent to " + user.email})
+})
+
 // API: FILES
 
 router.get("/files/", keyAuth, async function (req, res) {
@@ -109,7 +221,7 @@ router.get("/files/", keyAuth, async function (req, res) {
     const findUser = await users.findOne({username: username})
     if (findUser) {
         const files = findUser.files
-        res.status(200).send(files)
+        res.status(200).json({files: files})
         logger.logInfo(`${username}'s files was requested via API`)
     } else {
          res.status(404).json({error: "Error 404 - User not found"})
@@ -229,6 +341,10 @@ router.get("/role/all/", keyAuth, async function (req, res) {
 router.post("/role/create", keyAuth, async function (req, res) {
     const rolename = req.query.name
     const maxStorage = req.query.maxStorage
+    const findRole = await roles.findOne({name: rolename})
+    if (findRole) {
+        res.status(409).json({error: "Error 409 - Role already exist"})
+    } else {
     const role = new roles({
         name: rolename,
         maxStorage: maxStorage
@@ -236,22 +352,47 @@ router.post("/role/create", keyAuth, async function (req, res) {
     role.save()
     res.status(201).json({msg: "Response 201 - Role created"})
     logger.logInfo(`Role ${rolename} was created via API`)
+}
 })
 
 router.post("/role/delete", keyAuth, async function (req, res) {
     const rolename = req.query.name
+    const findRole = await roles.findOne({ name: rolename})
+    if (findRole) {
     const deleteRole = await roles.findOneAndRemove({ name: rolename })
     res.status(200).json({msg: "Response 200 - Role deleted"})
     logger.logInfo(`Role ${rolename} was deleted via API`)
+    } else {
+        res.status(404).json({error: "Error 404 - Role not found"})
+    }
 })
 
 router.post("/role/edit", keyAuth, async function (req, res) {
     const rolename = req.query.name
     const newname = req.query.newname
     const newmaxStorage = req.query.maxStorage
+    const findRole = await roles.findOne({ name: rolename})
+    if (findRole) {
     const updateRole = await roles.findOneAndUpdate({ name: rolename}, { name: newname, maxStorage: newmaxStorage})
     res.status(201).json({msg: "Response 201 - Role edited"})
     logger.logInfo(`Role ${rolename} was edited via API`)
+    } else {
+        res.status(404).json({error: "Error 404 - Role not found"})
+    }
 })
 
-module.exports = router
+// API: DASHBOARD
+
+router.get("/dash", keyAuth, async function (req, res) {
+    const cpu = osu.cpu
+    const ram = Math.round(process.memoryUsage().heapUsed / 1024 / 1024)
+    const uptime = ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true})
+    cpu.usage().then((cpuUsage) => {
+        res.status(200).json({cpuUsage: `${cpuUsage.toString()} %`, ramUsage: `${ram} MB`, uptime: uptime, version: `v${packages.version}`, developer: "DaneeSkripter", license: "MIT"})
+    })
+
+})
+
+module.exports.api = router
+module.exports.addkey = router2
+module.exports.delkey = router3

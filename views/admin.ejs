@@ -377,7 +377,28 @@ input[id="maxStorage"] {
         </select>
         <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input><h2 class="mb">MB</h2>
         <input type="submit" class="setasdefault" value="Update role"></input>
+      </form>
+      <h2 class="storageplans">API Keys</h2>
+      <form action="/addapikey/">
+        <input type="submit" class="back" value="Add API key"></input>
       </form> 
+    <table class="usrtable">
+        <thead>
+          <tr>
+            <th>API Key name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <% for (let apiKey of apiKeys) { %>
+              <% let apiKeyLink = "/delapikey/" + apiKey.name %>
+              <td><%= apiKey.name %></td>
+              <td><a href=<%= apiKeyLink %>><span class="material-icons">delete</span></a></td>
+            <% } %>
+          </tr>
+        </tbody>
+      </table>
       <form action="/">
         <input type="submit" class="back" href="/" value="Back to home page"></input>
         </form>

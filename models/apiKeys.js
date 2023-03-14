@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const apiKey = new mongoose.Schema({
+    name: { type: String},
     apiKey: { type: String}
 })
 
