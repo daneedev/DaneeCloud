@@ -97,7 +97,7 @@ router3.get("/:name", checkAuth, checkVerify, async function (req, res) {
 // API: USER
 
 router.get("/user", keyAuth, async function (req, res) {
-    const User = await users.findOne({ username: req.query.username})
+    const User = await users.findOne({ username: sanitize(req.query.username)})
     if (User) {
         res.status(200).send(User)
         logger.logInfo(`${req.query.username}'s account details was requested via API`)
@@ -136,9 +136,9 @@ router.post("/user/create", keyAuth, async function (req, res) {
 })
 
 router.post("/user/delete", keyAuth, async function (req, res) {
-    const findUser = await users.findOne({ username: req.query.username})
+    const findUser = await users.findOne({ username: sanitize(req.query.username)})
     if (findUser) {
-        const deleteUser = await users.findOneAndRemove({ username: req.query.username})
+        const deleteUser = await users.findOneAndRemove({ username: sanitize(req.query.username)})
         fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${user.username}/`)
         res.status(200).json({msg: "Response 200 - OK"})
         logger.logInfo(`User ${req.query.username} was deleted via API`)
@@ -155,9 +155,9 @@ router.post("/user/edit/", keyAuth, async function (req, res) {
     const newemail = req.query.newemail
     const newpassword = req.query.newpassword
     const hashedpassword = await bcrypt.hash(newpassword, 10)
-    const findUser = await users.findOne({username: username})
+    const findUser = await users.findOne({username: sanitize(username)})
     if (findUser) {
-        const updateUser = await users.findOne({username: username}, {
+        const updateUser = await users.findOne({username: sanitize(username)}, {
             username: newusername,
             email: newemail,
             password: hashedpassword
@@ -173,13 +173,13 @@ router.post("/user/edit/", keyAuth, async function (req, res) {
 router.post("/user/role", keyAuth, async function (req, res) {
     const rolename = req.query.name
     const username = req.query.username
-    const findUser = await users.findOne({username: username})
-    const findRole = await roles.findOne({name: rolename})
+    const findUser = await users.findOne({username: sanitize(username)})
+    const findRole = await roles.findOne({name: sanitize(rolename)})
     if (findUser) {
         if (!findRole) {
             res.status(404).json({error: "Error 404 - Role not found"})
         } else {
-        const updateUser = await users.findOneAndUpdate({username: username}, {role: rolename})
+        const updateUser = await users.findOneAndUpdate({username: sanitize(username)}, {role: sanitize(rolename)})
         res.status(201).json({msg: "Response 201 - User role changed"})
         logger.logInfo(`Role of user ${username} was changed to ${rolename} via API`)
         }
@@ -191,8 +191,8 @@ router.post("/user/role", keyAuth, async function (req, res) {
 router.post("/user/verify", keyAuth, async function (req, res) {
     const username = req.query.username
     const verifycode = Math.floor(Math.random() * 9000) + 1000
-    const addverifycode = await users.findOneAndUpdate({username: username}, {verifyCode: verifycode.toString()}) 
-    const user = await users.findOne({ username: username})
+    const addverifycode = await users.findOneAndUpdate({username: sanitize(username)}, {verifyCode: verifycode.toString()}) 
+    const user = await users.findOne({ username: sanitize(username)})
     transporter.sendMail({
         from: {
         name: config.cloudname + " | Verify",
@@ -218,7 +218,7 @@ router.post("/user/verify", keyAuth, async function (req, res) {
 
 router.get("/files/", keyAuth, async function (req, res) {
     const username = req.query.username
-    const findUser = await users.findOne({username: username})
+    const findUser = await users.findOne({username: sanitize(username)})
     if (findUser) {
         const files = findUser.files
         res.status(200).json({files: files})
@@ -229,7 +229,7 @@ router.get("/files/", keyAuth, async function (req, res) {
 })
 
 router.post("/files/delete/", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const file = req.query.file
     const findUser = await users.findOne({username: username})
     if (findUser) {
@@ -251,9 +251,9 @@ router.post("/files/delete/", keyAuth, async function (req, res) {
 })
 
 router.post("/files/rename/", keyAuth, async function (req, res) {
-    const username = req.query.username
-    const file = req.query.file
-    const newname = req.query.newname
+    const username = sanitize(req.query.username)
+    const file = sanitize(req.query.file)
+    const newname = sanitize(req.query.newname)
     const findUser = await users.findOne({username: username})
     if (findUser) {
         if (findUser.files.includes(file)) {
@@ -276,7 +276,7 @@ router.post("/files/rename/", keyAuth, async function (req, res) {
 })
 
 router.post("/files/share/", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const file = req.query.file
     const findUser = await users.findOne({username: username})
     if (findUser) {
@@ -298,7 +298,7 @@ router.post("/files/share/", keyAuth, async function (req, res) {
 })
 
 router.post("/files/noshare/", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const file = req.query.file
     const findUser = await users.findOne({username: username})
     if (findUser) {
@@ -322,7 +322,7 @@ router.post("/files/noshare/", keyAuth, async function (req, res) {
 // API: ROLES
 
 router.get("/role/", keyAuth, async function (req, res) {
-    const rolename = req.query.name
+    const rolename = sanitize(req.query.name)
     const role = await roles.findOne({ name: rolename})
     if (role) {
         res.status(200).send(role)
@@ -339,7 +339,7 @@ router.get("/role/all/", keyAuth, async function (req, res) {
 })
 
 router.post("/role/create", keyAuth, async function (req, res) {
-    const rolename = req.query.name
+    const rolename = sanitize(req.query.name)
     const maxStorage = req.query.maxStorage
     const findRole = await roles.findOne({name: rolename})
     if (findRole) {
@@ -356,7 +356,7 @@ router.post("/role/create", keyAuth, async function (req, res) {
 })
 
 router.post("/role/delete", keyAuth, async function (req, res) {
-    const rolename = req.query.name
+    const rolename = sanitize(req.query.name)
     const findRole = await roles.findOne({ name: rolename})
     if (findRole) {
     const deleteRole = await roles.findOneAndRemove({ name: rolename })
@@ -368,9 +368,9 @@ router.post("/role/delete", keyAuth, async function (req, res) {
 })
 
 router.post("/role/edit", keyAuth, async function (req, res) {
-    const rolename = req.query.name
-    const newname = req.query.newname
-    const newmaxStorage = req.query.maxStorage
+    const rolename = sanitize(req.query.name)
+    const newname = sanitize(req.query.newname)
+    const newmaxStorage = sanitize(req.query.maxStorage)
     const findRole = await roles.findOne({ name: rolename})
     if (findRole) {
     const updateRole = await roles.findOneAndUpdate({ name: rolename}, { name: newname, maxStorage: newmaxStorage})
