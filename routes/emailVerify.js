@@ -37,7 +37,7 @@ router.post("/", checkAuth, checkNotVerify, async function (req, res) {
 })
 
 router2.get("/", checkAuth, checkNotVerify, function (req, res) {
-    res.render(__dirname + "/../views/verifycode.ejs", { cloudname: config.cloudname})
+    res.render(__dirname + "/../views/verifycode.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
 })
 
 router2.post("/", checkAuth, checkNotVerify, async function (req, res) {

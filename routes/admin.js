@@ -23,7 +23,7 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
       const cpu = osu.cpu
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys})
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken()})
         })
       })
     } else {

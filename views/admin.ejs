@@ -375,6 +375,7 @@ input[id="maxStorage"] {
           <option value=<%= role.name %>><%= role.name %> | <%= role.maxStorage %> MB</option>
           <% } %>
         </select>
+        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input><h2 class="mb">MB</h2>
         <input type="submit" class="setasdefault" value="Update role"></input>
       </form>

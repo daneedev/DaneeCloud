@@ -12,6 +12,8 @@ const updater = require("./handlers/updater")
 app.use(methodOverride("_method"))
 const {checkAuth, checkNotAuth, checkVerify, checkNotVerify} = require("./handlers/authVerify")
 const roles = require("./models/roles")
+const csurf = require("tiny-csrf");
+const cookieParser = require("cookie-parser")
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
@@ -34,6 +36,14 @@ app.use(session({
     maxAge: 86400000
   }
 }))
+
+app.use(cookieParser(process.env.SESSION_SECRET));
+app.use(express.urlencoded({ extended: false}))
+
+app.use(csurf(
+  process.env.CSRF_TOKEN,
+  ["POST"]
+  ));
 
 app.use(passport.initialize())
 app.use(passport.session())
@@ -67,7 +77,6 @@ app.use("/files/", require("./routes/files"))
 
 app.use("/files/", AuthLimiter, checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
-app.use(express.urlencoded({ extended: false}))
 
 app.use("/", require("./routes/home"))
 
@@ -176,6 +185,23 @@ app.use("/api/", require("./routes/api").api)
 app.use("/addapikey/", require("./routes/api").addkey)
 
 app.use("/delapikey/", require("./routes/api").delkey)
+
+app.get("/test", (req, res) => {
+  const csrfToken = req.csrfToken();
+  return res.status(200).send(
+    `
+<form method="POST" action="/test">
+  <input name="_csrf" value="${csrfToken}" type="hidden"/>
+  <input name="thing" type="text"/>
+  <button type="submit"/>Submit</button>
+</form>
+`.trim()
+  );
+});
+
+app.post("/test", function (req, res) {
+  res.send("Cookie passed!")
+})
 
 // 404  PAGE
 

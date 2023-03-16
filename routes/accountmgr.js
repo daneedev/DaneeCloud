@@ -10,7 +10,7 @@ const sanitize = require("sanitize-filename")
 
 router.get("/", checkAuth, checkVerify, function (req, res) {
     const user = req.user
-    res.render(__dirname + "/../views/editaccount.ejs", { account: user.username,  cloudname: config.cloudname, editaccurl: "/editmyaccount/"})
+    res.render(__dirname + "/../views/editaccount.ejs", { account: user.username,  cloudname: config.cloudname, editaccurl: "/editmyaccount/", csrfToken: req.csrfToken()})
 })
 
 router.post("/:username", checkAuth, checkVerify, async function (req, res) {

@@ -49,7 +49,7 @@ function makeid(length) {
 router2.get("/", checkAuth, checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
     if (user.role == "admin") {
-        res.render(__dirname + "/../views/addapikey.ejs", {cloudname: config.cloudname})
+        res.render(__dirname + "/../views/addapikey.ejs", {cloudname: config.cloudname, csrfToken: req.csrfToken()})
     } else {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
     }

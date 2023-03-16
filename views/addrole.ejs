@@ -160,6 +160,7 @@ button[id="add"]:hover {
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Add role </h2>
     <form action="/addrole/" method="post">
+        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <label for="role"><span class="material-icons">edit</span>&nbsp;Role name</label>
         <input type="text" id="role" name="role" required></input>
         <label for="storage"><span class="material-icons">storage</span>&nbsp;Amount of storage (in MB)</label>

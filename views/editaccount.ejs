@@ -150,6 +150,7 @@ button[id="rename"]:hover {
     <h2 class="subtitle">Edit <%= account %> </h2>
     <% let editurl = editaccurl + account%> 
     <form action=<%= editurl %> method="post">
+        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <label for="newname"><span class="material-icons">edit</span>&nbsp;New account name</label>
         <input type="text", id="newname", name="newname" required></input>
         <label for="newname"><span class="material-icons">edit</span>&nbsp;New account email</label>

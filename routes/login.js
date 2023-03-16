@@ -5,7 +5,7 @@ const config = require("../config.json")
 const passport = require("passport")
 
 router.get("/", checkNotAuth, function (req, res) {
-    res.render(__dirname + "/../views/login.ejs", { cloudname: config.cloudname })
+    res.render(__dirname + "/../views/login.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
 })
 
 router.post("/", checkNotAuth, passport.authenticate("local", {

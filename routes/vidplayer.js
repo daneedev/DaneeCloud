@@ -29,7 +29,7 @@ router2.get("/:username/:file", checkAuth, checkVerify, async function (req, res
       if (await vidSubtitle.findOne({ filename: req.params.file })) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;This file already have subtitles`,  cloudname: config.cloudname})
       } else {
-      res.render(__dirname + "/../views/addsubtitles.ejs", {cloudname: config.cloudname, req: req})
+      res.render(__dirname + "/../views/addsubtitles.ejs", {cloudname: config.cloudname, req: req, csrfToken: req.csrfToken()})
       }
     } else {
       res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;File not found`,  cloudname: config.cloudname})
