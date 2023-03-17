@@ -48,7 +48,7 @@ router2.get("/:file", checkAuth, checkVerify, function (req, res) {
 router3.get("/:file", checkAuth, checkVerify, function (req, res) {
   const file = req.params.file
   if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/`).includes(file)) {
-    res.render(__dirname + "/../views/rename.ejs", { file: file,  cloudname: config.cloudname})
+    res.render(__dirname + "/../views/rename.ejs", { file: file,  cloudname: config.cloudname, csrfToken: req.csrfToken()})
   } else {
     res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
   }

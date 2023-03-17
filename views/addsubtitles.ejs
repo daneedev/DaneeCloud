@@ -177,6 +177,7 @@ button[id="add"]:hover {
     <h2 class="subtitle">Add subtitles for <%= req.params.file %></h2>
     <% let link = `/addsubtitles/${req.user.username}/${req.params.file}` %>
     <form action=<%= link %> method="post">
+        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <label for="name"><span class="material-icons">edit</span>&nbsp;Subtitles name</label>
         <input type="text" id="name" name="name" required></input>
         <label for="url"><span class="material-icons">link</span>&nbsp;Subtitles URL</label>

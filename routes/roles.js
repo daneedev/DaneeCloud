@@ -19,7 +19,7 @@ router.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
 })
 
 router2.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
-    res.render(__dirname + "/../views/addrole.ejs", {cloudname: config.cloudname})
+    res.render(__dirname + "/../views/addrole.ejs", {cloudname: config.cloudname, csrfToken: req.csrfToken()})
 })
 
 router2.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
@@ -33,7 +33,7 @@ router2.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) 
 
 router3.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
     const findRoles = await roles.find()
-    res.render(__dirname + "/../views/delrole.ejs", { cloudname: config.cloudname, roles: findRoles})
+    res.render(__dirname + "/../views/delrole.ejs", { cloudname: config.cloudname, roles: findRoles, csrfToken: req.csrfToken()})
 })
 
 router3.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
@@ -50,7 +50,7 @@ router3.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) 
 router4.get("/:username", checkAuth, checkVerify, checkAdmin, async function (req, res) {
     const findRoles = await roles.find()
     const user = req.params.username
-    res.render(__dirname + "/../views/editrole.ejs", {cloudname: config.cloudname, roles: findRoles, user: user})
+    res.render(__dirname + "/../views/editrole.ejs", {cloudname: config.cloudname, roles: findRoles, user: user, csrfToken: req.csrfToken()})
 })
 
 router4.post("/:username", checkAuth, checkVerify, checkAdmin, async function (req, res) {

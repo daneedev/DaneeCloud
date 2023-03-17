@@ -9,7 +9,7 @@ const fs = require("fs")
 const sanitize = require("sanitize-filename")
 
 router.get("/", checkNotAuth, function (req, res) {
-  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname})
+  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
 })
 
 router.post("/", checkNotAuth, async function (req, res) {
@@ -36,7 +36,6 @@ router.post("/", checkNotAuth, async function (req, res) {
           password: hashedPassword,
           id: Date.now().toString(),
           files: [],
-          isAdmin: false,
           isVerified: false,
           verifyCode: null,
           sharedFiles: [],
@@ -52,7 +51,6 @@ router.post("/", checkNotAuth, async function (req, res) {
           password: hashedPassword,
           id: Date.now().toString(),
           files: [],
-          isAdmin: false,
           isVerified: false,
           verifyCode: null,
           sharedFiles: [],

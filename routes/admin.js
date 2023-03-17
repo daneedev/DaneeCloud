@@ -11,6 +11,7 @@ const sanitize = require("sanitize-filename")
 const osu = require("node-os-utils")
 const ms = require("ms")
 const rolesModel = require("../models/roles")
+const apiKeys = require("../models/apiKeys")
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
     const request = require("request")
@@ -18,10 +19,11 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
     const allusers = await users.find()
     if (user.role == "admin") {
       const roles = await rolesModel.find()
+      const allApiKeys = await apiKeys.find()
       const cpu = osu.cpu
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config})
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken()})
         })
       })
     } else {

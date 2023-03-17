@@ -186,6 +186,7 @@ button[id="register"]:hover {
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Register</h2>
     <form action="/register" method="post">
+        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <label for="name"><span class="material-icons">account_circle</span>&nbsp;Username</label>
         <input type="text", id="name", name="name" required></input>
         <label for="email"><span class="material-icons">email</span>&nbsp;Email</label>

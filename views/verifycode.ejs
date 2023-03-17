@@ -130,6 +130,7 @@ button[id="verify"]:hover {
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Write code from email</h2>
     <form action="/verifycode/" method="post" id="form">
+    <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
     <input type="text", id="code", name="code" required placeholder="Verify code"></input>
     <button type="submit" id="verify"><span class="material-icons">verified</span>&nbsp;Verify</button>
     </form>

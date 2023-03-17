@@ -169,6 +169,7 @@ a {
     <% } %>  
     <h2 class="subtitle">Log In</h2>
     <form action="/login" method="post">
+        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <label for="name"><span class="material-icons">account_circle</span>&nbsp;Username</label>
         <input type="text", id="name", name="name" required></input>
         <label for="password"><span class="material-icons">lock</span>&nbsp;Password</label>
