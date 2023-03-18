@@ -40,13 +40,16 @@ app.use(session({
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(express.urlencoded({ extended: false}))
 
-app.use(csurf(
-  process.env.CSRF_TOKEN,
-  ["POST"]
-  ));
-
 app.use(passport.initialize())
 app.use(passport.session())
+
+// API
+
+app.use("/api/", require("./routes/api").api)
+
+app.use(csurf(
+  process.env.CSRF_TOKEN
+  ));
 
 // DATABASE
 
@@ -71,6 +74,10 @@ const AuthLimiter = RateLimit({
   message: 'Too many authantifications, please try again after an 15 minutes',
   max: 300
 })
+
+app.use("/addapikey/", require("./routes/api").addkey)
+
+app.use("/delapikey/", require("./routes/api").delkey)
 
 app.use("/files/", require("./routes/files"))
 
@@ -177,14 +184,6 @@ app.use("/rmsubtitles/", require("./routes/vidplayer").rmsubtitles)
 app.use("/editmyaccount/", require("./routes/accountmgr").edit)
 
 app.use("/delmyaccount/", require("./routes/accountmgr").delete)
-
-// API
-
-app.use("/api/", require("./routes/api").api)
-
-app.use("/addapikey/", require("./routes/api").addkey)
-
-app.use("/delapikey/", require("./routes/api").delkey)
 
 app.get("/test", (req, res) => {
   const csrfToken = req.csrfToken();
