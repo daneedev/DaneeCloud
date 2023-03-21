@@ -114,6 +114,10 @@ router.get("/user/all", keyAuth, async function (req, res) {
 
 router.post("/user/create", keyAuth, async function (req, res) {
     const username = sanitize(req.query.username)
+    const findUser = await users.findOne({username: req.query.username})
+    if (findUser) {
+           res.status(409).json({msg: "Response 409 - Already exist"})
+    } else {
     const email = req.query.email
     const password = req.query.password
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -127,19 +131,21 @@ router.post("/user/create", keyAuth, async function (req, res) {
         verifyCode: null,
         sharedFiles: [],
         usedStorage: 0,
-        role: "user"
+        role: "user",
+        ip: ""
     })
     newUser.save()
     fs.mkdirSync(__dirname + "/../uploads/" + username)
     res.status(201).json({msg: "Response 201 - Created"})
     logger.logInfo(`New user ${username} was created via API`)
+    }
 })
 
 router.post("/user/delete", keyAuth, async function (req, res) {
     const findUser = await users.findOne({ username: sanitize(req.query.username)})
     if (findUser) {
         const deleteUser = await users.findOneAndRemove({ username: sanitize(req.query.username)})
-        fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${user.username}/`)
+        fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${req.query.username}/`)
         res.status(200).json({msg: "Response 200 - OK"})
         logger.logInfo(`User ${req.query.username} was deleted via API`)
     } else {
@@ -157,11 +163,12 @@ router.post("/user/edit/", keyAuth, async function (req, res) {
     const hashedpassword = await bcrypt.hash(newpassword, 10)
     const findUser = await users.findOne({username: sanitize(username)})
     if (findUser) {
-        const updateUser = await users.findOne({username: sanitize(username)}, {
+        const updateUser = await users.findOneAndUpdate({username: sanitize(username)}, {
             username: newusername,
             email: newemail,
             password: hashedpassword
         })
+        fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${req.query.username}/`, __dirname + "/.." + config.uploadsfolder + `${req.query.newusername}/`)
         res.status(201).json({msg: "Response 201 - User edited"})
         logger.logInfo(`User ${username} was edited via API (New username: ${newusername}, New email: ${newemail})`)
     } else {
