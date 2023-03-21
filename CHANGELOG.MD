@@ -1,3 +1,25 @@
+# [1.5.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.4.0...v1.5.0) (2023-03-17)
+
+
+### Bug Fixes
+
+* isAdmin removed ([67421c1](https://github.com/DaneeSkripter/DaneeCloud/commit/67421c195e146d62be41764faff0b75cf667a084))
+* Maybe security bug fix ([3287216](https://github.com/DaneeSkripter/DaneeCloud/commit/3287216d36ef5d8047403c6a2b2bba4e94ff5183))
+* **security:** CSRF middleware added ([9caa352](https://github.com/DaneeSkripter/DaneeCloud/commit/9caa352e21453574ceb7d74988afbb515577d1c1))
+
+
+### Features
+
+* DaneeCloud API Part 1 ([7b23d72](https://github.com/DaneeSkripter/DaneeCloud/commit/7b23d72deab50f92d2a757f3e14143823b4e1d56))
+* DaneeCloud API Part 2 ([551f0dd](https://github.com/DaneeSkripter/DaneeCloud/commit/551f0ddbb2a2e23b990688542eb742d756ac87a3))
+
+
+### Reverts
+
+* Revert "isAdmin removed" ([b6a8ed7](https://github.com/DaneeSkripter/DaneeCloud/commit/b6a8ed7b679e60ad6566858285556be9ae4e6dd4))
+
+
+
 # [1.4.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.2...v1.4.0) (2023-03-10)
 
 
@@ -45,16 +67,6 @@
 
 * IP register added ([57659ee](https://github.com/DaneeSkripter/DaneeCloud/commit/57659ee7ddfa3348df44c87eac98045c6da650fd))
 * Option to add subtitles to video ([9b2dba6](https://github.com/DaneeSkripter/DaneeCloud/commit/9b2dba69c21f99e285778e3dff118502ce4fe149))
-
-
-
-## [1.2.3](https://github.com/DaneeSkripter/DaneeCloud/compare/0717f53cbb0c9098675554d110fdbee36c761ddc...v1.2.3) (2023-03-01)
-
-
-### Bug Fixes
-
-* Added automatic releases action ([0717f53](https://github.com/DaneeSkripter/DaneeCloud/commit/0717f53cbb0c9098675554d110fdbee36c761ddc))
-* g-action renamed ([09c3fb8](https://github.com/DaneeSkripter/DaneeCloud/commit/09c3fb8170439ff3abb1e99a45d885e123bacbd6))
 
 
 
