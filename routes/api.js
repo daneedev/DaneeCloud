@@ -198,8 +198,11 @@ router.post("/user/role", keyAuth, async function (req, res) {
 router.post("/user/verify", keyAuth, async function (req, res) {
     const username = req.query.username
     const verifycode = Math.floor(Math.random() * 9000) + 1000
-    const addverifycode = await users.findOneAndUpdate({username: sanitize(username)}, {verifyCode: verifycode.toString()}) 
     const user = await users.findOne({ username: sanitize(username)})
+    if (!user) {
+        res.status(404).json({error: "Error 404 - User not found"})
+    } else {
+    const addverifycode = await users.findOneAndUpdate({username: sanitize(username)}, {verifyCode: verifycode.toString()}) 
     transporter.sendMail({
         from: {
         name: config.cloudname + " | Verify",
@@ -219,6 +222,7 @@ router.post("/user/verify", keyAuth, async function (req, res) {
         }
         })
         res.status(200).json({msg: "Verification email has been sent to " + user.email})
+    }
 })
 
 // API: FILES
