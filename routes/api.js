@@ -131,8 +131,7 @@ router.post("/user/create", keyAuth, async function (req, res) {
         verifyCode: null,
         sharedFiles: [],
         usedStorage: 0,
-        role: "user",
-        ip: ""
+        role: "user"
     })
     newUser.save()
     fs.mkdirSync(__dirname + "/../uploads/" + username)
