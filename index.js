@@ -47,6 +47,12 @@ app.use(passport.session())
 
 app.use("/api/", require("./routes/api").api)
 
+app.use("/", require("./routes/home"))
+
+// UPLOAD
+
+app.use("/upload/", require("./routes/upload"))
+
 app.use(csurf(
   process.env.CSRF_TOKEN
   ));
@@ -85,7 +91,6 @@ app.use("/files/", require("./routes/files"))
 app.use("/files/", AuthLimiter, checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
 
-app.use("/", require("./routes/home"))
 
 // REGISTER
 app.use("/register", require("./routes/register"))
@@ -145,9 +150,6 @@ app.use("/deleteaccount/", require("./routes/admin").del)
 
 app.use("/editaccount/", require("./routes/admin").edit)
 
-// UPLOAD
-
-app.use("/upload/", require("./routes/upload"))
 
 // DOWNLOAD REDIRECT
 
