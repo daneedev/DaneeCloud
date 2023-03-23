@@ -343,8 +343,8 @@ router.get("/role/", keyAuth, async function (req, res) {
 })
 
 router.get("/role/all/", keyAuth, async function (req, res) {
-    const roles = await roles.find()
-    res.status(200).send(roles)
+    const allroles = await roles.find()
+    res.status(200).send(allroles)
     logger.logInfo(`All roles were requested via API`)
 })
 
@@ -357,7 +357,7 @@ router.post("/role/create", keyAuth, async function (req, res) {
     } else {
     const role = new roles({
         name: rolename,
-        maxStorage: maxStorage
+        maxStorage: Number(maxStorage)
     })
     role.save()
     res.status(201).json({msg: "Response 201 - Role created"})
@@ -369,9 +369,13 @@ router.post("/role/delete", keyAuth, async function (req, res) {
     const rolename = sanitize(req.query.name)
     const findRole = await roles.findOne({ name: rolename})
     if (findRole) {
+        if (rolename == "admin" || rolename == "user") {
+            res.status(409).json({error: "Error 409 - You can't delete admin or user role"})
+        } else {
     const deleteRole = await roles.findOneAndRemove({ name: rolename })
     res.status(200).json({msg: "Response 200 - Role deleted"})
     logger.logInfo(`Role ${rolename} was deleted via API`)
+        }
     } else {
         res.status(404).json({error: "Error 404 - Role not found"})
     }
@@ -383,9 +387,13 @@ router.post("/role/edit", keyAuth, async function (req, res) {
     const newmaxStorage = sanitize(req.query.maxStorage)
     const findRole = await roles.findOne({ name: rolename})
     if (findRole) {
+        if (rolename == "admin" || rolename == "user") {
+           res.status(409).json({error: "Error 409 - You can't edit admin or user role"})
+        } else {
     const updateRole = await roles.findOneAndUpdate({ name: rolename}, { name: newname, maxStorage: newmaxStorage})
     res.status(201).json({msg: "Response 201 - Role edited"})
     logger.logInfo(`Role ${rolename} was edited via API`)
+        }
     } else {
         res.status(404).json({error: "Error 404 - Role not found"})
     }
