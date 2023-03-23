@@ -1,3 +1,17 @@
+## [1.5.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.5.0...v1.5.1) (2023-03-23)
+
+
+### Bug Fixes
+
+* /api/role/ bug fixes ([2ffca8a](https://github.com/DaneeSkripter/DaneeCloud/commit/2ffca8a745bf5d37a5d6c18acb5b58a390397c16))
+* api /user/verify bug fix ([658528f](https://github.com/DaneeSkripter/DaneeCloud/commit/658528fe02bd6e15ecd421ff78e7a97932870f8c))
+* API bug fix ([3997952](https://github.com/DaneeSkripter/DaneeCloud/commit/3997952bfa0edfb9028d076aa4efbc2fd6558b70))
+* api missing things bug fix ([0285b88](https://github.com/DaneeSkripter/DaneeCloud/commit/0285b88b9b7f49f4591696629adcfb7383c7fc2d))
+* csrf upload bug fix ([9c521be](https://github.com/DaneeSkripter/DaneeCloud/commit/9c521be9416ce5244cf2b40970ff59c0388973e2))
+* No need to provide empty string to ip field ([4e14518](https://github.com/DaneeSkripter/DaneeCloud/commit/4e14518ea168f72580231d58ecf9c31ca6f6bbe0))
+
+
+
 # [1.5.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.4.0...v1.5.0) (2023-03-17)
 
 
@@ -51,22 +65,6 @@
 ### Bug Fixes
 
 * update link bug fix ([574bd26](https://github.com/DaneeSkripter/DaneeCloud/commit/574bd26c884bd0955f19b9124b7cd23f29aa7a25))
-
-
-
-# [1.3.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.2.3...v1.3.0) (2023-03-03)
-
-
-### Bug Fixes
-
-* added v to version columm in admin panel ([f389fac](https://github.com/DaneeSkripter/DaneeCloud/commit/f389facad2c83f03f4007e7dd53c476ef8116ea0))
-* Uploading bug fix ([51f8221](https://github.com/DaneeSkripter/DaneeCloud/commit/51f82215baa3a6838c08f23a026ab444c20915f1))
-
-
-### Features
-
-* IP register added ([57659ee](https://github.com/DaneeSkripter/DaneeCloud/commit/57659ee7ddfa3348df44c87eac98045c6da650fd))
-* Option to add subtitles to video ([9b2dba6](https://github.com/DaneeSkripter/DaneeCloud/commit/9b2dba69c21f99e285778e3dff118502ce4fe149))
 
 
 
