@@ -15,6 +15,10 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - Account registration & login
 - Logs everything into file
 - IP register (no alt accounts)
+- API
+- Addons
+
+## [Addons](https://docs.daneeskripter.dev/daneecloud/addons)
 
 ### Updates
 - You can look what changed [here](https://github.com/DaneeSkripter/DaneeCloud/blob/main/CHANGELOG.MD)
