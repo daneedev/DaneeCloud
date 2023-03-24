@@ -114,7 +114,7 @@ router.get("/user/all", keyAuth, async function (req, res) {
 
 router.post("/user/create", keyAuth, async function (req, res) {
     const username = sanitize(req.query.username)
-    const findUser = await users.findOne({username: req.query.username})
+    const findUser = await users.findOne({username: sanitize(req.query.username)})
     if (findUser) {
            res.status(409).json({msg: "Response 409 - Already exist"})
     } else {
@@ -144,7 +144,7 @@ router.post("/user/delete", keyAuth, async function (req, res) {
     const findUser = await users.findOne({ username: sanitize(req.query.username)})
     if (findUser) {
         const deleteUser = await users.findOneAndRemove({ username: sanitize(req.query.username)})
-        fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${req.query.username}/`)
+        fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.query.username)}/`)
         res.status(200).json({msg: "Response 200 - OK"})
         logger.logInfo(`User ${req.query.username} was deleted via API`)
     } else {
@@ -163,11 +163,11 @@ router.post("/user/edit/", keyAuth, async function (req, res) {
     const findUser = await users.findOne({username: sanitize(username)})
     if (findUser) {
         const updateUser = await users.findOneAndUpdate({username: sanitize(username)}, {
-            username: newusername,
-            email: newemail,
-            password: hashedpassword
+            username: sanitize(newusername),
+            email: sanitize(newemail),
+            password: sanitize(hashedpassword)
         })
-        fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${req.query.username}/`, __dirname + "/.." + config.uploadsfolder + `${req.query.newusername}/`)
+        fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.query.username)}/`, __dirname + "/.." + config.uploadsfolder + `${sanitize(req.query.newusername)}/`)
         res.status(201).json({msg: "Response 201 - User edited"})
         logger.logInfo(`User ${username} was edited via API (New username: ${newusername}, New email: ${newemail})`)
     } else {
