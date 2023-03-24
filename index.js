@@ -43,6 +43,20 @@ app.use(express.urlencoded({ extended: false}))
 app.use(passport.initialize())
 app.use(passport.session())
 
+// RATE LIMITING
+const limiter = RateLimit({
+  windowMs: 15*60*1000, // 15 minute
+  max: 500
+});
+app.use(limiter);
+
+// AUTH LIMITING
+const AuthLimiter = RateLimit({
+  windowsMs: 15*60*1000, // 15 minutes
+  message: 'Too many authantifications, please try again after an 15 minutes',
+  max: 300
+})
+
 // API
 
 app.use("/api/", require("./routes/api").api)
@@ -65,20 +79,6 @@ mongoose.connect(process.env.mongo_srv, {
   logger.logSuccess("Connected to the database!")
 ]).catch((err) =>{
   logger.logError('Failed connect to the database!')
-})
-
-// RATE LIMITING
-const limiter = RateLimit({
-  windowMs: 15*60*1000, // 15 minute
-  max: 500
-});
-app.use(limiter);
-
-// AUTH LIMITING
-const AuthLimiter = RateLimit({
-  windowsMs: 15*60*1000, // 15 minutes
-  message: 'Too many authantifications, please try again after an 15 minutes',
-  max: 300
 })
 
 app.use("/addapikey/", require("./routes/api").addkey)
