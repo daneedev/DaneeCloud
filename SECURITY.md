@@ -7,10 +7,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.5.0   | ✅                 |
+| 1.5.x   | ✅                 |
 | 1.4.0   | ✅                 |
-| 1.3.x   | ✅                 |
-| 1.2.2   | :white_check_mark: |
 | < 1.2.1 | :x:               |
 
 ## Reporting a Vulnerability
