@@ -1,3 +1,13 @@
+## [1.5.2](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.5.1...v1.5.2) (2023-03-25)
+
+
+### Bug Fixes
+
+* ratelimiting bug fix ([732e3b4](https://github.com/DaneeSkripter/DaneeCloud/commit/732e3b40add478765cc09f2585aea825f39b2e78))
+* security bug fixes in api ([1cb7193](https://github.com/DaneeSkripter/DaneeCloud/commit/1cb71931a9f24d9327b489a9d1795cd6afec6dc5))
+
+
+
 ## [1.5.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.5.0...v1.5.1) (2023-03-23)
 
 
@@ -56,15 +66,6 @@
 
 * expires changed to maxAge ([49f712e](https://github.com/DaneeSkripter/DaneeCloud/commit/49f712e6e9a15be5ea27c0601b702d25614c0c29))
 * **security:** Clear text transmission of sensitive cookie ([06aabd9](https://github.com/DaneeSkripter/DaneeCloud/commit/06aabd928885c5f137020f13a87f91c654306403))
-
-
-
-## [1.3.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.0...v1.3.1) (2023-03-05)
-
-
-### Bug Fixes
-
-* update link bug fix ([574bd26](https://github.com/DaneeSkripter/DaneeCloud/commit/574bd26c884bd0955f19b9124b7cd23f29aa7a25))
 
 
 
