@@ -1,4 +1,4 @@
-# [DaneeCloud](https://docs.daneeskripter.dev/daneecloud/)
+# <h1 align="center">[DaneeCloud](https://docs.daneeskripter.dev/daneecloud/)</h1>
 ![](/img/js.svg)
 ![](/img/mongodb.svg)
 ## About
