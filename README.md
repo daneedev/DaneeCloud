@@ -28,12 +28,14 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 ## ⚖️ Rights and license
 - You have ***NO*** right to say "we did this"
 - Please keep ***MY NAME*** in footer of pages
-- You have ***NO*** right to claim this project as your own
+- You have **NO** right to claim this project as your own
 - This project is licensed under the **[MIT license](./LICENSE)**
+- **DaneeSkripter ©️ 2022 - 2023 | All rights reserved**
 
 ## 🔗 Useful links
 - [Addons](https://docs.daneeskripter.dev/daneecloud/addons) - List of all addons (If you want to add your addon to this list, DM me on Discord)
 - [Changelog](https://github.com/DaneeSkripter/DaneeCloud/blob/main/CHANGELOG.MD)
+- [Docs](https://docs.daneeskripter.dev/daneecloud/) 
 
 ## 💿 Installation
 https://docs.daneeskripter.dev/daneecloud/install
