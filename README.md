@@ -1,4 +1,4 @@
-# <h1 align="center">[DaneeCloud](https://docs.daneeskripter.dev/daneecloud/)</h1>
+# <h1 align="center">☁️ DaneeCloud</h1>
 <b><p align="center">[⏬ Download latest release](https://github.com/daneeskripter/daneecloud/releases)</p></b>
 <b><p align="center">Made with 💖 by DaneeSkripter</p></b>
 
