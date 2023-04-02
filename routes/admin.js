@@ -20,6 +20,10 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
     if (user.role == "admin") {
       const roles = await rolesModel.find()
       const allApiKeys = await apiKeys.find()
+      const badge = roles.filter((obj) => {
+        return obj.name == "admin"
+      })
+      console.log(badge)
       const cpu = osu.cpu
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
