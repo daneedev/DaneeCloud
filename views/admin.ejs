@@ -422,13 +422,13 @@ input[id="badge"] {
           </tr>
         </thead>
         <tbody>
-          <tr>
             <% for (let apiKey of apiKeys) { %>
               <% let apiKeyLink = "/delapikey/" + apiKey.name %>
+              <tr>
               <td><%= apiKey.name %></td>
               <td><a href=<%= apiKeyLink %>><span class="material-icons">delete</span></a></td>
+            </tr>
             <% } %>
-          </tr>
         </tbody>
       </table>
       <form action="/">
