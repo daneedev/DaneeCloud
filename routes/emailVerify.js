@@ -8,7 +8,7 @@ const { transporter} = require("../handlers/smtpconfig")
 const logger = require("../handlers/logger")
 
 router.get("/", checkAuth, checkNotVerify, function (req, res) {
-    res.render(__dirname + "/../views/verify.ejs", { cloudname: config.cloudname, req: req})
+    res.render(__dirname + "/../views/verify.ejs", { cloudname: config.cloudname, req: req, csrfToken: req.csrfToken()})
 })
 
 router.post("/", checkAuth, checkNotVerify, async function (req, res) {
