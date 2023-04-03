@@ -351,13 +351,15 @@ router.get("/role/all/", keyAuth, async function (req, res) {
 router.post("/role/create", keyAuth, async function (req, res) {
     const rolename = sanitize(req.query.name)
     const maxStorage = req.query.maxStorage
+    const badgeUrl = req.query.badge
     const findRole = await roles.findOne({name: rolename})
     if (findRole) {
         res.status(409).json({error: "Error 409 - Role already exist"})
     } else {
     const role = new roles({
         name: rolename,
-        maxStorage: Number(maxStorage)
+        maxStorage: Number(maxStorage),
+        badge: badgeUrl
     })
     role.save()
     res.status(201).json({msg: "Response 201 - Role created"})
@@ -385,12 +387,13 @@ router.post("/role/edit", keyAuth, async function (req, res) {
     const rolename = sanitize(req.query.name)
     const newname = sanitize(req.query.newname)
     const newmaxStorage = sanitize(req.query.maxStorage)
+    const newbadgeUrl = req.query.badge
     const findRole = await roles.findOne({ name: rolename})
     if (findRole) {
         if (rolename == "admin" || rolename == "user") {
            res.status(409).json({error: "Error 409 - You can't edit admin or user role"})
         } else {
-    const updateRole = await roles.findOneAndUpdate({ name: rolename}, { name: newname, maxStorage: newmaxStorage})
+    const updateRole = await roles.findOneAndUpdate({ name: rolename}, { name: newname, maxStorage: newmaxStorage, badge: newbadgeUrl})
     res.status(201).json({msg: "Response 201 - Role edited"})
     logger.logInfo(`Role ${rolename} was edited via API`)
         }
