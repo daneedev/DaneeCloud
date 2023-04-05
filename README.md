@@ -1,4 +1,3 @@
-<img align="center" src="/img/daneecloudlogo.png"></img>
 # <h1 align="center">☁️ DaneeCloud</h1>
 <b><p align="center">[⏬ Download latest release](https://github.com/daneeskripter/daneecloud/releases)</p></b>
 <b><p align="center">Made with 💖 by DaneeSkripter</p></b>
