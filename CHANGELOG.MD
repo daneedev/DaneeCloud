@@ -1,3 +1,21 @@
+# [1.6.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.5.2...v1.6.0) (2023-04-05)
+
+
+### Bug Fixes
+
+* API Keys table bug fix ([42d10b2](https://github.com/DaneeSkripter/DaneeCloud/commit/42d10b2d586bb0df7e046cbcf34003669943e119))
+* Badge added to home page ([58fb5eb](https://github.com/DaneeSkripter/DaneeCloud/commit/58fb5eb1b0f074a749a4d88077d7baa31b68ebd0))
+* console.log role ([bedcdcf](https://github.com/DaneeSkripter/DaneeCloud/commit/bedcdcf55d5c3a73594bb6dfc122782190735d92))
+* emailVerify CSRF token bug fix ([58e6e04](https://github.com/DaneeSkripter/DaneeCloud/commit/58e6e045ad6f4e0f223336ed534e1580ae3b5a08))
+
+
+### Features
+
+* Add badges to roles ([af046af](https://github.com/DaneeSkripter/DaneeCloud/commit/af046af01354a601d5fa4bc2cd45d3eaebbf0ed8))
+* Badges added to API ([363f2d8](https://github.com/DaneeSkripter/DaneeCloud/commit/363f2d80507b8c73b708725570a9bcf0227df64d))
+
+
+
 ## [1.5.2](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.5.1...v1.5.2) (2023-03-25)
 
 
@@ -56,16 +74,6 @@
 ### Features
 
 * User's account managment ([c5faaab](https://github.com/DaneeSkripter/DaneeCloud/commit/c5faaaba20550220b7e5f15f71d916e557523150))
-
-
-
-## [1.3.2](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.1...v1.3.2) (2023-03-07)
-
-
-### Bug Fixes
-
-* expires changed to maxAge ([49f712e](https://github.com/DaneeSkripter/DaneeCloud/commit/49f712e6e9a15be5ea27c0601b702d25614c0c29))
-* **security:** Clear text transmission of sensitive cookie ([06aabd9](https://github.com/DaneeSkripter/DaneeCloud/commit/06aabd928885c5f137020f13a87f91c654306403))
 
 
 
