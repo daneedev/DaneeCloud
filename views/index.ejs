@@ -454,7 +454,7 @@ function abortHandler(event) {
             <button type="submit" class="delaccount">Delete account</button>
         </form>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Welcome, <%= username %>!</h2> 
+    <h2 class="subtitle">Welcome, <%= username %> <img title=<%= user.role %> src=<%= badge %> width="30" height="30"></img>!</h2> 
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3 class="storage"><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <form id="form" action="/upload/" method="post", enctype="multipart/form-data" target="_blank">

@@ -8,6 +8,7 @@ const roles = require("../models/roles")
 router.get("/", checkAuth , checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
     const role = await roles.findOne({name: user.role})
+    const badge = role.badge
     if (!user.ip && config.registerip) {
       const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
       await user.updateOne({ip: ip})
@@ -18,7 +19,7 @@ router.get("/", checkAuth , checkVerify, async function (req, res) {
     } else {
       isAdmin = false
     }
-    res.render(__dirname + "/../views/index.ejs", {isAdmin: isAdmin, username: req.user.username, cloudname: config.cloudname, usedStorage: user.usedStorage, maxStorage: role.maxStorage} )
+    res.render(__dirname + "/../views/index.ejs", {isAdmin: isAdmin, username: req.user.username, cloudname: config.cloudname, usedStorage: user.usedStorage, maxStorage: role.maxStorage, badge: badge, user: user} )
   })
 
 module.exports = router

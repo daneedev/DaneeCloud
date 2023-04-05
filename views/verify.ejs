@@ -155,6 +155,7 @@ button[id="verify"]:hover {
     <h1><%= cloudname %></h1>
     <h2 class="subtitle">Send verification email to <%= req.user.email %> </h2>
     <form action="/verify" method="post">
+    <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
       <input type="text"></input>
       <button id="send" type="submit" >Send verification email</button>
     </form>
