@@ -1,3 +1,15 @@
+## [1.6.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.6.0...v1.6.1) (2023-04-14)
+
+
+### Bug Fixes
+
+* better footer text ([733bfb4](https://github.com/DaneeSkripter/DaneeCloud/commit/733bfb4c4b7cbcb881efe3af426a69b507e9406c))
+* csrfToken bug fix ([e8cb5af](https://github.com/DaneeSkripter/DaneeCloud/commit/e8cb5aff0d24995c34220ab92ab660f4fa17d155))
+* Footer edited ([569cfff](https://github.com/DaneeSkripter/DaneeCloud/commit/569cfffe1edd918298a2206956198e3848c0ce88))
+* new default port ([47634a6](https://github.com/DaneeSkripter/DaneeCloud/commit/47634a6c224de295219c87bbed7f15dc95295206))
+
+
+
 # [1.6.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.5.2...v1.6.0) (2023-04-05)
 
 
@@ -59,21 +71,6 @@
 ### Reverts
 
 * Revert "isAdmin removed" ([b6a8ed7](https://github.com/DaneeSkripter/DaneeCloud/commit/b6a8ed7b679e60ad6566858285556be9ae4e6dd4))
-
-
-
-# [1.4.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.3.2...v1.4.0) (2023-03-10)
-
-
-### Bug Fixes
-
-* deleted depracted way to collect ip address ([b4c0dea](https://github.com/DaneeSkripter/DaneeCloud/commit/b4c0dea73dbbdf819b1e6d0cc1da1544df7f8c18))
-* passport 0.6 not working ([99101b1](https://github.com/DaneeSkripter/DaneeCloud/commit/99101b1920859fa875725e7d2dd4611429c0dd34))
-
-
-### Features
-
-* User's account managment ([c5faaab](https://github.com/DaneeSkripter/DaneeCloud/commit/c5faaaba20550220b7e5f15f71d916e557523150))
 
 
 
