@@ -36,10 +36,9 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - **DaneeSkripter ©️ 2022 - 2023 | All rights reserved**
 
 ## 🔗 Useful links
-- [Addons](https://docs.daneeskripter.dev/daneecloud/addons) - List of all addons (If you want to add your addon to this list, DM me on Discord)
 - [Changelog](https://github.com/DaneeSkripter/DaneeCloud/blob/main/CHANGELOG.MD)
 - [Docs](https://docs.daneeskripter.dev/daneecloud/) 
-- [Themes](https://github.com/DaneeSkripter/DaneeCloudThemes) - List of all themes
+- [Addons & Themes](https://cloudaddons.daneeskripter.dev) - List of all addons & themes
 - [Demo](https://cloud.daneeskripter.dev) - Demo version of DaneeCloud, that allow you to upload 64 MB
 
 ## 💿 Installation
