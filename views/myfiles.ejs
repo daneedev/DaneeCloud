@@ -159,12 +159,53 @@ p {
   margin-left: auto;
 }
 
+input[id="searchBar"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
     </style>
+    <script>
+      function searchBar() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("searchBar");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("files");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+    </script>
     <h1><%= cloudname %> </h1>
     <h2>My Files</h2>
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
-    <table>
+    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for file name">
+    <table id="files">
       <thead>
       <tr>
         <th>Preview</th>
