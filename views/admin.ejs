@@ -315,6 +315,24 @@ input[id="badge"] {
     border:0cm
 }
 
+input[id="searchBar"] {
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+}
+
 
 .material-icons.md-36 { font-size: 36px;   margin-top: 20px;}
     </style>
@@ -350,7 +368,31 @@ input[id="badge"] {
       </tbody>
     </table>
     <h2 class="usr">User management</h2>
-    <table class="usrtable">
+    <script>
+      function searchBar() {
+  // Declare variables
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("searchBar");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("users");
+  tr = table.getElementsByTagName("tr");
+
+  // Loop through all table rows, and hide those who don't match the search query
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+}
+    </script>
+    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for username">
+    <table class="usrtable" id="users">
         <thead>
         <tr>
           <th>Account username</th>
