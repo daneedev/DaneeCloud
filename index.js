@@ -187,22 +187,6 @@ app.use("/editmyaccount/", require("./routes/accountmgr").edit)
 
 app.use("/delmyaccount/", require("./routes/accountmgr").delete)
 
-app.get("/test", (req, res) => {
-  const csrfToken = req.csrfToken();
-  return res.status(200).send(
-    `
-<form method="POST" action="/test">
-  <input name="_csrf" value="${csrfToken}" type="hidden"/>
-  <input name="thing" type="text"/>
-  <button type="submit"/>Submit</button>
-</form>
-`.trim()
-  );
-});
-
-app.post("/test", function (req, res) {
-  res.send("Cookie passed!")
-})
 
 // 404  PAGE
 
