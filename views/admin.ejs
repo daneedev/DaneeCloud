@@ -379,7 +379,7 @@ input[id="searchBar"] {
 
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[1];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -395,6 +395,7 @@ input[id="searchBar"] {
     <table class="usrtable" id="users">
         <thead>
         <tr>
+          <th>Profile picture</th>
           <th>Account username</th>
           <th>Account email</th>
           <th>Is verified?</th>
@@ -418,6 +419,9 @@ input[id="searchBar"] {
           <% } %>   
           <tr>
             <% let badge = roles.filter((obj) => {return obj.name == user.role})[0].badge   %>
+            <% let hashedemail = md5(user.email) %>
+            <% let gravatar = `https://www.gravatar.com/avatar/${hashedemail}` %>
+            <td><img src=<%= gravatar %> width="40" height="auto"></td>
             <td><%= user.username %> | <img title=<%= user.role %> src=<%= badge %> width="20" height="20"></img></td>
             <td><%= user.email %> </td>
             <td><%= isverified %> </td>

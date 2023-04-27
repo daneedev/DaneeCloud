@@ -21,9 +21,10 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
       const roles = await rolesModel.find()
       const allApiKeys = await apiKeys.find()
       const cpu = osu.cpu
+      const md5 = require("md5")
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken()})
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken(), md5: md5})
         })
       })
     } else {
