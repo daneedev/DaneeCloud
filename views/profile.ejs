@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="../css//style.css">
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet">
+              <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+            <title<%= cloudname %></title>
+        <style>body {
+            background-color: #d2d3db;
+            padding: 0;
+            margin: 0;
+        }
+        
+
+        
+        h1 {
+    color: #5D3FD3;
+    margin-top: 10%;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: xxx-large;
+
+}
+        h2 {
+            color: #5D3FD3;
+    margin-top: -5px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: x-large;
+        
+        }
+      
+    .username {
+          color: #5D3FD3;
+          display: flex;
+          margin-left: 100px;
+          margin-right: auto;
+          margin-top: -50px;
+          margin-bottom: 50px;
+          justify-content: center;
+          align-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: 20px;
+      }
+      .email {
+          color: #5D3FD3;
+          display: flex;
+          margin-left: auto;
+          margin-right: auto;
+          margin-bottom: 50px;
+          justify-content: center;
+          align-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: 17px;
+      }
+      .isverified {
+          color: #5D3FD3;
+          display: flex;
+          margin-left: auto;
+          margin-top: -50px;
+          margin-right: auto;   
+          justify-content: center;
+          align-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: 17px;
+      }
+      .info {
+          color: #5D3FD3;
+          display: flex;
+          margin-left: auto;
+          margin-top: -15px;
+          margin-right: auto;   
+          justify-content: center;
+          align-items: center;
+          font-family: "Montserrat", sans-serif;
+          font-size: 17px;
+      }
+      input[type="submit"] {
+        color: white;
+    height: 60px;
+    width: 250px;
+    background-color: #5D3FD3;
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+    }
+    
+    input[type="submit"]:hover {
+        color: #5D3FD3;
+    height: 60px;
+    width: 250px;
+    background-color: white;
+    font-size: 20px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 24px;
+    transition-duration: 0.4s;
+    border:0cm
+    }
+    .footer {
+      position: fixed;
+      padding: 10px 10px 0px 10px;
+      bottom: 0;
+      width: 100%;
+      /* Height of the footer*/
+      height: 40px;
+      background: black;
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      text-align: center;
+  }
+
+  img {
+    display: block;
+    margin-left: 43%;
+    margin-right: auto;
+  }
+
+  ::-webkit-input-placeholder {
+    text-align: center;
+  }
+  
+  :-moz-placeholder {
+    text-align: center;
+  }
+  :-ms-input-placeholder {  
+    text-align: center; 
+ }
+
+        </style>
+        
+        </head>
+        <body>
+            <h1><%= cloudname %></h1>
+            <h2>My profile</h2>
+            <% let hashedemail = md5(user.email) %>
+            <% let gravatar = `https://www.gravatar.com/avatar/${hashedemail}` %>
+            <% let isVerified; %>
+            <% if (user.isVerified) { %>
+            <% isVerified = "Yes" %>
+            <% } else { %>
+            <% isVerified = "No" %>
+            <% } %>
+            <img src=<%= gravatar %> >
+            <h3 class="username"><%= user.username %></h3>
+            <h3 class="email">Email: <%= user.email %></h3>
+            <h3 class="isverified">Verified: <%= isVerified %></h3>
+            <h3 class="info">Role: <%= user.role %></h3>
+            <form action="/editmyaccount">
+                <input type="submit" class="editaccount" value="Edit account"></input>
+            </form>
+            <form action="/delmyaccount">
+                <input type="submit" class="delaccount" value="Delete account"></input>
+            </form>
+            <form action="/">
+            <input type="submit" href="/" value="Back to home page"></input>
+            </form>
+            <footer>
+                     <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
+        
+        </footer>
+        </body>
+        </html>

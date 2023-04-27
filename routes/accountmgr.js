@@ -1,6 +1,7 @@
 const express = require("express") 
 const router = express.Router()
 const router2 = express.Router()
+const router3 = express.Router()
 const {checkAuth, checkVerify} = require("../handlers/authVerify")
 const users = require("../models/users");
 const config = require("../config.json")
@@ -34,5 +35,12 @@ router2.post("/", checkAuth, checkVerify, async function (req, res) {
     res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Your account has been deleted!`,  cloudname: config.cloudname})
 })
 
+router3.get("/", checkAuth, checkVerify, async function (req, res) {
+    const md5 = require("md5")
+    const user = req.user
+    res.render(__dirname + "/../views/profile.ejs", {cloudname: config.cloudname, md5: md5, user: user})
+})
+
 module.exports.edit = router
 module.exports.delete = router2
+module.exports.myprofile = router3
