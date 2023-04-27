@@ -1,3 +1,22 @@
+# [1.7.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.6.1...v1.7.0) (2023-04-27)
+
+
+### Bug Fixes
+
+* favicon static ([660b3d4](https://github.com/DaneeSkripter/DaneeCloud/commit/660b3d4002347b919958f556161ef7f85b02a68c))
+* unused route ([7b550c2](https://github.com/DaneeSkripter/DaneeCloud/commit/7b550c2cc7a68c02d0b16d50d2086bba5b4473a3))
+
+
+### Features
+
+* **design:** logos added ([3ff5d99](https://github.com/DaneeSkripter/DaneeCloud/commit/3ff5d99211305c8cf6b126bb15e88a2a8b2ad86c))
+* files search bar ([5881e62](https://github.com/DaneeSkripter/DaneeCloud/commit/5881e626e5078abadd828ceed9fddf92d43b0780))
+* profile pictures added ([eb54c90](https://github.com/DaneeSkripter/DaneeCloud/commit/eb54c909da6eab37e31e8baea721d911e064e276))
+* user's profile page ([cd0a016](https://github.com/DaneeSkripter/DaneeCloud/commit/cd0a01637ebcb01d5025a1771c063a80e231ed30))
+* users search bar ([2530279](https://github.com/DaneeSkripter/DaneeCloud/commit/2530279d26a168012cccf2fa69d3e3af638a2a8c))
+
+
+
 ## [1.6.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.6.0...v1.6.1) (2023-04-14)
 
 
@@ -49,28 +68,6 @@
 * api missing things bug fix ([0285b88](https://github.com/DaneeSkripter/DaneeCloud/commit/0285b88b9b7f49f4591696629adcfb7383c7fc2d))
 * csrf upload bug fix ([9c521be](https://github.com/DaneeSkripter/DaneeCloud/commit/9c521be9416ce5244cf2b40970ff59c0388973e2))
 * No need to provide empty string to ip field ([4e14518](https://github.com/DaneeSkripter/DaneeCloud/commit/4e14518ea168f72580231d58ecf9c31ca6f6bbe0))
-
-
-
-# [1.5.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.4.0...v1.5.0) (2023-03-17)
-
-
-### Bug Fixes
-
-* isAdmin removed ([67421c1](https://github.com/DaneeSkripter/DaneeCloud/commit/67421c195e146d62be41764faff0b75cf667a084))
-* Maybe security bug fix ([3287216](https://github.com/DaneeSkripter/DaneeCloud/commit/3287216d36ef5d8047403c6a2b2bba4e94ff5183))
-* **security:** CSRF middleware added ([9caa352](https://github.com/DaneeSkripter/DaneeCloud/commit/9caa352e21453574ceb7d74988afbb515577d1c1))
-
-
-### Features
-
-* DaneeCloud API Part 1 ([7b23d72](https://github.com/DaneeSkripter/DaneeCloud/commit/7b23d72deab50f92d2a757f3e14143823b4e1d56))
-* DaneeCloud API Part 2 ([551f0dd](https://github.com/DaneeSkripter/DaneeCloud/commit/551f0ddbb2a2e23b990688542eb742d756ac87a3))
-
-
-### Reverts
-
-* Revert "isAdmin removed" ([b6a8ed7](https://github.com/DaneeSkripter/DaneeCloud/commit/b6a8ed7b679e60ad6566858285556be9ae4e6dd4))
 
 
 
