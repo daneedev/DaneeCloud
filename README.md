@@ -1,3 +1,7 @@
+<p align="center">
+<img width="200" height="200" src="/img/daneecloudlogo.png"></img>
+</p>
+
 # <h1 align="center">☁️ DaneeCloud</h1>
 <b><p align="center">[⏬ Download latest release](https://github.com/daneeskripter/daneecloud/releases)</p></b>
 <b><p align="center">Made with 💖 by DaneeSkripter</p></b>

@@ -1,6 +1,6 @@
 {
   "name": "daneecloud",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "Online filesystem",
   "main": "index.js",
   "scripts": {
