@@ -22,6 +22,7 @@
     "is-audio": "^0.0.0",
     "is-image": "^3.1.0",
     "is-video": "^1.0.1",
+    "md5": "^2.3.0",
     "method-override": "^3.0.0",
     "mongoose": "^7.0.5",
     "ms": "^2.1.3",
