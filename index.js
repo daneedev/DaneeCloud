@@ -87,6 +87,8 @@ app.use("/delapikey/", require("./routes/api").delkey)
 
 app.use("/files/", require("./routes/files"))
 
+app.use('/favicon.ico', express.static( __dirname + "/img/daneecloudfavicon.png"));
+
 
 app.use("/files/", AuthLimiter, checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
