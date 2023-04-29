@@ -1,12 +1,3 @@
-## [1.7.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.7.0...v1.7.1) (2023-04-29)
-
-
-### Bug Fixes
-
-* markdown bug fix ([9d8cd31](https://github.com/DaneeSkripter/DaneeCloud/commit/9d8cd31fc659d09bfcf79db4a00b32b96bfcab62))
-
-
-
 # [1.7.0](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.6.1...v1.7.0) (2023-04-27)
 
 
