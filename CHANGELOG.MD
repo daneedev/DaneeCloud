@@ -1,4 +1,4 @@
-## [1.7.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.7.0...v1.7.1) (2023-04-27)
+## [1.7.1](https://github.com/DaneeSkripter/DaneeCloud/compare/v1.7.0...v1.7.1) (2023-04-29)
 
 
 ### Bug Fixes
