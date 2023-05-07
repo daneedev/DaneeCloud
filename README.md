@@ -30,7 +30,9 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 | Badge | Name | Description |
 | ----- | ---- | ----------- |
 | ![](https://img.shields.io/github/actions/workflow/status/DaneeSkripter/DaneeCloud/codeql.yml?label=CodeQL&logo=github) | CodeQL | Looking for vulnerabilities in code |
-| ![](https://img.shields.io/github/actions/workflow/status/DaneeSkripter/DaneeCloud/release.yml?label=Release&logo=github) | Release | Creating automatic releases after pushing commits
+
+## [🖼️ Addons & Themes](./addons.md)
+- *to show list of addons & themes click the link above*
 
 ## ⚖️ Rights and license
 - You have ***NO*** right to say "we did this"
@@ -42,7 +44,6 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 ## 🔗 Useful links
 - [Changelog](https://github.com/DaneeSkripter/DaneeCloud/blob/main/CHANGELOG.MD)
 - [Docs](https://docs.daneeskripter.dev/daneecloud/) 
-- [Addons & Themes](https://cloudaddons.daneeskripter.dev) - List of all addons & themes
 - [Demo](https://cloud.daneeskripter.dev) - Demo version of DaneeCloud, that allow you to upload 64 MB
 
 ## 💿 Installation
