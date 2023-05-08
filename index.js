@@ -189,6 +189,9 @@ app.use("/editmyaccount/", require("./routes/accountmgr").edit)
 
 app.use("/delmyaccount/", require("./routes/accountmgr").delete)
 
+// MY PROFILE
+app.use("/myprofile", require("./routes/accountmgr").myprofile)
+
 
 // 404  PAGE
 
