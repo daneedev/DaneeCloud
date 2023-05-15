@@ -11,7 +11,9 @@ const users = new mongoose.Schema({
     sharedFiles: {type: Array},
     usedStorage: { type: Number},
     role: { type: String},
-    ip: { type: String}
+    ip: { type: String},
+    createdAt: { type: String},
+    lastSeen: { type: String }
 })
 
 const model = mongoose.model('users', users)

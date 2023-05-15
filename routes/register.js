@@ -7,6 +7,7 @@ const logger = require("../handlers/logger")
 const bcrypt = require("bcrypt")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
+const moment = require("moment")
 
 router.get("/", checkNotAuth, function (req, res) {
   res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
@@ -29,6 +30,12 @@ router.post("/", checkNotAuth, async function (req, res) {
         } else  if (ipExist && config.registerip) { 
           res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this IP address already exists!`,  cloudname: config.cloudname})
         } else {
+          const datevar = new Date()
+          const day = datevar.getDate()
+          const month = datevar.getMonth()
+          const year = datevar.getFullYear()
+          const date = `${day}.${month}.${year}`
+          const lastSeen = moment.unix(Date.now() / 1000).fromNow()
           if (config.registerip) {
           const user = new users({
           username: req.body.name,
@@ -41,7 +48,9 @@ router.post("/", checkNotAuth, async function (req, res) {
           sharedFiles: [],
           usedStorage: 0,
           role: "user",
-          ip: ip
+          ip: ip,
+          createdAt: date,
+          lastSeen: lastSeen
         })
         user.save()
       } else {
@@ -55,7 +64,9 @@ router.post("/", checkNotAuth, async function (req, res) {
           verifyCode: null,
           sharedFiles: [],
           usedStorage: 0,
-          role: "user"
+          role: "user",
+          createdAt: date,
+          lastSeen: lastSeen
         })
         user.save()
       }
