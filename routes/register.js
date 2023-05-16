@@ -11,6 +11,13 @@ const moment = require("moment")
 
 router.get("/", checkNotAuth, function (req, res) {
   res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
+  const client = require("../index").presence
+  client.updatePresence({
+    state: 'Browsing register page',
+    startTimestamp: Date.now(),
+    largeImageKey: config.richpresencelogo,
+    instance: true,
+  });
 })
 
 router.post("/", checkNotAuth, async function (req, res) {

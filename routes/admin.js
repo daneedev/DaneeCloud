@@ -27,6 +27,13 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
         res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken(), md5: md5})
         })
       })
+      const client = require("../index").presence
+      client.updatePresence({
+        state: 'Browsing admin panel',
+        startTimestamp: Date.now(),
+        largeImageKey: config.richpresencelogo,
+        instance: true,
+      });
     } else {
       res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
     }
@@ -54,6 +61,13 @@ router2.get("/:account", checkAuth, checkVerify, async function (req, res) {
 router3.get("/:account", checkAuth, checkVerify, function (req, res) {
     const account = req.params.account
     res.render(__dirname + "/../views/editaccount.ejs", { account: account,  cloudname: config.cloudname, editaccurl: "/editaccount/", csrfToken: req.csrfToken()})
+    const client = require("../index").presence
+    client.updatePresence({
+      state: `Editing a ${account} account`,
+      startTimestamp: Date.now(),
+      largeImageKey: config.richpresencelogo,
+      instance: true,
+    });
   })
   
 router3.post("/:account", checkAuth, checkVerify, async function (req, res) {
