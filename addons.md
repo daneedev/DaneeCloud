@@ -18,4 +18,4 @@
 | Preview | Download Link | Theme name | Theme version | DaneeCloud supported versions | Price | Developer |
 | ------- | ------------- | ---------- | ------------- | ----------------------------- | ----- | --------- |
 | ![](https://cloud.daneeskripter.dev/sf/daneeskripter/daneecloudhome.png) | [GitHub](https://github.com/DaneeSkripter/DaneeCloud) | Default *(included in DaneeCloud)* | Same as DaneeCloud | v1.x.x - latest |  Free | DaneeSkripter |
-| - | [GitHub](https://github.com/DaneeSkripter/dc-darkbluetheme/releases) | DarkBlue Theme | v1.0.0 | v1.6.0 - v1.6.1 | Free | DaneeSkripter
+| - | [GitHub](https://github.com/DaneeSkripter/dc-darkbluetheme/releases) | DarkBlue Theme | v1.1.0 | v1.6.0 - v1.7.x | Free | DaneeSkripter

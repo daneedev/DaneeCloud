@@ -38,7 +38,7 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - You have ***NO*** right to say "we did this"
 - Please keep ***MY NAME*** in footer of pages
 - You have **NO** right to claim this project as your own
-- This project is licensed under the **[MIT license](./LICENSE)**
+- This project is licensed under the **[GPL-3.0 LICENSE](./LICENSE)**
 - **DaneeSkripter ©️ 2022 - 2023 | All rights reserved**
 
 ## 🔗 Useful links
