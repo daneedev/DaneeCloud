@@ -20,6 +20,13 @@ router.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
 
 router2.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
     res.render(__dirname + "/../views/addrole.ejs", {cloudname: config.cloudname, csrfToken: req.csrfToken()})
+    const client = require("../index").presence
+    client.updatePresence({
+        state: `Creating new role`,
+        startTimestamp: Date.now(),
+        largeImageKey: config.richpresencelogo,
+        instance: true,
+      });
 })
 
 router2.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {

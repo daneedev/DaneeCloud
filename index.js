@@ -57,6 +57,10 @@ const AuthLimiter = RateLimit({
   max: 300
 })
 
+// DISCORD RICH PRESENCE
+const client = require('discord-rich-presence')(config.richpresenceclientid)
+module.exports.presence = client
+
 // API
 
 app.use("/api/", require("./routes/api").api)

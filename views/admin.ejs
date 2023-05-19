@@ -400,6 +400,8 @@ input[id="searchBar"] {
           <th>Account email</th>
           <th>Is verified?</th>
           <th>IP address</th>
+          <th>Created at</th>
+          <th>Last seen</th>
           <th>Role</th>
           <th>Actions</th>
         </tr>
@@ -430,6 +432,8 @@ input[id="searchBar"] {
             <% } else { %>
               <td>-</td>
             <% } %>
+            <td><%= user.createdAt %></td>
+            <td><%= user.lastSeen %></td>
             <td><%= user.role %> </td> 
             <td><a href=<%= link2 %>><span class="material-icons">contact_mail</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>            <% } %>
             

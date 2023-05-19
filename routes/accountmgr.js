@@ -12,6 +12,13 @@ const sanitize = require("sanitize-filename")
 router.get("/", checkAuth, checkVerify, function (req, res) {
     const user = req.user
     res.render(__dirname + "/../views/editaccount.ejs", { account: user.username,  cloudname: config.cloudname, editaccurl: "/editmyaccount/", csrfToken: req.csrfToken()})
+    const client = require("../index").presence
+    client.updatePresence({
+        state: `Editing his account`,
+        startTimestamp: Date.now(),
+        largeImageKey: config.richpresencelogo,
+        instance: true,
+      });
 })
 
 router.post("/:username", checkAuth, checkVerify, async function (req, res) {
@@ -25,6 +32,13 @@ router.post("/:username", checkAuth, checkVerify, async function (req, res) {
 
 router2.get("/", checkAuth, checkVerify, function (req, res) {
     res.render(__dirname + "/../views/delacc.ejs", { cloudname: config.cloudname })
+    const client = require("../index").presence
+    client.updatePresence({
+        state: `Deleting his account`,
+        startTimestamp: Date.now(),
+        largeImageKey: config.richpresencelogo,
+        instance: true,
+      });
 })
 
 router2.post("/", checkAuth, checkVerify, async function (req, res) {
@@ -39,6 +53,13 @@ router3.get("/", checkAuth, checkVerify, async function (req, res) {
     const md5 = require("md5")
     const user = req.user
     res.render(__dirname + "/../views/profile.ejs", {cloudname: config.cloudname, md5: md5, user: user})
+    const client = require("../index").presence
+    client.updatePresence({
+        state: `Browsing his profile page`,
+        startTimestamp: Date.now(),
+        largeImageKey: config.richpresencelogo,
+        instance: true,
+      });
 })
 
 module.exports.edit = router
