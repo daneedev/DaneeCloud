@@ -4,7 +4,5 @@
     "port": 5000,
     "uploadsfolder": "/uploads/",
     "logtofile": false,
-    "registerip": false,
-    "richpresenceclientid": "1086270274451808366",
-    "richpresencelogo": "logo"
+    "registerip": false
 }
