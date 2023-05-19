@@ -23,13 +23,6 @@ router.get("/", checkAuth , checkVerify, async function (req, res) {
     const lastSeen = moment.unix(Date.now() / 1000).fromNow()
     const updateLastSeen = await users.findOneAndUpdate({ username: req.user.username}, {lastSeen: lastSeen})
     res.render(__dirname + "/../views/index.ejs", {isAdmin: isAdmin, username: req.user.username, cloudname: config.cloudname, usedStorage: user.usedStorage, maxStorage: role.maxStorage, badge: badge, user: user} )
-    const client = require("../index").presence
-      client.updatePresence({
-      state: 'Browsing homepage',
-      startTimestamp: Date.now(),
-      largeImageKey: config.richpresencelogo,
-      instance: true,
-    });
   })
 
 module.exports = router
