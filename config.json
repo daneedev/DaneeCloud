@@ -4,5 +4,6 @@
     "port": 5000,
     "uploadsfolder": "/uploads/",
     "logtofile": false,
-    "registerip": false
+    "registerip": false,
+    "disableResiter": false
 }
