@@ -15,13 +15,6 @@ router.get("/:username/:file", checkAuth, checkVerify, async function (req, res)
           const vidtag = file.split(".").pop()
           const subtitles = await vidSubtitle.findOne({ filename: file}) || "None"
           res.render(__dirname + "/../views/video.ejs", {file: file, vidtag: vidtag, cloudname: config.cloudname, username: req.user.username, subtitles: subtitles})
-          const client = require("../index").presence
-          client.updatePresence({
-              state: `Watching ${file}`,
-              startTimestamp: Date.now(),
-              largeImageKey: config.richpresencelogo,
-              instance: true,
-            });
         } else {
           res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
         }

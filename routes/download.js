@@ -10,13 +10,6 @@ const sanitize = require("sanitize-filename")
 router.get("/", checkAuth, checkVerify, function (req, res) {
     const file = req.query.downloadfile
     res.redirect("/download/" + file)
-    const client = require("../index").presence
-    client.updatePresence({
-        state: `Downloading ${file}`,
-        startTimestamp: Date.now(),
-        largeImageKey: config.richpresencelogo,
-        instance: true,
-      });
   })
 
 

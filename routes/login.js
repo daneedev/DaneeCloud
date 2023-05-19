@@ -6,13 +6,6 @@ const passport = require("passport")
 
 router.get("/", checkNotAuth, function (req, res) {
     res.render(__dirname + "/../views/login.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
-    const client = require("../index").presence
-    client.updatePresence({
-      state: 'Browsing login page',
-      startTimestamp: Date.now(),
-      largeImageKey: config.richpresencelogo,
-      instance: true,
-    });
 })
 
 router.post("/", checkNotAuth, passport.authenticate("local", {

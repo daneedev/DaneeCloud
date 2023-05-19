@@ -10,13 +10,6 @@ router.get("/:username/:file", checkAuth, checkVerify, function (req, res) {
         const file = sanitize(req.params.file)
         if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
           res.render(__dirname + "/../views/audio.ejs", {file: file, cloudname: config.cloudname, username: req.user.username})
-          const client = require("../index").presence
-          client.updatePresence({
-              state: `Listening to ${file}`,
-              startTimestamp: Date.now(),
-              largeImageKey: config.richpresencelogo,
-              instance: true,
-            });
         } else {
           res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
         }
