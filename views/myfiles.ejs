@@ -212,6 +212,7 @@ input[id="searchBar"] {
         <th>File name</th>
         <th>Is shared?</th>
         <th>Size</th>
+        <th>Created on</th>
         <th>Actions</th>
       </tr>
     </thead>
@@ -229,6 +230,8 @@ input[id="searchBar"] {
         <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file %>
         <% let isShared; %> 
         <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
+        <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).birthtime %>
+        <% let creationDate = `${fsDate.getDate()}.${fsDate.getMonth()}.${fsDate.getFullYear()}` %>
         <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
         <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
@@ -253,6 +256,7 @@ input[id="searchBar"] {
           <% } else { %> 
           <td><%= size.toFixed(2) %> MB </td>
           <% } %>
+          <th><%= creationDate %></th>
           <% if (sharedFiles.includes(file)) { %> 
           <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link5 %>><span class="material-icons">stop_screen_share</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
         <% } else { %>
