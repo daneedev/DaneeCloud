@@ -5,5 +5,5 @@
     "uploadsfolder": "/uploads/",
     "logtofile": false,
     "registerip": false,
-    "disableResiter": false
+    "disableRegister": false
 }
