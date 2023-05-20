@@ -15,7 +15,7 @@ router.get("/", checkNotAuth, function (req, res) {
 
 router.post("/", checkNotAuth, async function (req, res) {
     try {
-      if (config.disableResiter) {
+      if (config.disableRegister) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel</span>&nbsp;Sorry, registration is disabled.`,  cloudname: config.cloudname})
       } else if (req.body.password.length < 8) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname})
@@ -34,7 +34,7 @@ router.post("/", checkNotAuth, async function (req, res) {
         } else {
           const datevar = new Date()
           const day = datevar.getDate()
-          const month = datevar.getMonth()
+          const month = datevar.getMonth() + 1
           const year = datevar.getFullYear()
           const date = `${day}.${month}.${year}`
           const lastSeen = moment.unix(Date.now() / 1000).fromNow()
