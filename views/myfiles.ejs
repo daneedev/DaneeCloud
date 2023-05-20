@@ -231,7 +231,7 @@ input[id="searchBar"] {
         <% let isShared; %> 
         <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
         <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).birthtime %>
-        <% let creationDate = `${fsDate.getDate()}.${fsDate.getMonth()}.${fsDate.getFullYear()}` %>
+        <% let creationDate = `${fsDate.getDate()}.${fsDate.getMonth() + 1}.${fsDate.getFullYear()}` %>
         <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
         <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 

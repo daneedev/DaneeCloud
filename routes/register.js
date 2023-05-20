@@ -32,7 +32,7 @@ router.post("/", checkNotAuth, async function (req, res) {
         } else {
           const datevar = new Date()
           const day = datevar.getDate()
-          const month = datevar.getMonth()
+          const month = datevar.getMonth() + 1
           const year = datevar.getFullYear()
           const date = `${day}.${month}.${year}`
           const lastSeen = moment.unix(Date.now() / 1000).fromNow()
