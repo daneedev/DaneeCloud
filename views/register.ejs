@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Register</title>
+    <title><%= cloudname %> | <%= lang["Register"] %></title>
 </head>
 <body>
     <style>
@@ -184,16 +184,16 @@ button[id="register"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Register</h2>
+    <h2 class="subtitle"><%= lang["Register"] %></h2>
     <form action="/register" method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="name"><span class="material-icons">account_circle</span>&nbsp;Username</label>
+        <label for="name"><span class="material-icons">account_circle</span>&nbsp;<%= lang["Username2"] %></label>
         <input type="text", id="name", name="name" required></input>
-        <label for="email"><span class="material-icons">email</span>&nbsp;Email</label>
+        <label for="email"><span class="material-icons">email</span>&nbsp;<%= lang["Email2"] %></label>
         <input type="email", id="email", name="email" required></input>
-        <label for="password"><span class="material-icons">lock</span>&nbsp;Password</label>
+        <label for="password"><span class="material-icons">lock</span>&nbsp;<%= lang["Password"] %></label>
         <input type="password", id="password", name="password" required></input>
-        <button type="submit" id="register"><span class="material-icons">how_to_reg</span>&nbsp;Register</button>
+        <button type="submit" id="register"><span class="material-icons">how_to_reg</span>&nbsp;<%= lang["Register"] %></button>
     </form>
     <footer>
                <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

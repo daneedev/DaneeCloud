@@ -153,14 +153,14 @@
         </head>
         <body>
             <h1><%= cloudname %></h1>
-            <h2>My profile</h2>
+            <h2><%= lang["My-Profile"] %></h2>
             <% let hashedemail = md5(user.email) %>
             <% let gravatar = `https://www.gravatar.com/avatar/${hashedemail}` %>
             <% let isVerified; %>
             <% if (user.isVerified) { %>
-            <% isVerified = "Yes" %>
+            <% isVerified = lang["Yes"] %>
             <% } else { %>
-            <% isVerified = "No" %>
+            <% isVerified = lang["No"] %>
             <% } %>
             <img src=<%= gravatar %> >
             <h3 class="username"><%= user.username %></h3>
@@ -168,13 +168,13 @@
             <h3 class="isverified">Verified: <%= isVerified %></h3>
             <h3 class="info">Role: <%= user.role %></h3>
             <form action="/editmyaccount">
-                <input type="submit" class="editaccount" value="Edit account"></input>
+                <input type="submit" class="editaccount" value=<%= lang["Edit-Account"] %>></input>
             </form>
             <form action="/delmyaccount">
-                <input type="submit" class="delaccount" value="Delete account"></input>
+                <input type="submit" class="delaccount" value=<%= lang["Delete-Account"] %>></input>
             </form>
             <form action="/">
-            <input type="submit" href="/" value="Back to home page"></input>
+            <input type="submit" href="/" value=<%= lang["Back"] %>></input>
             </form>
             <footer>
                      <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Rename</title>
+    <title><%= cloudname %> | <%= lang["Rename"] %></title>
 </head>
 <body>
     <style>
@@ -131,13 +131,13 @@ button[id="rename"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Rename <%= file %> </h2>
+    <h2 class="subtitle"><%= lang["Rename"] %> <%= file %> </h2>
     <% let renameurl =  "/rename/" + file%> 
     <form action=<%= renameurl %> method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="newname"><span class="material-icons">edit</span>&nbsp;New name</label>
+        <label for="newname"><span class="material-icons">edit</span>&nbsp;<%= lang["New-Name"] %></label>
         <input type="text", id="newname", name="newname" required></input>
-        <button type="submit" id="rename"><span class="material-icons">edit</span>&nbsp;Rename</button>
+        <button type="submit" id="rename"><span class="material-icons">edit</span>&nbsp;<%= lang["Rename"] %></button>
     </form>
     <footer>
                <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

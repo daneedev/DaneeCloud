@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Verify</title>
+    <title><%= cloudname %> | <%= lang["Verify"] %></title>
 </head>
 <body>
     <style>
@@ -153,13 +153,13 @@ button[id="verify"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Send verification email to <%= req.user.email %> </h2>
+    <h2 class="subtitle"><%= lang["Send-Verify"] %> <%= req.user.email %> </h2>
     <form action="/verify" method="post">
     <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
       <input type="text"></input>
-      <button id="send" type="submit" >Send verification email</button>
+      <button id="send" type="submit" ><%= lang["Send-Verify2"] %></button>
     </form>
-    <a href="/verifycode">Have a code already?</a>
+    <a href="/verifycode"><%= lang["Have-Code"] %></a>
     <footer>
                <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
     

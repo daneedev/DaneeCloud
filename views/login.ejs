@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Log In</title>
+    <title><%= cloudname %> | <%= lang["Log-In"] %></title>
 </head>
 <body>
     <style>
@@ -167,16 +167,16 @@ a {
     <% if (messages.error) {%>
     <%= messages.error %>
     <% } %>  
-    <h2 class="subtitle">Log In</h2>
+    <h2 class="subtitle"><%= lang["Log-In"] %></h2>
     <form action="/login" method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="name"><span class="material-icons">account_circle</span>&nbsp;Username</label>
+        <label for="name"><span class="material-icons">account_circle</span>&nbsp;<%= lang["Username2"] %></label>
         <input type="text", id="name", name="name" required></input>
-        <label for="password"><span class="material-icons">lock</span>&nbsp;Password</label>
+        <label for="password"><span class="material-icons">lock</span>&nbsp;<%= lang["Password"] %></label>
         <input type="password", id="password", name="password" required></input>
-        <button type="submit" id="login"><span class="material-icons">login</span>&nbsp;Log In</button>
+        <button type="submit" id="login"><span class="material-icons">login</span>&nbsp;<%= lang["Log-In"] %></button>
     </form>
-    <a href="/register">Haven't account yet?</a>
+    <a href="/register"><%= lang["noaccount"] %></a>
     <footer>
                <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
     

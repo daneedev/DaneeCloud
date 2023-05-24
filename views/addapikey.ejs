@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Add API key</title>
+    <title><%= cloudname %> | <%= lang["Add-Api-Key"] %></title>
 </head>
 <body>
     <style>
@@ -132,12 +132,12 @@ button[id="add"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Add API key </h2>
+    <h2 class="subtitle"><%= lang["Add-Api-Key"] %> </h2>
     <form action="/addapikey/" method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="name"><span class="material-icons">api</span>&nbsp;API key name</label>
+        <label for="name"><span class="material-icons">api</span>&nbsp;<%= lang["API-Key-Name"] %></label>
         <input type="text" id="name" name="name" required></input>
-        <button type="submit" id="add"><span class="material-icons">add</span>&nbsp;Add API key</button>
+        <button type="submit" id="add"><span class="material-icons">add</span>&nbsp;<%= lang["Add-Api-Key"] %></button>
     </form>
     <footer>
         <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

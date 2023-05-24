@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= cloudname %> | My Files</title>
+    <title><%= cloudname %> | <%= lang["My-Files"] %></title>
   </head>
   <body>
     <style>
@@ -42,7 +42,7 @@
         
         }
 
-        input[type="submit"] {
+        button[type="submit"] {
         color: white;
     height: 60px;
     width: 250px;
@@ -61,7 +61,7 @@
     border:0cm
     }
     
-    input[type="submit"]:hover {
+    button[type="submit"]:hover {
         color: #5D3FD3;
     height: 60px;
     width: 250px;
@@ -202,19 +202,19 @@ input[id="searchBar"] {
 }
     </script>
     <h1><%= cloudname %> </h1>
-    <h2>My Files</h2>
+    <h2><%= lang["My-Files"] %></h2>
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
-    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for file name">
+    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
     <table id="files">
       <thead>
       <tr>
-        <th>Preview</th>
-        <th>File name</th>
-        <th>Is shared?</th>
-        <th>Size</th>
-        <th>Created on</th>
-        <th>Actions</th>
+        <th><%= lang["Preview"] %></th>
+        <th><%= lang["File-Name"] %></th>
+        <th><%= lang["Is-Shared"] %></th>
+        <th><%= lang["Size"] %></th>
+        <th><%= lang["Created-On"] %></th>
+        <th><%= lang["Actions"] %></th>
       </tr>
     </thead>
     <tbody>
@@ -237,7 +237,7 @@ input[id="searchBar"] {
           <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
         <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
           <% if (file.split(".").pop() == "mkv") {%> 
-            <td>Not supported</td>
+            <td><%= lang["Not-Supported"] %></td>
           <% } else { %>
           <td><a href=<%= link6 %> ><span class="material-icons">play_circle</span></a>&nbsp;<a href=<%= link8 %>><span class="material-icons">subtitles</span></a>&nbsp;<a href=<%= link9 %>><span class="material-icons">subtitles_off</span></a></td>
           <% } %> 
@@ -268,7 +268,7 @@ input[id="searchBar"] {
     </tbody>
     </table>
       <form action="/">
-        <input type="submit" href="/" value="Back to home page"></input>
+        <button type="submit" href="/"><%= lang["Back"] %></button>
         </form>
     <footer>
              <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

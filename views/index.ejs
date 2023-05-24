@@ -399,25 +399,25 @@ function abortHandler(event) {
 </script>
 
         <form action="/logout?_method=DELETE" method="POST">
-            <button type="submit" class="logout">Log Out</button>
+            <button type="submit" class="logout"><%= lang["Log-Out"] %></button>
         </form>
         <form action="/myfiles", method="get">
-            <button type="submit" class="myfiles">My Files</button>
+            <button type="submit" class="myfiles"><%= lang["My-Files"] %></button>
         </form> 
         <% if (isAdmin == true) { %>  
         <form action="/admin", method="get">
-            <button type="submit" class="admin">Admin Panel</button>
+            <button type="submit" class="admin"><%= lang["Admin-Panel"] %></button>
         </form> 
         <% } %>
         <form action="/myprofile">
-            <input type="submit" class="myprofile" value="My profile"></input>
+            <button type="submit" class="myprofile"><%= lang["My-Profile"] %></button>
         </form>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Welcome, <%= username %> <img title=<%= user.role %> src=<%= badge %> width="30" height="30"></img>!</h2> 
+    <h2 class="subtitle"><%= lang["Welcome"] %>, <%= username %> <img title=<%= user.role %> src=<%= badge %> width="30" height="30"></img>!</h2> 
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3 class="storage"><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <form id="form" action="/upload/" method="post", enctype="multipart/form-data" target="_blank">
-        <label for="file" ><span class="material-icons">upload_file</span>&nbsp;Upload your file</label>
+        <label for="file" ><span class="material-icons">upload_file</span>&nbsp;<%= lang["Upload"] %></label>
         <input type="file" name="file" id="file" onchange="progressBar()" required hidden></input>
         <progress id="progressBar" class="progressBar" value="0" max="100"></progress>
         <h3 id="status"></h3>
