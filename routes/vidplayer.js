@@ -28,15 +28,15 @@ router2.get("/:username/:file", checkAuth, checkVerify, async function (req, res
   if (req.params.username == req.user.username) {
     if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(req.params.file)) {
       if (await vidSubtitle.findOne({ filename: req.params.file })) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;This file already have subtitles`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;This file already have subtitles`,  cloudname: config.cloudname, lang: lang})
       } else {
-      res.render(__dirname + "/../views/addsubtitles.ejs", {cloudname: config.cloudname, req: req, csrfToken: req.csrfToken()})
+      res.render(__dirname + "/../views/addsubtitles.ejs", {cloudname: config.cloudname, req: req, csrfToken: req.csrfToken(), lang: lang})
       }
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;File not found`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;File not found`,  cloudname: config.cloudname, lang: lang})
     }
     } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
@@ -49,9 +49,9 @@ router2.post("/:username/:file", checkAuth, checkVerify, async function (req, re
       subtitlename: req.body.name
     })
     Subtitles.save()
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Subtitles ${req.body.name} successfully added to ${file}`,  cloudname: config.cloudname})
+    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Subtitles ${req.body.name} successfully added to ${file}`,  cloudname: config.cloudname, lang: lang})
   } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
@@ -60,12 +60,12 @@ router3.get("/:username/:file", checkAuth, checkVerify, async function (req, res
     const file = req.params.file
     if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file) && await vidSubtitle.findOne({ filename: file})) {
       const removeSubtitles = await vidSubtitle.findOneAndRemove({ filename: file})
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Subtitles successfully removed from ${file}`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Subtitles successfully removed from ${file}`,  cloudname: config.cloudname, lang: lang})
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;This file has no subtitles`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;This file has no subtitles`,  cloudname: config.cloudname, lang: lang})
     }
   } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
