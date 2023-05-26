@@ -4,7 +4,6 @@ const {checkAuth, checkVerify} = require("../handlers/authVerify")
 const users = require("../models/users");
 const config = require("../config.json")
 const roles = require("../models/roles")
-const moment = require("moment")
 const lang = require("../lang/default.json")
 
 router.get("/", checkAuth , checkVerify, async function (req, res) {
@@ -21,7 +20,7 @@ router.get("/", checkAuth , checkVerify, async function (req, res) {
     } else {
       isAdmin = false
     }
-    const lastSeen = moment.unix(Date.now() / 1000).fromNow()
+    const lastSeen = (Date.now() / 1000).toString()
     const updateLastSeen = await users.findOneAndUpdate({ username: req.user.username}, {lastSeen: lastSeen})
     res.render(__dirname + "/../views/index.ejs", {isAdmin: isAdmin, username: req.user.username, cloudname: config.cloudname, usedStorage: user.usedStorage, maxStorage: role.maxStorage, badge: badge, user: user, lang: lang} )
   })

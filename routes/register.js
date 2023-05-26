@@ -7,7 +7,6 @@ const logger = require("../handlers/logger")
 const bcrypt = require("bcrypt")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
-const moment = require("moment")
 const lang = require("../lang/default.json")
 
 router.get("/", checkNotAuth, function (req, res) {
@@ -38,7 +37,7 @@ router.post("/", checkNotAuth, async function (req, res) {
           const month = datevar.getMonth() + 1
           const year = datevar.getFullYear()
           const date = `${day}.${month}.${year}`
-          const lastSeen = moment.unix(Date.now() / 1000).fromNow()
+          const lastSeen = (Date.now() / 1000).toString()
           if (config.registerip) {
           const user = new users({
           username: req.body.name,

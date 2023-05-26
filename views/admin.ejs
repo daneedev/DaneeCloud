@@ -391,7 +391,7 @@ input[id="searchBar"] {
   }
 }
     </script>
-    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Seach-Username"] %>>
+    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-Username"] %>>
     <table class="usrtable" id="users">
         <thead>
         <tr>
@@ -433,7 +433,7 @@ input[id="searchBar"] {
               <td>-</td>
             <% } %>
             <td><%= user.createdAt %></td>
-            <td><%= user.lastSeen %></td>
+            <td><%= moment.unix(parseInt(user.lastSeen)).fromNow() %></td>
             <td><%= user.role %> </td> 
             <td><a href=<%= link2 %>><span class="material-icons">contact_mail</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>            <% } %>
             
