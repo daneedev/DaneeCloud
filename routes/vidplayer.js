@@ -7,6 +7,7 @@ const config = require("../config.json")
 const sanitize = require("sanitize-filename")
 const fs = require("fs")
 const vidSubtitle = require("../models/vidsubtitles")
+const lang = require("../lang/default.json")
 
 router.get("/:username/:file", checkAuth, checkVerify, async function (req, res) {
     if (req.params.username == req.user.username) {
@@ -14,12 +15,12 @@ router.get("/:username/:file", checkAuth, checkVerify, async function (req, res)
         if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file)) {
           const vidtag = file.split(".").pop()
           const subtitles = await vidSubtitle.findOne({ filename: file}) || "None"
-          res.render(__dirname + "/../views/video.ejs", {file: file, vidtag: vidtag, cloudname: config.cloudname, username: req.user.username, subtitles: subtitles})
+          res.render(__dirname + "/../views/video.ejs", {file: file, vidtag: vidtag, cloudname: config.cloudname, username: req.user.username, subtitles: subtitles, lang: lang})
         } else {
-          res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
+          res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname, lang: lang})
         }
       } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname, lang: lang})
       }
 })
 

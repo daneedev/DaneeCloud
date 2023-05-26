@@ -5,6 +5,7 @@ const config = require("../config.json")
 const fs = require("fs")
 const isimg = require("is-image")
 const sanitize = require("sanitize-filename")
+const lang = require("../lang/default.json")
 
 router.get("/:username/:file", checkAuth, checkVerify, function (req, res) {
     if (req.params.username == req.user.username) {
@@ -16,10 +17,10 @@ router.get("/:username/:file", checkAuth, checkVerify, function (req, res) {
           }
           res.send(requestedfile)
         } else {
-          res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname})
+          res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} not found!`,  cloudname: config.cloudname, lang: lang})
         }
       } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname, lang: lang})
       }
 })
 

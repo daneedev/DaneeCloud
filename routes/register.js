@@ -8,17 +8,18 @@ const bcrypt = require("bcrypt")
 const fs = require("fs")
 const sanitize = require("sanitize-filename")
 const moment = require("moment")
+const lang = require("../lang/default.json")
 
 router.get("/", checkNotAuth, function (req, res) {
-  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
+  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang})
 })
 
 router.post("/", checkNotAuth, async function (req, res) {
     try {
       if (config.disableRegister) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel</span>&nbsp;Sorry, registration is disabled.`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel</span>&nbsp;Sorry, registration is disabled.`,  cloudname: config.cloudname, lang: lang})
       } else if (req.body.password.length < 8) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname, lang: lang})
       } else {
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         const hashedPassword = await bcrypt.hash(req.body.password, 10)
@@ -26,11 +27,11 @@ router.post("/", checkNotAuth, async function (req, res) {
         const emailExist = await users.findOne({ email: req.body.email})
         const ipExist = await users.findOne({ip: ip})
         if (usernameExist) {
-          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`,  cloudname: config.cloudname})
+          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this username already exists!`,  cloudname: config.cloudname, lang: lang})
         } else if (emailExist) { 
-          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`,  cloudname: config.cloudname})
+          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel_schedule_send</span>&nbsp;User with this email already exists!`,  cloudname: config.cloudname, lang: lang})
         } else  if (ipExist && config.registerip) { 
-          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this IP address already exists!`,  cloudname: config.cloudname})
+          res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;User with this IP address already exists!`,  cloudname: config.cloudname, lang: lang})
         } else {
           const datevar = new Date()
           const day = datevar.getDate()
