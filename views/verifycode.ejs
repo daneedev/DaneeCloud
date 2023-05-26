@@ -128,7 +128,7 @@ button[id="verify"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle"><%= lang["Write-Code"] %>/h2>
+    <h2 class="subtitle"><%= lang["Write-Code"] %></h2>
     <form action="/verifycode/" method="post" id="form">
     <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
     <input type="text", id="code", name="code" required placeholder=<%= lang["Verify-Code"] %>></input>

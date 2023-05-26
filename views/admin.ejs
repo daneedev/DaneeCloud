@@ -58,7 +58,7 @@
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 30px;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     margin-left: auto;
@@ -77,7 +77,7 @@
     background-color: white;
     font-size: 20px;
     margin-top: 30px;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     margin-left: auto;
@@ -161,7 +161,7 @@ select {
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -179,7 +179,7 @@ select {
     background-color: white;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -193,11 +193,11 @@ select {
 .del {
   color: white;
     height: 40px;
-    width: 135px;
+    width: 145px;
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -211,11 +211,11 @@ select {
 .del:hover {
   color: #5D3FD3;
     height: 40px;
-    width: 135px;
+    width: 145px;
     background-color: white;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -232,7 +232,7 @@ select {
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 25px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -250,7 +250,7 @@ select {
     background-color: white;
     font-size: 20px;
     margin-top: 25px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -443,10 +443,10 @@ input[id="searchBar"] {
       </table>
       <h2 class="storageplans"><%= lang["Roles"] %></h2>
       <form action="/addrole/">
-      <input type="submit" class="add" value=<%= lang["Add-Role"] %>></input>
+      <button type="submit" class="add"><%= lang["Add-Role"] %></button>
     </form>
     <form action="/delrole/">
-      <input type="submit" class="del" value=<%= lang["Remove-Role"] %>></input>
+      <button type="submit" class="del"><%= lang["Remove-Role"] %></button>
     </form>
       <form action="/updaterole/" method="post">
         <select name="role">
@@ -458,11 +458,11 @@ input[id="searchBar"] {
         <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input><h2 class="mb">MB</h2>
         <label for="badge"><span class="material-icons">verified</span>&nbsp;<%= lang["Badge-URL"] %></label>
         <input type="text", id="badge", name="badge"></input>
-        <input type="submit" class="setasdefault" value=<%= lang["Update-Role"] %>></input>
+        <button type="submit" class="setasdefault"><%= lang["Update-Role"] %></button>
       </form>
       <h2 class="storageplans"><%= lang["API-Keys"] %></h2>
       <form action="/addapikey/">
-        <input type="submit" class="back" value=<%= lang["Add-Api-Key"] %>></input>
+        <button type="submit" class="back"><%= lang["Add-Api-Key"] %></button>
       </form> 
     <table class="usrtable">
         <thead>
@@ -482,7 +482,7 @@ input[id="searchBar"] {
         </tbody>
       </table>
       <form action="/">
-        <input type="submit" class="back" href="/" value=<%= lang["Back"] %>></input>
+        <button type="submit" class="back" href="/"><%= lang["Back"] %></button>
         </form>
     <footer>
              <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

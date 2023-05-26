@@ -114,6 +114,7 @@
             <h1><%= cloudname %></h1>
             <h3><%= lang["Deletion-Confirm"] %></h3>
             <form action="/delmyaccount/" method="post">
+            <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
             <input type="submit" value=<%= lang["Yes"] %>></input>
             </form>
             <form action="/">
