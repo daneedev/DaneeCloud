@@ -15,6 +15,7 @@ const osu = require("node-os-utils")
 const ms = require("ms")
 const packages = require("../package.json");
 const { checkAuth, checkVerify } = require("../handlers/authVerify");
+const lang = require("../lang/default.json")
 
 router.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*')
@@ -49,9 +50,9 @@ function makeid(length) {
 router2.get("/", checkAuth, checkVerify, async function (req, res) {
     const user = await users.findOne({username: req.user.username})
     if (user.role == "admin") {
-        res.render(__dirname + "/../views/addapikey.ejs", {cloudname: config.cloudname, csrfToken: req.csrfToken()})
+        res.render(__dirname + "/../views/addapikey.ejs", {cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang})
     } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
@@ -62,17 +63,17 @@ router2.post("/", checkAuth, checkVerify, async function (req, res) {
     if (user.role == "admin") {
         const findAPIKey = await apiKeys.findOne({ name: apiKeyName})
         if (findAPIKey) {
-            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 409 - API Key already exist`,  cloudname: config.cloudname})
+            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["API-Key-Exist"]}`,  cloudname: config.cloudname, lang: lang})
         } else {
             const ApiKey = new apiKeys({
                 name: apiKeyName,
                 apiKey: apiKey.toString()
             })
             ApiKey.save()
-            res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;API Key with name ${apiKeyName} was generated: ${apiKey.toString()} (!! WARNING: YOU WON'T SEE THIS KEY AGAIN!!)`,  cloudname: config.cloudname})
+            res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["API-Key-Generated"].replace("${apiKeyName}", apiKeyName).replace("${apiKey.toString()}", apiKey.toString())}`,  cloudname: config.cloudname, lang: lang})
         }
     } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
@@ -84,13 +85,13 @@ router3.get("/:name", checkAuth, checkVerify, async function (req, res) {
     const findApiKey = await apiKeys.findOne({name: apiKeyName})
     if (user.role == "admin") {
         if (!findApiKey) {
-            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - API key not found`,  cloudname: config.cloudname})
+            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["API-Key-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
         } else {
                 const deleteApiKey = await apiKeys.findOneAndRemove({ name: apiKeyName})
-                res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;API Key with name ${apiKeyName} was deleted!`,  cloudname: config.cloudname})
+                res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["API-Key-Deleted"].replace("${apiKeyName}", apiKeyName)}`,  cloudname: config.cloudname, lang: lang})
             }
     } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 

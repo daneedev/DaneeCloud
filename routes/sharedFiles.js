@@ -15,9 +15,9 @@ const lang = require("../lang/default.json")
 router.get("/:username/:file", async function (req, res) {
     const user = await users.findOne({username: req.params.username})
     if (!user) {
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No account with this username!`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Username-Not-Exist"]}`, lang: lang})
     } else if (!user.sharedFiles.includes(req.params.file)) {
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;No shared file found!`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["No-Shared-File"]}`, lang: lang})
     } else {
       fs.readFile( __dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file), (err, data) => {
         if (err) {
@@ -43,11 +43,11 @@ router2.get("/:file", checkAuth, checkVerify, async function (req, res) {
     const file = req.params.file
     const user = await users.findOne({username: req.user.username})
     if (user.sharedFiles.includes(file)) {
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;This file is already shared!`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Already-Shared"]}`, lang: lang})
     } else {
       user.sharedFiles.push(file)
       user.save()
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as shared! <a href=${config.cloudurl}/sf/${req.user.username}/${file}>Link</a>`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["File-Shared"].replace("${file}", file)} <a href=${config.cloudurl}/sf/${req.user.username}/${file}>Link</a>`, lang: lang})
       logger.logInfo(`${req.user.username} shared ${file}!`)
     }
 })
@@ -56,11 +56,11 @@ router3.get("/:file", checkAuth, checkVerify, async function (req, res) {
     const file = req.params.file
     const user = await users.findOne({username: req.user.username})
     if (!user.sharedFiles.includes(file)) {
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;File ${file} isnt shared!`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Shared"].replace("${file}", file)}`, lang: lang})
     } else {
       user.sharedFiles.pull(file)
       user.save()
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;File ${file} has been set as not shared!`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Disabled-Shared"].replace("${file)", file)}`, lang: lang})
       logger.logInfo(`${req.user.username} set ${file} as not shared!`)
     } 
 })

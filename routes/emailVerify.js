@@ -45,7 +45,7 @@ router2.post("/", checkAuth, checkNotVerify, async function (req, res) {
     const user = await users.findOne({ username: req.user.username})
     if (user.verifyCode == req.body.code) {
       const verifyuser = await users.findOneAndUpdate({username: req.user.username}, { isVerified: true})
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">verified</span>&nbsp;Your account has been successfully verified!`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">verified</span>&nbsp;${lang["Account-Verified"]}`, lang: lang})
       logger.logInfo("User " + req.user.username + " has been successfully verified!")
     } else {
       res.redirect("/verifycode")
