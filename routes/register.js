@@ -15,7 +15,9 @@ router.get("/", checkNotAuth, function (req, res) {
 
 router.post("/", checkNotAuth, async function (req, res) {
     try {
-      if (req.body.password.length < 8) {
+      if (config.disableRegister) {
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cancel</span>&nbsp;Sorry, registration is disabled.`,  cloudname: config.cloudname})
+      } else if (req.body.password.length < 8) {
         res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">no_accounts</span>&nbsp;Password must contains atleast 8 characters.`,  cloudname: config.cloudname})
       } else {
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
