@@ -25,11 +25,15 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - IP register (no alt accounts)
 - API
 - Addons
+- Multi-Language Support
 
 ## 🎬 Actions
 | Badge | Name | Description |
 | ----- | ---- | ----------- |
 | ![](https://img.shields.io/github/actions/workflow/status/DaneeSkripter/DaneeCloud/codeql.yml?label=CodeQL&logo=github) | CodeQL | Looking for vulnerabilities in code |
+
+## 🌐 Translations [![Crowdin](https://badges.crowdin.net/daneecloud/localized.svg)](https://crowdin.com/project/daneecloud)
+
 
 ## [🖼️ Addons & Themes](./addons.md)
 - *to show list of addons & themes click the link above*
