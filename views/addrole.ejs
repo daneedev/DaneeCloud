@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Add role</title>
+    <title><%= cloudname %> | <%= lang["Add-Role"] %> </title>
 </head>
 <body>
     <style>
@@ -184,16 +184,16 @@ input[id="badge"] {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Add role </h2>
+    <h2 class="subtitle"><%= lang["Add-Role"] %></h2>
     <form action="/addrole/" method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="role"><span class="material-icons">edit</span>&nbsp;Role name</label>
+        <label for="role"><span class="material-icons">edit</span>&nbsp;<%= lang["Role-Name"] %></label>
         <input type="text" id="role" name="role" required></input>
-        <label for="storage"><span class="material-icons">storage</span>&nbsp;Amount of storage (in MB)</label>
+        <label for="storage"><span class="material-icons">storage</span>&nbsp;<%= lang["Amount-Of-Storage"] %></label>
         <input type="text", id="storage", name="storage" required placeholder="128 MB"></input>
-        <label for="badge"><span class="material-icons">verified</span>&nbsp;URL of badge (not required)</label>
+        <label for="badge"><span class="material-icons">verified</span>&nbsp;<%= lang["Badge-URL"] %></label>
         <input type="text", id="badge", name="badge"></input>
-        <button type="submit" id="add"><span class="material-icons">add</span>&nbsp;Add role</button>
+        <button type="submit" id="add"><span class="material-icons">add</span>&nbsp;<%= lang["Add-Role"] %></button>
     </form>
     <footer>
         <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

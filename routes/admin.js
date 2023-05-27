@@ -12,6 +12,9 @@ const osu = require("node-os-utils")
 const ms = require("ms")
 const rolesModel = require("../models/roles")
 const apiKeys = require("../models/apiKeys")
+const lang = require("../lang/default.json")
+const moment = require("moment")
+
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
     const request = require("request")
@@ -24,11 +27,11 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
       const md5 = require("md5")
       cpu.usage().then((cpuUsage) => {
         request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken(), md5: md5})
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken(), md5: md5, lang: lang, moment: moment})
         })
       })
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
   })
 
@@ -38,14 +41,14 @@ router2.get("/:account", checkAuth, checkVerify, async function (req, res) {
     if (loggeduser.role == "admin") {
       const findusertodelete = await users.findOne({username: account})
       if (!findusertodelete) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Account-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
       } else {
         const usertodelete = await users.findOneAndRemove({ username: account})
         fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${account}/`)
-        res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} has been deleted.`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Account-Deleted2"].replace("${account}", account)}`,  cloudname: config.cloudname, lang: lang})
       }
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
       logger.logInfo(`${req.user.username} deleted account ${account}!`)
     }
   })
@@ -53,7 +56,7 @@ router2.get("/:account", checkAuth, checkVerify, async function (req, res) {
 
 router3.get("/:account", checkAuth, checkVerify, function (req, res) {
     const account = req.params.account
-    res.render(__dirname + "/../views/editaccount.ejs", { account: account,  cloudname: config.cloudname, editaccurl: "/editaccount/", csrfToken: req.csrfToken()})
+    res.render(__dirname + "/../views/editaccount.ejs", { account: account,  cloudname: config.cloudname, editaccurl: "/editaccount/", csrfToken: req.csrfToken(), lang: lang})
   })
   
 router3.post("/:account", checkAuth, checkVerify, async function (req, res) {
@@ -64,15 +67,15 @@ router3.post("/:account", checkAuth, checkVerify, async function (req, res) {
     if (loggeduser.role == "admin") {
       const findusertorename = await users.findOne({username: account})
       if (!findusertorename) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Account not found`,  cloudname: config.cloudname})
+        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Account-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
       } else {
       const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname, email: newaccountemail})
       fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;Account ${account} with ${findusertorename.email} email has been renamed to ${newaccountname} with ${newaccountemail} email`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Account-Renamed"].replace("${account}", account).replace("${findusertorename.email}", findusertorename.email).replace("${newaccountname}", newaccountname).replace("${newaccountemail}", newaccountemail)}`,  cloudname: config.cloudname, lang: lang})
       logger.logInfo(`${account} with ${findusertorename.email} email has been renamed to ${newaccountname} with ${newaccountemail} email by ${req.user.username}`)
     }
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;Error 401 - Unauthorized`,  cloudname: config.cloudname})
+      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
   })
 

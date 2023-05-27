@@ -14,6 +14,7 @@ const {checkAuth, checkNotAuth, checkVerify, checkNotVerify} = require("./handle
 const roles = require("./models/roles")
 const csurf = require("tiny-csrf");
 const cookieParser = require("cookie-parser")
+const lang = require("./lang/default.json")
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
@@ -196,7 +197,7 @@ app.use("/myprofile", require("./routes/accountmgr").myprofile)
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
-  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;Error 404 - Page not found!`,  cloudname: config.cloudname})
+  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error404"]}`,  cloudname: config.cloudname, lang: lang})
 })
 
 // CHECK IF DEFAULT ROLES ARE IN DB

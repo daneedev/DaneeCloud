@@ -25,12 +25,21 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - IP register (no alt accounts)
 - API
 - Addons
+- Multi-Language Support
 
 ## 🎬 Actions
 | Badge | Name | Description |
 | ----- | ---- | ----------- |
 | ![](https://img.shields.io/github/actions/workflow/status/DaneeSkripter/DaneeCloud/codeql.yml?label=CodeQL&logo=github) | CodeQL | Looking for vulnerabilities in code |
 
+## 🌐 Translations [![Crowdin](https://badges.crowdin.net/daneecloud/localized.svg)](https://crowdin.com/project/daneecloud)
+- [How to switch language](https://docs.daneeskripter.dev/daneecloud/change-language)
+- [I want to translate](https://crowdin.com/project/daneecloud)
+### Translated languages
+| 🏳️ Language | 🙋 Translator |
+| ------------ | ------------- |
+| 🇨🇿 Czech | DaneeSkripter |
+| 🇯🇵 Japanese | Koichi MATSUMOTO |
 ## [🖼️ Addons & Themes](./addons.md)
 - *to show list of addons & themes click the link above*
 

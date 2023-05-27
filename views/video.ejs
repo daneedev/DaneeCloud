@@ -120,14 +120,14 @@ video {
         </head>
         <body>
             <h1><%= cloudname %></h1>
-            <h2>Upload & Download your files!</h2>
+            <h2><%= lang["Upload-And-Download"] %></h2>
            <video width="650" height="450" controls preload="metadata">
                 <source src=<%= "/files/" + username + "/" + file %>   type=<%= "video/" + vidtag%> >
                 <track label="None" kind="subtitles" default>
                 <track label=<%= subtitles.subtitlename%> kind="subtitles" src=<%= subtitles.subtitleurl%>/>
             </video>
             <form action="/">
-            <input type="submit" href="/" value="Back to home page"></input>
+            <input type="submit" href="/" value=<%= lang["Back"] %>></input>
             </form>
             <footer>
                      <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

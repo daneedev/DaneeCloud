@@ -6,14 +6,15 @@ const users = require("../models/users");
 const config = require("../config.json")
 const { transporter} = require("../handlers/smtpconfig")
 const logger = require("../handlers/logger")
+const lang = require("../lang/default.json")
 
 router.get("/", checkAuth, checkNotVerify, function (req, res) {
-    res.render(__dirname + "/../views/verify.ejs", { cloudname: config.cloudname, req: req, csrfToken: req.csrfToken()})
+    res.render(__dirname + "/../views/verify.ejs", { cloudname: config.cloudname, req: req, csrfToken: req.csrfToken(), lang: lang})
 })
 
 router.post("/", checkAuth, checkNotVerify, async function (req, res) {
     const verifycode = Math.floor(Math.random() * 9000) + 1000
-    const addverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: verifycode.toString()}) 
+    const addverifycode = await users.findOneAndUpdate({username: req.user.username}, {verifyCode: verifycode.toString(), lang: lang}) 
     transporter.sendMail({
     from: {
     name: config.cloudname + " | Verify",
@@ -37,14 +38,14 @@ router.post("/", checkAuth, checkNotVerify, async function (req, res) {
 })
 
 router2.get("/", checkAuth, checkNotVerify, function (req, res) {
-    res.render(__dirname + "/../views/verifycode.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken()})
+    res.render(__dirname + "/../views/verifycode.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang})
 })
 
 router2.post("/", checkAuth, checkNotVerify, async function (req, res) {
     const user = await users.findOne({ username: req.user.username})
     if (user.verifyCode == req.body.code) {
       const verifyuser = await users.findOneAndUpdate({username: req.user.username}, { isVerified: true})
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">verified</span>&nbsp;Your account has been successfully verified!`})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<span class="material-icons">verified</span>&nbsp;${lang["Account-Verified"]}`, lang: lang})
       logger.logInfo("User " + req.user.username + " has been successfully verified!")
     } else {
       res.redirect("/verifycode")

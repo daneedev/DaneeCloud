@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Admin</title>
+    <title><%= cloudname %> | <%= lang["Admin-Panel"] %></title>
 </head>
 <body>
     <style>
@@ -58,7 +58,7 @@
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 30px;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     margin-left: auto;
@@ -77,7 +77,7 @@
     background-color: white;
     font-size: 20px;
     margin-top: 30px;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     margin-left: auto;
@@ -157,11 +157,11 @@ select {
 .add {
   color: white;
     height: 40px;
-    width: 125px;
+    width: 200px;
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -175,11 +175,11 @@ select {
 .add:hover {
   color: #5D3FD3;
     height: 40px;
-    width: 125px;
+    width: 200px;
     background-color: white;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -193,11 +193,11 @@ select {
 .del {
   color: white;
     height: 40px;
-    width: 135px;
+    width: 200px;
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -211,11 +211,11 @@ select {
 .del:hover {
   color: #5D3FD3;
     height: 40px;
-    width: 135px;
+    width: 200px;
     background-color: white;
     font-size: 20px;
     margin-top: 5px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -232,7 +232,7 @@ select {
     background-color: #5D3FD3;
     font-size: 20px;
     margin-top: 25px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -250,7 +250,7 @@ select {
     background-color: white;
     font-size: 20px;
     margin-top: 25px;
-    display: flex;
+    display: block;
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -337,37 +337,37 @@ input[id="searchBar"] {
 .material-icons.md-36 { font-size: 36px;   margin-top: 20px;}
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Admin Panel</h2>
-    <h2 class="stats">Stats</h2>
+    <h2 class="subtitle"><%= lang["Admin-Panel"] %></h2>
+    <h2 class="stats"><%= lang["Stats"] %></h2>
     <table class="statstable">
       <thead>
-        <th>Name</th>
-        <th>Value</th>
+        <th><%= lang["Name"] %></th>
+        <th><%= lang["Value"] %></th>
       </thead>
       <tbody>
         <tr>
-          <td>Ram Usage</td>
+          <td><%= lang["Ram-Usage"] %></td>
           <td><%= Math.round(process.memoryUsage().heapUsed / 1024 / 1024) %> MB </td>
         </tr>
         <tr>
-          <td>CPU Usage</td> 
+          <td><%= lang["CPU-Usage"] %></td> 
           <td><%= cpuUsage.toString() %> % </td> 
         </tr>
         <tr>
-          <td>Uptime</td>
+          <td><%= lang["Uptime"] %></td>
           <td><%= ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true}) %></td> 
         </tr>
         <tr>
-          <td>Version</td>
+          <td><%= lang["Version"] %></td>
           <% if (packages.version == stableVersion) { %> 
           <td>v<%= packages.version %> </td>
           <% } else { %>
-            <td>v<%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/v" + stableVersion %>>v<%= stableVersion %> available!</a></td> 
+            <td>v<%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/v" + stableVersion %>>v<%= stableVersion %> <%= lang["Is-Available"] %>!</a></td> 
         <% } %> 
         </tr>
       </tbody>
     </table>
-    <h2 class="usr">User management</h2>
+    <h2 class="usr"><%= lang["User-Managment"] %></h2>
     <script>
       function searchBar() {
   // Declare variables
@@ -391,19 +391,19 @@ input[id="searchBar"] {
   }
 }
     </script>
-    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder="Search for username">
+    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-Username"] %>>
     <table class="usrtable" id="users">
         <thead>
         <tr>
-          <th>Profile picture</th>
-          <th>Account username</th>
-          <th>Account email</th>
-          <th>Is verified?</th>
-          <th>IP address</th>
-          <th>Created at</th>
-          <th>Last seen</th>
-          <th>Role</th>
-          <th>Actions</th>
+          <th><%= lang["Profile-Picture"] %></th>
+          <th><%= lang["Username"] %></th>
+          <th><%= lang["Email"] %></th>
+          <th><%= lang["Is-Verified"] %></th>
+          <th><%= lang["IP"] %></th>
+          <th><%= lang["Created-At"] %></th>
+          <th><%= lang["Last-Seen"] %></th>
+          <th><%= lang["Role"] %></th>
+          <th><%= lang["Actions"] %></th>
         </tr>
       </thead>
       <tbody>
@@ -415,9 +415,9 @@ input[id="searchBar"] {
           <% let userrole = user.role %>
           <% let isverified; %>    
           <% if (user.isVerified) { %>
-            <% isverified = "Yes" %>
+            <% isverified = lang["Yes"] %>
           <% } else { %>  
-            <% isverified = "No" %>
+            <% isverified = lang["No"] %>
           <% } %>   
           <tr>
             <% let badge = roles.filter((obj) => {return obj.name == user.role})[0].badge   %>
@@ -433,7 +433,7 @@ input[id="searchBar"] {
               <td>-</td>
             <% } %>
             <td><%= user.createdAt %></td>
-            <td><%= user.lastSeen %></td>
+            <td><%= moment.unix(parseInt(user.lastSeen)).fromNow() %></td>
             <td><%= user.role %> </td> 
             <td><a href=<%= link2 %>><span class="material-icons">contact_mail</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>            <% } %>
             
@@ -441,12 +441,12 @@ input[id="searchBar"] {
           
       </tbody>
       </table>
-      <h2 class="storageplans">Roles</h2>
+      <h2 class="storageplans"><%= lang["Roles"] %></h2>
       <form action="/addrole/">
-      <input type="submit" class="add" value="Add role"></input>
+      <button type="submit" class="add"><%= lang["Add-Role"] %></button>
     </form>
     <form action="/delrole/">
-      <input type="submit" class="del" value="Remove role"></input>
+      <button type="submit" class="del"><%= lang["Remove-Role"] %></button>
     </form>
       <form action="/updaterole/" method="post">
         <select name="role">
@@ -456,19 +456,19 @@ input[id="searchBar"] {
         </select>
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input><h2 class="mb">MB</h2>
-        <label for="badge"><span class="material-icons">verified</span>&nbsp;URL of badge (not required)</label>
+        <label for="badge"><span class="material-icons">verified</span>&nbsp;<%= lang["Badge-URL"] %></label>
         <input type="text", id="badge", name="badge"></input>
-        <input type="submit" class="setasdefault" value="Update role"></input>
+        <button type="submit" class="setasdefault"><%= lang["Update-Role"] %></button>
       </form>
-      <h2 class="storageplans">API Keys</h2>
+      <h2 class="storageplans"><%= lang["API-Keys"] %></h2>
       <form action="/addapikey/">
-        <input type="submit" class="back" value="Add API key"></input>
+        <button type="submit" class="back"><%= lang["Add-Api-Key"] %></button>
       </form> 
     <table class="usrtable">
         <thead>
           <tr>
-            <th>API Key name</th>
-            <th>Actions</th>
+            <th><%= lang["API-Key-Name"] %></th>
+            <th><%= lang["Actions"] %></th>
           </tr>
         </thead>
         <tbody>
@@ -482,7 +482,7 @@ input[id="searchBar"] {
         </tbody>
       </table>
       <form action="/">
-        <input type="submit" class="back" href="/" value="Back to home page"></input>
+        <button type="submit" class="back" href="/"><%= lang["Back"] %></button>
         </form>
     <footer>
              <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>

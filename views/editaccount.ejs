@@ -10,7 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | Edit account</title>
+    <title><%= cloudname %> | <%= lang["Edit-Account"] %></title>
 </head>
 <body>
     <style>
@@ -157,17 +157,17 @@ button[id="rename"]:hover {
 
     </style>
     <h1><%= cloudname %></h1>
-    <h2 class="subtitle">Edit <%= account %> </h2>
+    <h2 class="subtitle"> <%= lang["Edit"] %> <%= account %> </h2>
     <% let editurl = editaccurl + account%> 
     <form action=<%= editurl %> method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="newname"><span class="material-icons">edit</span>&nbsp;New account name</label>
+        <label for="newname"><span class="material-icons">edit</span>&nbsp; <%= lang["New-Account"] %></label>
         <input type="text", id="newname", name="newname" required></input>
-        <label for="newname"><span class="material-icons">edit</span>&nbsp;New account email</label>
+        <label for="newname"><span class="material-icons">edit</span>&nbsp; <%= lang["New-Email"] %></label>
         <input type="email", id="newemail", name="newemail" required></input>
-        <button type="submit" id="rename"><span class="material-icons">edit</span>&nbsp;Rename account</button>
+        <button type="submit" id="rename"><span class="material-icons">edit</span>&nbsp; <%= lang["Edit-Account"] %></button>
     </form>
-    <p>* Profile pictures are powered by Gravatar</p>
+    <p>*  <%= lang["Pfp-Powered-By"] %></p>
     <footer>
                <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
     
