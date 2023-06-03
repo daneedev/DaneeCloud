@@ -10,7 +10,7 @@ const sanitize = require("sanitize-filename")
 const lang = require("../lang/default.json")
 
 router.get("/", checkNotAuth, function (req, res) {
-  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang, RCAPTCHA_SITE_KEY: process.env.RCAPTCHA_SITE_KEY})
+  res.render(__dirname + "/../views/register.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang, RCAPTCHA_SITE_KEY: process.env.RCAPTCHA_SITE_KEY, config: config})
 })
 
 router.post("/", checkNotAuth, async function (req, res) {

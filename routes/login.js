@@ -6,7 +6,7 @@ const passport = require("passport")
 const lang = require("../lang/default.json")
 
 router.get("/", checkNotAuth, function (req, res) {
-    res.render(__dirname + "/../views/login.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang, RCAPTCHA_SITE_KEY: process.env.RCAPTCHA_SITE_KEY})
+    res.render(__dirname + "/../views/login.ejs", { cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang, RCAPTCHA_SITE_KEY: process.env.RCAPTCHA_SITE_KEY, config: config})
 })
 
 router.post("/", checkNotAuth, passport.authenticate("local", {
