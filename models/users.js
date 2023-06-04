@@ -6,6 +6,7 @@ const users = new mongoose.Schema({
     password: { type: String, require: true},
     id: { type: String, require: true},
     files: { type: Array},
+    folders: { type: Array},
     isVerified: { type: Boolean},
     verifyCode: { type: String},
     sharedFiles: {type: Array},
