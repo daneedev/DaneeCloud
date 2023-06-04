@@ -162,6 +162,8 @@ app.use("/dwnl/", require("./routes/download").dwnl)
 
 app.use("/download/", require("./routes/download").download)
 
+app.use("/downloadf/", require("./routes/download").downloadf)
+
 // ROLES
 
 app.use("/updaterole/", require("./routes/roles").updaterole)
