@@ -113,5 +113,9 @@
     "File-Not-Found2": "File not found",
     "Subtitles-Added": "Subtitles ${req.body.name} successfully added to ${file}",
     "Subtitles-Removed": "Subtitles successfully removed from ${file}",
-    "No-Subtitles": "This file has no subtitles"
+    "No-Subtitles": "This file has no subtitles",
+    "Create-Folder": "Create folder",
+    "Folder-Name": "Name of folder",
+    "Folder-Exist": "Folder already exist!",
+    "Folder-Created": "Folder ${req.body.name} has been created!"
 }
