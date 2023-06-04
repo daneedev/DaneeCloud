@@ -54,6 +54,7 @@
     align-items: center;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 5px;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -73,6 +74,7 @@
     align-items: center;
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 5px;
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
     border-radius: 24px;
@@ -206,6 +208,9 @@ input[id="searchBar"] {
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
+    <form action="/createfolder">
+      <button type="submit"><span class="material-icons">add_circle</span>&nbsp;<%= lang["Create-Folder"] %></button>
+    </form>
     <table id="files">
       <thead>
       <tr>
@@ -264,7 +269,15 @@ input[id="searchBar"] {
           <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">screen_share</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td> 
         <% } %> 
         </tr>
-        <% }) %> 
+        <% }) %>
+        <% folders.forEach((folder) => { %>
+          <td>-</td>
+          <td><%= folder + "/" %></td>
+          <td>-</td>
+          <td>-</td>
+          <td>-</td>
+          <td><a href=""><span class="material-icons">drive_file_move</span></a>&nbsp;<a href=""><span class="material-icons">delete</span></a></td>
+       <% }) %> 
     </tbody>
     </table>
       <form action="/">
