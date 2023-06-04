@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const router2 = express.Router()
 const router3 = express.Router()
+const router4 = express.Router()
 const {checkAuth, checkVerify} = require("../handlers/authVerify")
 const users = require("../models/users");
 const config = require("../config.json")
@@ -20,7 +21,8 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
     const role = await roles.findOne({name: user.role})
     const files = user.files
     const sharedFiles = user.sharedFiles
-    res.render(__dirname + "/../views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: role.maxStorage, usedStorage: user.usedStorage, isAudio: isaudio, vidSubtitles: vidSubtitles, lang: lang})
+    const folders = user.folders
+    res.render(__dirname + "/../views/myfiles.ejs", {files: files,  cloudname: config.cloudname, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: role.maxStorage, usedStorage: user.usedStorage, isAudio: isaudio, vidSubtitles: vidSubtitles, lang: lang, folders: folders})
   })
 
 
@@ -71,6 +73,24 @@ router3.post("/:file", checkAuth, checkVerify, async function (req, res) {
   logger.logInfo(`${req.user.username} renamed ${oldname} to ${newname}!`)
 })
 
+router4.get("/", checkAuth, checkVerify, function (req, res) {
+  res.render(__dirname + "/../views/createFolder.ejs", {cloudname: config.cloudname, lang: lang, csrfToken: req.csrfToken()})
+})
+
+router4.post("/", checkAuth, checkVerify, async function (req, res) {
+  const username = req.user.username
+  const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+  if (checkFolder.includes(req.body.name)) {
+    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Folder-Exist"]}`,  cloudname: config.cloudname, lang: lang})
+  } else {
+    const createFolder = await fs.mkdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/` + req.body.name)
+    const user = await users.findOne({username: username})
+    user.folders.push(req.body.name)
+    user.save()
+    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Folder-Created"].replace("${req.body.name}", req.body.name)}`,  cloudname: config.cloudname, lang: lang})
+  }
+})
 module.exports.myfiles = router
 module.exports.del = router2
 module.exports.ren = router3
+module.exports.createfolder = router4
