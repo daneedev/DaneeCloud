@@ -83,7 +83,7 @@ router4.post("/", checkAuth, checkVerify, async function (req, res) {
   if (checkFolder.includes(req.body.name)) {
     res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Folder-Exist"]}`,  cloudname: config.cloudname, lang: lang})
   } else {
-    const createFolder = await fs.mkdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/` + req.body.name)
+    const createFolder = await fs.mkdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(username)}/` + sanitize(req.body.name))
     const user = await users.findOne({username: username})
     user.folders.push(req.body.name)
     user.save()
