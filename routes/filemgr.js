@@ -3,6 +3,8 @@ const router = express.Router()
 const router2 = express.Router()
 const router3 = express.Router()
 const router4 = express.Router()
+const router5 = express.Router()
+const router6 = express.Router()
 const {checkAuth, checkVerify} = require("../handlers/authVerify")
 const users = require("../models/users");
 const config = require("../config.json")
@@ -88,9 +90,37 @@ router4.post("/", checkAuth, checkVerify, async function (req, res) {
     user.folders.push(req.body.name)
     user.save()
     res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Folder-Created"].replace("${req.body.name}", req.body.name)}`,  cloudname: config.cloudname, lang: lang})
+    logger.logInfo(`${req.user.username} created ${req.body.name} folder!`)
   }
 })
+
+router5.get("/:folder", checkAuth, checkVerify, async function (req, res) {
+  const folder = sanitize(req.params.folder)
+  const username = req.user.username
+  const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+  if (!checkFolder) {
+    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Folder-Not-Found"]}`})
+  } else {
+    await fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(username)}/` + folder)
+    const user = await users.findOne({username: username})
+    user.folders.pull(folder)
+    user.save()
+    res.redirect("/myfiles")
+    logger.logInfo(`${username} deleted ${folder} folder!`)
+  }
+})
+
+router6.get("/:folder", checkAuth, checkVerify, async function (req, res) {
+  const files = await fs.readdirSync(__dirname + `${config.uploadsfolder}/${sanitize(req.user.username)}/${sanitize(req.params.folder)}`)
+  const user = await users.findOne({username: req.user.username})
+  const role = await roles.findOne({name: user.role})
+  const sharedFiles = user.sharedFiles
+  res.render(__dirname + "/../views/folder.ejs", {cloudname: config.cloudname, files: files, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: role.maxStorage, usedStorage: user.usedStorage, isAudio: isaudio, vidSubtitles: vidSubtitles, lang: lang})
+})
+
 module.exports.myfiles = router
 module.exports.del = router2
 module.exports.ren = router3
 module.exports.createfolder = router4
+module.exports.deletefolder = router5
+module.exports.showfolder = router6

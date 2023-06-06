@@ -271,12 +271,13 @@ input[id="searchBar"] {
         </tr>
         <% }) %>
         <% folders.forEach((folder) => { %>
+          <% let delfolder = "/deletefolder/" + folder %>
           <td>-</td>
           <td><%= folder + "/" %></td>
           <td>-</td>
           <td>-</td>
           <td>-</td>
-          <td><a href=""><span class="material-icons">drive_file_move</span></a>&nbsp;<a href=""><span class="material-icons">delete</span></a></td>
+          <td><a href=""><span class="material-icons">drive_file_move</span></a>&nbsp;<a href=<%= delfolder %>><span class="material-icons">delete</span></a></td>
        <% }) %> 
     </tbody>
     </table>

@@ -198,6 +198,10 @@ app.use("/myprofile", require("./routes/accountmgr").myprofile)
 // CREATE FOLDER
 app.use("/createfolder", require("./routes/filemgr").createfolder)
 
+// DELETE FOLDER
+
+app.use("/deletefolder", require("./routes/filemgr").deletefolder)
+
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
