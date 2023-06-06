@@ -202,6 +202,10 @@ app.use("/createfolder", require("./routes/filemgr").createfolder)
 
 app.use("/deletefolder", require("./routes/filemgr").deletefolder)
 
+// SHOW FOLDER
+
+app.use("/folder/", require("./routes/filemgr").showfolder)
+
 // 404  PAGE
 
 app.get("/*", async function (req, res) {

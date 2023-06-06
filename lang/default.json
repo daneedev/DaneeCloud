@@ -117,5 +117,6 @@
     "Create-Folder": "Create folder",
     "Folder-Name": "Name of folder",
     "Folder-Exist": "Folder already exist!",
-    "Folder-Created": "Folder ${req.body.name} has been created!"
+    "Folder-Created": "Folder ${req.body.name} has been created!",
+    "Folder-Not-Found": "Folder not found!"
 }

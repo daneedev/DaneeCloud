@@ -111,7 +111,7 @@ router5.get("/:folder", checkAuth, checkVerify, async function (req, res) {
 })
 
 router6.get("/:folder", checkAuth, checkVerify, async function (req, res) {
-  const files = await fs.readdirSync(__dirname + `${config.uploadsfolder}/${sanitize(req.user.username)}/${sanitize(req.params.folder)}`)
+  const files = await fs.readdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(req.user.username)}/${sanitize(req.params.folder)}`)
   const user = await users.findOne({username: req.user.username})
   const role = await roles.findOne({name: user.role})
   const sharedFiles = user.sharedFiles

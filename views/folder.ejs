@@ -208,9 +208,6 @@ input[id="searchBar"] {
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
-    <form action="/createfolder">
-      <button type="submit"><span class="material-icons">add_circle</span>&nbsp;<%= lang["Create-Folder"] %></button>
-    </form>
     <table id="files">
       <thead>
       <tr>
@@ -270,16 +267,6 @@ input[id="searchBar"] {
         <% } %> 
         </tr>
         <% }) %>
-        <% folders.forEach((folder) => { %>
-          <% let delfolder = "/deletefolder/" + folder %>
-          <% let showfolder = "/folder/" + folder %>
-          <td>-</td>
-          <td><%= folder + "/" %></td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td><a href=<%= showfolder %>><span class="material-icons">drive_file_move</span></a>&nbsp;<a href=<%= delfolder %>><span class="material-icons">delete</span></a></td>
-       <% }) %> 
     </tbody>
     </table>
       <form action="/">
