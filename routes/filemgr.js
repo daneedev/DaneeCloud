@@ -115,7 +115,7 @@ router6.get("/:folder", checkAuth, checkVerify, async function (req, res) {
   const user = await users.findOne({username: req.user.username})
   const role = await roles.findOne({name: user.role})
   const sharedFiles = user.sharedFiles
-  res.render(__dirname + "/../views/folder.ejs", {cloudname: config.cloudname, files: files, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: role.maxStorage, usedStorage: user.usedStorage, isAudio: isaudio, vidSubtitles: vidSubtitles, lang: lang})
+  res.render(__dirname + "/../views/folder.ejs", {cloudname: config.cloudname, files: files, fs: fs, config: config, req: req, __dirname: __dirname, isImg: isimg, Buffer: Buffer, sharedFiles: sharedFiles, isVid: isvid, maxStorage: role.maxStorage, usedStorage: user.usedStorage, isAudio: isaudio, vidSubtitles: vidSubtitles, lang: lang, folder: req.params.folder})
 })
 
 module.exports.myfiles = router
