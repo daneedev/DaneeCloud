@@ -21,7 +21,7 @@ router.post("/", upload.single('file'), checkAuth, checkVerify, async function (
       if (req.body.dest == "/") {
         dir = __dirname + "/.." + config.uploadsfolder + `${req.user.username}/`
       } else {
-        dir = __dirname + "/.." + config.uploadsfolder + `${req.user.username}/${req.body.dest}/`
+        dir = __dirname + "/.." + config.uploadsfolder + `${req.user.username}/${sanitize(req.body.dest)}/`
       }
       if (fs.readdirSync(dir).includes(name)) {
         res.render(__dirname + "/../views/message2.ejs", {message: `<span class="material-icons">file_copy</span>&nbsp;${lang["File-Already-Exist"].replace("${name}", name)}`,  cloudname: config.cloudname, lang: lang})
