@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="../css/register.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
       <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -224,7 +223,7 @@ input[id="searchBar"] {
         <tr>
         <% let link = "/delete/" + file + `/${folder}` %>
         <% let link2 = "/rename/" + file + `/${folder}` %>
-        <% let link3 = "/download/" + file + `/${folder}` %>
+        <% let link3 = "/downloadf/" + `${folder}/` + file %>
         <% let link4 = "/addsf/" + file + `/${folder}` %> 
         <% let link5 = "/rmsf/" + file + `/${folder}` %> 
         <% let link6 = "/playvideo/" + `${req.user.username}/` + file + `/${folder}` %> 
