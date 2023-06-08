@@ -29,16 +29,17 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
 
 
 
-router2.get("/:file", checkAuth, checkVerify, function (req, res) {
+router2.get("/:file/:folder?", checkAuth, checkVerify, function (req, res) {
     const file = sanitize(req.params.file)
-    fs.readFile( __dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file, async (err, data) =>{
+    const folder = sanitize(req.params.folder)
+    fs.readFile( __dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + file, async (err, data) =>{
       if (err) {
         res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
       } else {
         const user = await users.findOne({ username: req.user.username})
-        const filesize = Math.floor(fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024))
+        const filesize = Math.floor(fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + file).size / (1024 * 1024))
         const updateStorage = await users.findOneAndUpdate({ username: req.user.username}, {usedStorage: user.usedStorage - filesize})
-        fs.unlinkSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)
+        fs.unlinkSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + file)
         user.files.pull(file)
         if (user.sharedFiles.includes(file)) {
           user.sharedFiles.pull(file)
@@ -50,25 +51,33 @@ router2.get("/:file", checkAuth, checkVerify, function (req, res) {
     })
   })
 
-router3.get("/:file", checkAuth, checkVerify, function (req, res) {
+router3.get("/:file/:folder?", checkAuth, checkVerify, function (req, res) {
   const file = req.params.file
-  if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/`).includes(file)) {
-    res.render(__dirname + "/../views/rename.ejs", { file: file,  cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang})
+  const folder = sanitize(req.params.folder)
+  if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/`).includes(file)) {
+    res.render(__dirname + "/../views/rename.ejs", { file: file,  cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang, folder: folder})
   } else {
     res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
-router3.post("/:file", checkAuth, checkVerify, async function (req, res) {
+router3.post("/:file/:folder?", checkAuth, checkVerify, async function (req, res) {
   const oldname = sanitize(req.params.file)
   const newname = sanitize(req.body.newname.replace(/ /g, "_")) + "." + oldname.split(".").pop()
-  fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + oldname, __dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + newname)
+  const folder = sanitize(req.params.folder)
+  fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + oldname, __dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + newname)
   const user = await users.findOne({ username: req.user.username})
+//    if (user.sharedFiles.includes(`${folder}/${oldname}`)) {
+   //   user.sharedFiles.pull(`${folder}/${oldname}`)
+      //user.sharedFiles.push(`${folder}/${newname}`)
+
+  if (!folder) {
   user.files.pull(oldname)
   user.files.push(newname)
   if (user.sharedFiles.includes(oldname)) {
     user.sharedFiles.pull(oldname)
     user.sharedFiles.push(newname)
+  }
   }
   user.save()
   res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["File-Renamed"].replace("${oldname}", oldname).replace("${newname}", newname)}`,  cloudname: config.cloudname, lang: lang})

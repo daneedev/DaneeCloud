@@ -132,7 +132,7 @@ button[id="rename"]:hover {
     </style>
     <h1><%= cloudname %></h1>
     <h2 class="subtitle"><%= lang["Rename"] %> <%= file %> </h2>
-    <% let renameurl =  "/rename/" + file%> 
+    <% let renameurl =  "/rename/" + file + (`/${folder}` || "" )%> 
     <form action=<%= renameurl %> method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
         <label for="newname"><span class="material-icons">edit</span>&nbsp;<%= lang["New-Name"] %></label>

@@ -222,15 +222,15 @@ input[id="searchBar"] {
     <tbody>
       <% files.forEach((file) => { %> 
         <tr>
-        <% let link = "/delete/" + file %>
-        <% let link2 = "/rename/" + file %>
-        <% let link3 = "/download/" + file %>
-        <% let link4 = "/addsf/" + file %> 
-        <% let link5 = "/rmsf/" + file %> 
-        <% let link6 = "/playvideo/" + `${req.user.username}/` + file %> 
-        <% let link7 = "/playaudio/" + `${req.user.username}/` + file %>
-        <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file %>
-        <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file %>
+        <% let link = "/delete/" + file + `/${folder}` %>
+        <% let link2 = "/rename/" + file + `/${folder}` %>
+        <% let link3 = "/download/" + file + `/${folder}` %>
+        <% let link4 = "/addsf/" + file + `/${folder}` %> 
+        <% let link5 = "/rmsf/" + file + `/${folder}` %> 
+        <% let link6 = "/playvideo/" + `${req.user.username}/` + file + `/${folder}` %> 
+        <% let link7 = "/playaudio/" + `${req.user.username}/` + file + `/${folder}` %>
+        <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
+        <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
         <% let isShared; %> 
         <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).size / (1024 * 1024) %> 
         <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).birthtime %>
