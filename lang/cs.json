@@ -113,5 +113,10 @@
     "File-Not-Found2": "Soubor nenalezen",
     "Subtitles-Added": "Titulky ${req.body.name} byly úspěšně přidány do ${file}",
     "Subtitles-Removed": "Titulky byly úspěšně odebrány z ${file}",
-    "No-Subtitles": "Tento soubor nemá žádné titulky"
+    "No-Subtitles": "Tento soubor nemá žádné titulky",
+    "Create-Folder": "Vytvořit složku",
+    "Folder-Name": "Jméno složky",
+    "Folder-Exist": "Složka již existuje!",
+    "Folder-Created": "Složka ${req.body.name} byla vytvořena!",
+    "Folder-Not-Found": "Složka nenalezena!"
 }
