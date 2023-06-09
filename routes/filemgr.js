@@ -67,10 +67,6 @@ router3.post("/:file/:folder?", checkAuth, checkVerify, async function (req, res
   const folder = sanitize(req.params.folder)
   fs.renameSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + oldname, __dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + newname)
   const user = await users.findOne({ username: req.user.username})
-//    if (user.sharedFiles.includes(`${folder}/${oldname}`)) {
-   //   user.sharedFiles.pull(`${folder}/${oldname}`)
-      //user.sharedFiles.push(`${folder}/${newname}`)
-
   if (!folder) {
   user.files.pull(oldname)
   user.files.push(newname)
