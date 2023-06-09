@@ -418,7 +418,7 @@ router.get("/dash", keyAuth, async function (req, res) {
 // API: FOLDERS
 
 router.get("/folders/", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const user = await users.findOne({username: username})
     if (user) {
         const folders = user.folders
@@ -430,7 +430,7 @@ router.get("/folders/", keyAuth, async function (req, res) {
 })
 
 router.get("/folders/files", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = santize(req.query.username)
     const folder = req.query.folder
     const user = await users.findOne({username: username})
     if (user) {
@@ -448,7 +448,7 @@ router.get("/folders/files", keyAuth, async function (req, res) {
 })
 
 router.post("/folders/create", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const folder = req.query.folder
     const user = await users.findOne({username: username})
     if (user) { 
@@ -468,7 +468,7 @@ router.post("/folders/create", keyAuth, async function (req, res) {
 })
 
 router.post("/folders/delete", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const folder = req.query.folder
     const user = await users.findOne({username: username})
     if (user) { 
@@ -488,10 +488,10 @@ router.post("/folders/delete", keyAuth, async function (req, res) {
 })
 
 router.get("/folders/files/rename", keyAuth, async function (req, res) {
-    const username = req.query.username
+    const username = sanitize(req.query.username)
     const folder = req.query.folder
     const file = req.query.file
-    const newname = req.query.newname
+    const newname = sanitize(req.query.newname)
     const user = await users.findOne({username: username})
     if (user) {
     const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
