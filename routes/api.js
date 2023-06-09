@@ -487,7 +487,7 @@ router.post("/folders/delete", keyAuth, async function (req, res) {
         }
 })
 
-router.get("/folders/files/rename", keyAuth, async function (req, res) {
+router.post("/folders/files/rename", keyAuth, async function (req, res) {
     const username = sanitize(req.query.username)
     const folder = req.query.folder
     const file = req.query.file
@@ -501,6 +501,30 @@ router.get("/folders/files/rename", keyAuth, async function (req, res) {
             const renameFile = await fs.renameSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}/${file}`, __dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}/${newname}`)
             res.status(201).json({msg: `Response 201 - File renamed`})
             logger.logInfo(`${username}'s file ${file} in folder ${folder} was renamed to ${newname} via API`)
+        } else {
+            res.status(404).json({error: "Error 404 - File not found"})
+        }
+    } else {
+        res.status(404).json({error: "Error 404 - Folder not found"})
+    }
+    } else {
+        res.status(404).json({error: "Error 404 - User not found"})
+    }
+})
+
+router.post("/folders/files/delete", keyAuth, async function (req, res) {
+    const username = sanitize(req.query.username)
+    const folder = req.query.folder
+    const file = req.query.file
+    const user = await users.findOne({username: username})
+    if (user) {
+    const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+    if (checkFolder.includes(folder)) {
+        const checkFile = await fs.readdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}`)
+        if (checkFile.includes(file)) { 
+            const deleteFile = await fs.rmSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}/${file}`)
+            res.status(200).json({msg: `Response 200 - File deleted`})
+            logger.logInfo(`${username}'s file ${file} in folder ${folder} was deleted via API`)
         } else {
             res.status(404).json({error: "Error 404 - File not found"})
         }
