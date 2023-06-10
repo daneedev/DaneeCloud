@@ -113,5 +113,10 @@
     "File-Not-Found2": "ファイルが見つかりません",
     "Subtitles-Added": "サブタイトル ${req.body.name} が ${file} へ追加されました",
     "Subtitles-Removed": "サブタイトルが ${file} から削除されました",
-    "No-Subtitles": "このファイルにサブタイトルはありません"
+    "No-Subtitles": "このファイルにサブタイトルはありません",
+    "Create-Folder": "フォルダを作成",
+    "Folder-Name": "フォルダ名",
+    "Folder-Exist": "同じ名前のフォルダがあります",
+    "Folder-Created": "${req.body.name} フォルダを作成しました!",
+    "Folder-Not-Found": "フォルダがありません"
 }

@@ -10,8 +10,7 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <title><%= cloudname %> | <%= lang["Log-In"] %></title>
+    <title><%= cloudname %> | <%= lang["Create-Folder"] %></title>
 </head>
 <body>
     <style>
@@ -20,7 +19,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    margin: 0;
 }
 
 h1 {
@@ -53,6 +51,7 @@ h1 {
     text-align: center;
 }
 
+
 label[for="name"] {
     color: #5D3FD3;
     margin-top: 5px;
@@ -61,8 +60,8 @@ label[for="name"] {
     display: flex;
     justify-content: center;
     font-size: 20px;
-
 }
+
 
 input[id="name"] {
     height: 60px;
@@ -80,33 +79,9 @@ input[id="name"] {
     transition-duration: 0.4s;
     border:0cm
 }
-label[for="password"] {
-    color: #5D3FD3;
-    margin-top: 10px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-}
-input[id="password"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
 
-button[id="login"] {
+
+button[id="add"] {
     color: white;
     height: 60px;
     width: 250px;
@@ -125,7 +100,7 @@ button[id="login"] {
     border:0cm
 }
 
-button[id="login"]:hover {
+button[id="add"]:hover {
     color: #5D3FD3;
     height: 60px;
     width: 250px;
@@ -143,14 +118,6 @@ button[id="login"]:hover {
     transition-duration: 0.4s;
     border:0cm
 }
-
-a {
-    color: #5D3FD3;
-    margin: auto;
-    font-family: "Montserrat", sans-serif;
-    font-size: medium;
-    margin-top: 10px;
-}
 ::-webkit-input-placeholder {
     text-align: center;
   }
@@ -163,43 +130,17 @@ a {
  }
 
 
-div {
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
- }
-
     </style>
     <h1><%= cloudname %></h1>
-    <% if (messages.error) {%>
-    <%= messages.error %>
-    <% } %>  
-    <% if (config.enableRecaptcha) { %>
-    <script>
-        window.addEventListener('load', () => {
-            const $recaptcha = document.querySelector('#g-recaptcha-response');
-            if ($recaptcha) {
-                $recaptcha.setAttribute('required', 'required');
-            }
-        })
-    </script>
-    <% } %>
-    <h2 class="subtitle"><%= lang["Log-In"] %></h2>
-    <form action="/login" method="post">
+    <h2 class="subtitle"><%= lang["Create-Folder"] %> </h2>
+    <form action="/createfolder/" method="post">
         <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="name"><span class="material-icons">account_circle</span>&nbsp;<%= lang["Username2"] %></label>
-        <input type="text", id="name", name="name" required></input>
-        <label for="password"><span class="material-icons">lock</span>&nbsp;<%= lang["Password"] %></label>
-        <input type="password", id="password", name="password" required></input>
-        <% if (config.enableRecaptcha) { %>
-        <div class="g-recaptcha" data-sitekey=<%= RCAPTCHA_SITE_KEY %>></div>
-        <br/>
-        <% } %>
-        <button type="submit" id="login"><span class="material-icons">login</span>&nbsp;<%= lang["Log-In"] %></button>
+        <label for="name"><span class="material-icons">folder</span>&nbsp;<%= lang["Folder-Name"] %></label>
+        <input type="text" id="name" name="name" required></input>
+        <button type="submit" id="add"><span class="material-icons">add</span>&nbsp;<%= lang["Create-Folder"] %></button>
     </form>
-    <a href="/register"><%= lang["noaccount"] %></a>
     <footer>
-               <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
+        <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
     
     </footer>
 </body>

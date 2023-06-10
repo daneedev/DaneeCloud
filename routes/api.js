@@ -415,6 +415,127 @@ router.get("/dash", keyAuth, async function (req, res) {
 
 })
 
+// API: FOLDERS
+
+router.get("/folders/", keyAuth, async function (req, res) {
+    const username = sanitize(req.query.username)
+    const user = await users.findOne({username: username})
+    if (user) {
+        const folders = user.folders
+        res.status(200).json({folders: folders})
+        logger.logInfo(`${username}'s folders were requested via API`)
+    } else {
+         res.status(404).json({error: "Error 404 - User not found"})
+    }
+})
+
+router.get("/folders/files", keyAuth, async function (req, res) {
+    const username = santize(req.query.username)
+    const folder = req.query.folder
+    const user = await users.findOne({username: username})
+    if (user) {
+    const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+    if (checkFolder.includes(folder)) {
+    const files = await fs.readdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}`)
+    res.status(200).json({files: files})
+    logger.logInfo(`${username}'s files in ${folder} were requested via API`)
+    } else {
+        res.status(404).json({error: "Error 404 - Folder not found"})
+    }
+    } else {
+        res.status(404).json({error: "Error 404 - User not found"})
+    }
+})
+
+router.post("/folders/create", keyAuth, async function (req, res) {
+    const username = sanitize(req.query.username)
+    const folder = req.query.folder
+    const user = await users.findOne({username: username})
+    if (user) { 
+        const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+        if (checkFolder.includes(folder)) {
+            res.status(409).json({error: "Error 409 - Folder already exist"})
+        } else {        
+        const createFolder = await fs.mkdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}`)
+        user.folders.push(folder)
+        user.save()
+        res.status(201).json({msg: "Response 201 - Folder created"})
+        logger.logInfo(`Folder ${folder} was created via API for ${username}`)
+        }
+        } else {
+            res.status(404).json({error: "Error 404 - User not found"})
+        }
+})
+
+router.post("/folders/delete", keyAuth, async function (req, res) {
+    const username = sanitize(req.query.username)
+    const folder = req.query.folder
+    const user = await users.findOne({username: username})
+    if (user) { 
+        const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+        if (checkFolder.includes(folder)) {
+            const deleteFolder = await fs.rmdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}`)
+            user.folders.pull(folder)
+            user.save()
+            res.status(200).json({msg: "Response 200 - Folder deleted"})
+            logger.logInfo(`${username}'s folder ${folder} was deleted!`)
+        } else {
+            res.status(404).json({error: "Error 404 - Folder not found"})
+        }
+        } else {
+            res.status(404).json({error: "Error 404 - User not found"})
+        }
+})
+
+router.post("/folders/files/rename", keyAuth, async function (req, res) {
+    const username = sanitize(req.query.username)
+    const folder = req.query.folder
+    const file = req.query.file
+    const newname = sanitize(req.query.newname)
+    const user = await users.findOne({username: username})
+    if (user) {
+    const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+    if (checkFolder.includes(folder)) {
+        const checkFile = await fs.readdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}`)
+        if (checkFile.includes(file)) {
+            const renameFile = await fs.renameSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}/${file}`, __dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}/${newname}`)
+            res.status(201).json({msg: `Response 201 - File renamed`})
+            logger.logInfo(`${username}'s file ${file} in folder ${folder} was renamed to ${newname} via API`)
+        } else {
+            res.status(404).json({error: "Error 404 - File not found"})
+        }
+    } else {
+        res.status(404).json({error: "Error 404 - Folder not found"})
+    }
+    } else {
+        res.status(404).json({error: "Error 404 - User not found"})
+    }
+})
+
+router.post("/folders/files/delete", keyAuth, async function (req, res) {
+    const username = sanitize(req.query.username)
+    const folder = req.query.folder
+    const file = req.query.file
+    const user = await users.findOne({username: username})
+    if (user) {
+    const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
+    if (checkFolder.includes(folder)) {
+        const checkFile = await fs.readdirSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}`)
+        if (checkFile.includes(file)) { 
+            const deleteFile = await fs.rmSync(__dirname + `/../${config.uploadsfolder}/${sanitize(username)}/${sanitize(folder)}/${file}`)
+            res.status(200).json({msg: `Response 200 - File deleted`})
+            logger.logInfo(`${username}'s file ${file} in folder ${folder} was deleted via API`)
+        } else {
+            res.status(404).json({error: "Error 404 - File not found"})
+        }
+    } else {
+        res.status(404).json({error: "Error 404 - Folder not found"})
+    }
+    } else {
+        res.status(404).json({error: "Error 404 - User not found"})
+    }
+})
+
 module.exports.api = router
 module.exports.addkey = router2
 module.exports.delkey = router3

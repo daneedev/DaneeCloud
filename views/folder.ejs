@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="../css/register.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
       <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -208,15 +207,11 @@ input[id="searchBar"] {
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
     <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
-    <form action="/createfolder">
-      <button type="submit"><span class="material-icons">add_circle</span>&nbsp;<%= lang["Create-Folder"] %></button>
-    </form>
     <table id="files">
       <thead>
       <tr>
         <th><%= lang["Preview"] %></th>
         <th><%= lang["File-Name"] %></th>
-        <th><%= lang["Is-Shared"] %></th>
         <th><%= lang["Size"] %></th>
         <th><%= lang["Created-On"] %></th>
         <th><%= lang["Actions"] %></th>
@@ -225,22 +220,19 @@ input[id="searchBar"] {
     <tbody>
       <% files.forEach((file) => { %> 
         <tr>
-        <% let link = "/delete/" + file %>
-        <% let link2 = "/rename/" + file %>
-        <% let link3 = "/download/" + file %>
-        <% let link4 = "/addsf/" + file %> 
-        <% let link5 = "/rmsf/" + file %> 
-        <% let link6 = "/playvideo/" + `${req.user.username}/` + file %> 
-        <% let link7 = "/playaudio/" + `${req.user.username}/` + file %>
-        <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file %>
-        <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file %>
-        <% let isShared; %> 
-        <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).size / (1024 * 1024) %> 
-        <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/` + file).birthtime %>
+        <% let link = "/delete/" + file + `/${folder}` %>
+        <% let link2 = "/rename/" + file + `/${folder}` %>
+        <% let link3 = "/downloadf/" + `${folder}/` + file %>
+        <% let link6 = "/playvideo/" + `${req.user.username}/` + file + `/${folder}` %> 
+        <% let link7 = "/playaudio/" + `${req.user.username}/` + file + `/${folder}` %>
+        <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
+        <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
+        <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).size / (1024 * 1024) %> 
+        <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).birthtime %>
         <% let creationDate = `${fsDate.getDate()}.${fsDate.getMonth() + 1}.${fsDate.getFullYear()}` %>
-        <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
-          <td><img src=<%= "/files/" + req.user.username + "/" + file%> ></td>
-        <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/` + file)) { %> 
+        <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder}/` + file)) { %> 
+          <td><img src=<%= "/files/" + req.user.username + `/${folder}/` + file%> ></td>
+        <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder}/` + file)) { %> 
           <% if (file.split(".").pop() == "mkv") {%> 
             <td><%= lang["Not-Supported"] %></td>
           <% } else { %>
@@ -251,35 +243,16 @@ input[id="searchBar"] {
         <% } else { %> 
           <td>-</td>
         <% } %> 
-        <td><%= file %></td>
-        <% if (sharedFiles.includes(file)) { %>
-          <td>Yes</td>
-        <% } else { %>
-          <td>No</td>
-        <% } %>   
+        <td><%= file %></td> 
           <% if (size.toFixed(2) > 1024) { %>
             <td><%= size.toFixed(2) / 1000 %> GB </td>
           <% } else { %> 
           <td><%= size.toFixed(2) %> MB </td>
           <% } %>
           <th><%= creationDate %></th>
-          <% if (sharedFiles.includes(file)) { %> 
-          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link5 %>><span class="material-icons">stop_screen_share</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>
-        <% } else { %>
-          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">screen_share</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td> 
-        <% } %> 
+          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td> 
         </tr>
         <% }) %>
-        <% folders.forEach((folder) => { %>
-          <% let delfolder = "/deletefolder/" + folder %>
-          <% let showfolder = "/folder/" + folder %>
-          <td>-</td>
-          <td><%= folder + "/" %></td>
-          <td>-</td>
-          <td>-</td>
-          <td>-</td>
-          <td><a href=<%= showfolder %>><span class="material-icons">drive_file_move</span></a>&nbsp;<a href=<%= delfolder %>><span class="material-icons">delete</span></a></td>
-       <% }) %> 
     </tbody>
     </table>
       <form action="/">

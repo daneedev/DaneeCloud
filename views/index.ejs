@@ -339,6 +339,21 @@ h3 {
       
       }
 
+      select {
+  background-color: #5D3FD3;
+  color: white;
+  border-radius: 24px;
+  height: 60px;
+  width: 250px;
+  font-family: "Montserrat", sans-serif;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+}
+
 ::-webkit-input-placeholder {
     text-align: center;
   }
@@ -366,9 +381,11 @@ function _(el) {
 
 function progressBar() {
   var file = _("file").files[0];
+  var select = _("dest").value;
   // alert(file.name+" | "+file.size+" | "+file.type);
   var formdata = new FormData();
   formdata.append("file", file);
+  formdata.append("dest", select);
   var ajax = new XMLHttpRequest();
   ajax.upload.addEventListener("progress", progressHandler, false);
   ajax.addEventListener("load", completeHandler, false);
@@ -377,6 +394,7 @@ function progressBar() {
   ajax.open("POST", "/upload/", true); 
   ajax.send(formdata);
 }
+
 
 function progressHandler(event) {
   var percent = (event.loaded / event.total) * 100;
@@ -416,7 +434,13 @@ function abortHandler(event) {
     <h2 class="subtitle"><%= lang["Welcome"] %>, <%= username %> <img title=<%= user.role %> src=<%= badge %> width="30" height="30"></img>!</h2> 
     <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
     <h3 class="storage"><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
-    <form id="form" action="/upload/" method="post", enctype="multipart/form-data" target="_blank">
+    <form id="form" action="/upload/" method="post" enctype="multipart/form-data" target="_blank">
+        <select name="dest" id="dest">
+            <option value="/">/</option>
+            <% for (let folder of folders) { %>        
+              <option value=<%= folder %>><%= "/" + folder %></option>
+              <% } %>
+            </select>
         <label for="file" ><span class="material-icons">upload_file</span>&nbsp;<%= lang["Upload"] %></label>
         <input type="file" name="file" id="file" onchange="progressBar()" required hidden></input>
         <progress id="progressBar" class="progressBar" value="0" max="100"></progress>

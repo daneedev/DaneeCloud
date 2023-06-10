@@ -162,6 +162,8 @@ app.use("/dwnl/", require("./routes/download").dwnl)
 
 app.use("/download/", require("./routes/download").download)
 
+app.use("/downloadf/", require("./routes/download").downloadf)
+
 // ROLES
 
 app.use("/updaterole/", require("./routes/roles").updaterole)
@@ -193,6 +195,16 @@ app.use("/delmyaccount/", require("./routes/accountmgr").delete)
 // MY PROFILE
 app.use("/myprofile", require("./routes/accountmgr").myprofile)
 
+// CREATE FOLDER
+app.use("/createfolder", require("./routes/filemgr").createfolder)
+
+// DELETE FOLDER
+
+app.use("/deletefolder", require("./routes/filemgr").deletefolder)
+
+// SHOW FOLDER
+
+app.use("/folder/", require("./routes/filemgr").showfolder)
 
 // 404  PAGE
 
