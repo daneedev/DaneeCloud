@@ -38,8 +38,10 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 ### Translated languages
 | 🏳️ Language | 🙋 Translator |
 | ------------ | ------------- |
-| 🇨🇿 Czech | DaneeSkripter |
-| 🇯🇵 Japanese | Koichi MATSUMOTO |
+| 🇨🇿 Czech     | DaneeSkripter |
+| 🇯🇵 Japanese  | Koichi MATSUMOTO |
+| 🇪🇸 Spanish   | chander1411 |
+
 ## [🖼️ Addons & Themes](./addons.md)
 - *to show list of addons & themes click the link above*
 
