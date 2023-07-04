@@ -10,8 +10,8 @@
 
 | Preview | Download Link | Addon name | Addon version | DaneeCloud supported versions | Price | Developer |
 | ------- | ------------- | ---------- | ------------- | ----------------------------- | ----- | --------- |
-|   -     | [GitHub](https://github.com/DaneeSkripter/DaneeCloudBot) | Discord Bot | v1.2.0 | v1.5.x - v1.7.x | Free | DaneeSkripter |
-|   -     | [NPM](https://www.npmjs.com/package/daneecloud-api) | daneecloud-api NPM package | v1.0.1 | v1.5.x - 1.7.x | Free | DaneeSkripter |
+|   -     | [GitHub](https://github.com/DaneeSkripter/DaneeCloudBot) | Discord Bot | v1.3.0 | v1.5.x - v1.9.x | Free | DaneeSkripter |
+|   -     | [NPM](https://www.npmjs.com/package/daneecloud-api) | daneecloud-api NPM package | v1.1.0 | v1.5.x - 1.9.x | Free | DaneeSkripter |
 
 ## Theme List
 
