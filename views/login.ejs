@@ -2,205 +2,142 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title><%= cloudname %> | <%= lang["Log-In"] %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
         body {
-    background-color: #d2d3db;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    margin: 0;
-}
+            background-image: linear-gradient(to right bottom, #5d3fd3, #7e67d8, #9d8ddb, #bbb3db, #d9d9d9);
+            width: 98vw;
+            height: 98vh;
+        }
 
-h1 {
-    color: #5D3FD3;
-    margin-top: 10%;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: xxx-large;
+        .flex-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .login {
+            width: 35%;
+            height: 45%;
+            background-color: #0e1111;
+            border-radius: 40px;
+            align-items: center;
+            justify-content: center;
+        }
 
-}
+        .login > h1, .login > h2 {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            color: #5D3FD3;
+            line-height: 50%;
+        }
 
-.subtitle {
-    color: #5D3FD3;
-    margin-top: -5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: x-large;
-}
+        .login > form > label {
+            display: flex;
+            justify-content: center;
+            color: #5D3FD3;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25px;
+        }
 
-.footer {
-    position: fixed;
-    padding: 10px 10px 0px 10px;
-    bottom: 0;
-    width: 100%;
-    /* Height of the footer*/
-    height: 40px;
-    background: black;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-    text-align: center;
-}
+        input {
+            height: 20%;
+            border-radius: 40px;
+            border: none;
+            display: flex;
+            justify-self: center;
+            margin: auto;
+            font-size: 100%;
+            padding-left: 2%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
 
-label[for="name"] {
-    color: #5D3FD3;
-    margin-top: 5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
+       form {
+            width: 100%;
+            height: 50%;
+        }
 
-}
+        button {
+            margin: auto;
+            height: 20%;
+            width: 25%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #5D3FD3;
+            border-radius: 20px;
+            font-size: 20px;
+            color: white;
+            border: none;
+            transition-duration: 0.4s;
+        }
 
-input[id="name"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-label[for="password"] {
-    color: #5D3FD3;
-    margin-top: 10px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-}
-input[id="password"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        button:hover {
+            height: 21%;
+            width: 26%;
+            color:#5D3FD3;
+            background-color: white;
+        }
 
-button[id="login"] {
-    color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-button[id="login"]:hover {
-    color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-a {
-    color: #5D3FD3;
-    margin: auto;
-    font-family: "Montserrat", sans-serif;
-    font-size: medium;
-    margin-top: 10px;
-}
-::-webkit-input-placeholder {
-    text-align: center;
-  }
-  
-  :-moz-placeholder {
-    text-align: center;
-  }
-  :-ms-input-placeholder {  
-    text-align: center; 
- }
-
-
-div {
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
- }
-
-    </style>
-    <h1><%= cloudname %></h1>
-    <% if (messages.error) {%>
-    <%= messages.error %>
-    <% } %>  
-    <% if (config.enableRecaptcha) { %>
-    <script>
-        window.addEventListener('load', () => {
-            const $recaptcha = document.querySelector('#g-recaptcha-response');
-            if ($recaptcha) {
-                $recaptcha.setAttribute('required', 'required');
+       .register {
+            margin-top: 2%;
+        }
+        
+        @media screen and (max-width: 426px) {
+            .login {
+                width: 70%;
+                height: 45%;
             }
-        })
-    </script>
-    <% } %>
-    <h2 class="subtitle"><%= lang["Log-In"] %></h2>
-    <form action="/login" method="post">
-        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="name"><span class="material-icons">account_circle</span>&nbsp;<%= lang["Username2"] %></label>
-        <input type="text", id="name", name="name" required></input>
-        <label for="password"><span class="material-icons">lock</span>&nbsp;<%= lang["Password"] %></label>
-        <input type="password", id="password", name="password" required></input>
-        <% if (config.enableRecaptcha) { %>
-        <div class="g-recaptcha" data-sitekey=<%= RCAPTCHA_SITE_KEY %>></div>
-        <br/>
+            button {
+                margin-top: 2%;
+                width: 40%;
+            }
+            button:hover {
+                width: 41%;
+            }
+
+            .register {
+                margin-top: 5%;
+                width: 45%;
+            }
+            .register:hover {
+                width: 46%;
+            }
+        }
+    </style>
+    <% if (config.enableRecaptcha) { %>
+        <script>
+       function onSubmit(token) {
+         document.getElementById("loginform").submit();
+       }
+        </script>
         <% } %>
-        <button type="submit" id="login"><span class="material-icons">login</span>&nbsp;<%= lang["Log-In"] %></button>
-    </form>
-    <a href="/register"><%= lang["noaccount"] %></a>
-    <footer>
-               <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
-    
-    </footer>
+    <div class="flex-container">
+    <div class="login">
+        <h1><b><%= cloudname %></b></h1>
+        <h2><%= lang["Log-In"] %></h2>
+        <form action="/login" method="post" id="loginform">
+            <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
+            <label for="name">&nbsp;<i class="fa-solid fa-user"></i>&nbsp;<%= lang["Username2"] %></label>
+            <input type="text", id="name", name="name" required></input>
+            <label for="password"><i class="fa-solid fa-lock"></i>&nbsp;<%= lang["Password"] %></label>
+            <input type="password", id="password", name="password" required></input>
+            <button type="submit" class="g-recaptcha" data-sitekey=<%= RCAPTCHA_SITE_KEY %> data-callback="onSubmit"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;<%= lang["Log-In"] %></button>
+        </form>
+        <form class="registerform" action="/register">
+        <button class="register" type="submit"><i class="fa-solid fa-user-plus"></i>&nbsp;<%= lang["Register"] %></button>
+        </form>
+        </div>
+    </div>
 </body>
 </html>
