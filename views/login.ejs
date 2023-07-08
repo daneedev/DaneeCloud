@@ -148,7 +148,11 @@
             <input type="text", id="name", name="name" required></input>
             <label for="password"><i class="fa-solid fa-lock"></i>&nbsp;<%= lang["Password"] %></label>
             <input type="password", id="password", name="password" required></input>
+            <% if (config.enableRecaptcha) { %>
             <button type="submit" class="g-recaptcha" data-sitekey=<%= RCAPTCHA_SITE_KEY %> data-callback="onSubmit"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;<%= lang["Log-In"] %></button>
+            <% } else { %>
+            <button type="submit"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;<%= lang["Log-In"] %></button>
+            <% } %>
         </form>
         <form class="registerform" action="/register">
         <button class="register" type="submit"><i class="fa-solid fa-user-plus"></i>&nbsp;<%= lang["Register"] %></button>
