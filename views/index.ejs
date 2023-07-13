@@ -92,6 +92,48 @@
         progress::-webkit-progress-value {
                     background-color: #1f74cc;
                 }
+
+                .footer {
+            width: 40%;
+            height: 5%;
+            background-color: black;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        a:link, a:visited, a:hover, a:active {
+            color: #1f74cc;
+            text-decoration: none;
+            background-color: transparent;
+        }
+
+        
+        @media screen and (max-width: 426px) {
+            .upload {
+                width: 70%;
+                height: 45%;
+            }
+            .upload > form > label {
+                width: 80%;
+            }
+
+            select {
+                width: 80%;
+            }
+
+            .footer {
+                width: 100%;
+                font-size: 12px;
+            }
+           progress {
+            margin-top: -5%;
+           }
+        }
     </style>
     <script>
         function _(el) {
@@ -153,6 +195,9 @@
         <h3 id="status"></h3>
     </form>
         </div>
+    </div>
+    <div class="footer">
+        <p><%= cloudname %> ©️ 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></p>
     </div>
 </body>
 </html>
