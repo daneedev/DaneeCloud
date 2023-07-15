@@ -34,7 +34,7 @@ router2.get("/:file/:folder?", checkAuth, checkVerify, function (req, res) {
     const folder = sanitize(req.params.folder || "")
     fs.readFile( __dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + file, async (err, data) =>{
       if (err) {
-        res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
       } else {
         const user = await users.findOne({ username: req.user.username})
         const filesize = Math.floor(fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder || ""}/` + file).size / (1024 * 1024))
@@ -57,7 +57,7 @@ router3.get("/:file/:folder?", checkAuth, checkVerify, function (req, res) {
   if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder || ""}/`).includes(file)) {
     res.render(__dirname + "/../views/rename.ejs", { file: file,  cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang, folder: folder})
   } else {
-    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
@@ -76,7 +76,7 @@ router3.post("/:file/:folder?", checkAuth, checkVerify, async function (req, res
   }
   }
   user.save()
-  res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["File-Renamed"].replace("${oldname}", oldname).replace("${newname}", newname)}`,  cloudname: config.cloudname, lang: lang})
+  res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["File-Renamed"].replace("${oldname}", oldname).replace("${newname}", newname)}`,  cloudname: config.cloudname, lang: lang})
   logger.logInfo(`${req.user.username} renamed ${oldname} to ${newname}!`)
 })
 
@@ -88,13 +88,13 @@ router4.post("/", checkAuth, checkVerify, async function (req, res) {
   const username = req.user.username
   const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
   if (checkFolder.includes(req.body.name)) {
-    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Folder-Exist"]}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Folder-Exist"]}`,  cloudname: config.cloudname, lang: lang})
   } else {
     const createFolder = await fs.mkdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(username)}/` + sanitize(req.body.name))
     const user = await users.findOne({username: username})
     user.folders.push(req.body.name)
     user.save()
-    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Folder-Created"].replace("${req.body.name}", req.body.name)}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Folder-Created"].replace("${req.body.name}", req.body.name)}`,  cloudname: config.cloudname, lang: lang})
     logger.logInfo(`${req.user.username} created ${req.body.name} folder!`)
   }
 })
@@ -104,7 +104,7 @@ router5.get("/:folder", checkAuth, checkVerify, async function (req, res) {
   const username = req.user.username
   const checkFolder = await fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${username}/`)
   if (!checkFolder) {
-    res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Folder-Not-Found"]}`})
+    res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Folder-Not-Found"]}`})
   } else {
     await fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(username)}/` + folder)
     const user = await users.findOne({username: username})

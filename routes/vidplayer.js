@@ -17,10 +17,10 @@ router.get("/:username/:file", checkAuth, checkVerify, async function (req, res)
           const subtitles = await vidSubtitle.findOne({ filename: file}) || "None"
           res.render(__dirname + "/../views/video.ejs", {file: file, vidtag: vidtag, cloudname: config.cloudname, username: req.user.username, subtitles: subtitles, lang: lang})
         } else {
-          res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
+          res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
         }
       } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
       }
 })
 
@@ -28,15 +28,15 @@ router2.get("/:username/:file", checkAuth, checkVerify, async function (req, res
   if (req.params.username == req.user.username) {
     if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(req.params.file)) {
       if (await vidSubtitle.findOne({ filename: req.params.file })) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Have-Subtitles"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Have-Subtitles"]}`,  cloudname: config.cloudname, lang: lang})
       } else {
       res.render(__dirname + "/../views/addsubtitles.ejs", {cloudname: config.cloudname, req: req, csrfToken: req.csrfToken(), lang: lang})
       }
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found2"]}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["File-Not-Found2"]}`,  cloudname: config.cloudname, lang: lang})
     }
     } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
@@ -49,9 +49,9 @@ router2.post("/:username/:file", checkAuth, checkVerify, async function (req, re
       subtitlename: req.body.name
     })
     Subtitles.save()
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Subtitles-Added"].replace("${req.body.name}", req.body.name).replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Subtitles-Added"].replace("${req.body.name}", req.body.name).replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
   } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
   }
 })
 
@@ -60,12 +60,12 @@ router3.get("/:username/:file", checkAuth, checkVerify, async function (req, res
     const file = req.params.file
     if (fs.readdirSync(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/`).includes(file) && await vidSubtitle.findOne({ filename: file})) {
       const removeSubtitles = await vidSubtitle.findOneAndRemove({ filename: file})
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Subtitles-Removed"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Subtitles-Removed"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["No-Subtitles"]}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["No-Subtitles"]}`,  cloudname: config.cloudname, lang: lang})
     }
   } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
   }
 })
 

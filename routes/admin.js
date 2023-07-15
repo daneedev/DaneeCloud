@@ -31,7 +31,7 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
         })
       })
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
   })
 
@@ -41,14 +41,14 @@ router2.get("/:account", checkAuth, checkVerify, async function (req, res) {
     if (loggeduser.role == "admin") {
       const findusertodelete = await users.findOne({username: account})
       if (!findusertodelete) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Account-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Account-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
       } else {
         const usertodelete = await users.findOneAndRemove({ username: account})
         fs.rmdirSync(__dirname + "/.." + config.uploadsfolder + `${account}/`)
-        res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Account-Deleted2"].replace("${account}", account)}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Account-Deleted2"].replace("${account}", account)}`,  cloudname: config.cloudname, lang: lang})
       }
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
       logger.logInfo(`${req.user.username} deleted account ${account}!`)
     }
   })
@@ -67,15 +67,15 @@ router3.post("/:account", checkAuth, checkVerify, async function (req, res) {
     if (loggeduser.role == "admin") {
       const findusertorename = await users.findOne({username: account})
       if (!findusertorename) {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Account-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Account-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
       } else {
       const usertorename = await users.findOneAndUpdate({username: account}, {username: newaccountname, email: newaccountemail})
       fs.renameSync(__dirname + config.uploadsfolder + `${account}/`, __dirname + config.uploadsfolder + `${newaccountname}/`)
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Account-Renamed"].replace("${account}", account).replace("${findusertorename.email}", findusertorename.email).replace("${newaccountname}", newaccountname).replace("${newaccountemail}", newaccountemail)}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Account-Renamed"].replace("${account}", account).replace("${findusertorename.email}", findusertorename.email).replace("${newaccountname}", newaccountname).replace("${newaccountemail}", newaccountemail)}`,  cloudname: config.cloudname, lang: lang})
       logger.logInfo(`${account} with ${findusertorename.email} email has been renamed to ${newaccountname} with ${newaccountemail} email by ${req.user.username}`)
     }
     } else {
-      res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
   })
 

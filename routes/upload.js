@@ -35,7 +35,7 @@ router.post("/", upload.single('file'), checkAuth, checkVerify, async function (
           if (err) {
             res.send(err);
           } else {
-            res.render(__dirname + "/../views/message2.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["File-Uploaded"].replace("${name}", name)}`,  cloudname: config.cloudname, lang: lang})
+            res.render(__dirname + "/../views/message2.ejs", {message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["File-Uploaded"].replace("${name}", name)}`,  cloudname: config.cloudname, lang: lang})
             const filesize = req.file.size / (1024 * 1024) + user.usedStorage
             if (req.body.dest == "/") {
             user.files.push(name)
