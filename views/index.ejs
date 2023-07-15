@@ -18,7 +18,7 @@
         .flex-container {
             display: flex;
             width: 100%;
-            height: 95%;
+            height: 85%;
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
@@ -106,6 +106,45 @@
             font-family: 'Montserrat', sans-serif;
         }
 
+        .navbar {
+            width: 60%;
+            height: 10%;
+            background-color: black;
+            display: flex;
+            border-radius: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            flex-flow: row nowrap;
+            justify-content: space-between;
+        }
+        .navbar > form {
+            width: 25%;
+            height: 100%;
+        }
+
+        .navbar > form > button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10% auto;
+            width: 70%;
+            height: 50%;
+            background-color: #1f74cc;
+            border-radius: 20px;
+            font-size: 20px;
+            color: white;
+            border: none;
+            transition-duration: 0.4s;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        .navbar > form > button:hover {
+            background-color: white;
+            color: #1f74cc;
+            width: 71%;
+            height: 51%;
+            }
+
         a:link, a:visited, a:hover, a:active {
             color: #1f74cc;
             text-decoration: none;
@@ -176,6 +215,22 @@
           _("status").innerHTML = "Upload Aborted";
         }
         </script>
+        <div class="navbar">
+            <form action="/myprofile">
+                <button type="submit" class="myprofile"><%= lang["My-Profile"] %></button>
+            </form>
+            <form action="/myfiles", method="get">
+                <button type="submit" class="myfiles"><%= lang["My-Files"] %></button>
+            </form> 
+            <% if (isAdmin == true) { %>  
+            <form action="/admin", method="get">
+                <button type="submit" class="admin"><%= lang["Admin-Panel"] %></button>
+            </form> 
+            <% } %>
+            <form action="/logout?_method=DELETE" method="POST">
+                <button type="submit" class="logout"><%= lang["Log-Out"] %></button>
+            </form>
+        </div>
     <div class="flex-container">
         <div class="upload">
             <h1><%= cloudname %></h1>
