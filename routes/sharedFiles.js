@@ -60,7 +60,7 @@ router3.get("/:file", checkAuth, checkVerify, async function (req, res) {
     } else {
       user.sharedFiles.pull(file)
       user.save()
-      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Disabled-Shared"].replace("${file)", file)}`, lang: lang})
+      res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Disabled-Shared"].replace("${file}", file)}`, lang: lang})
       logger.logInfo(`${req.user.username} set ${file} as not shared!`)
     } 
 })
