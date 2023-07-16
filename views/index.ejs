@@ -127,7 +127,7 @@
             justify-content: center;
             align-items: center;
             margin: 10% auto;
-            width: 70%;
+            width: 80%;
             height: 50%;
             background-color: #1f74cc;
             border-radius: 20px;
@@ -141,7 +141,7 @@
         .navbar > form > button:hover {
             background-color: white;
             color: #1f74cc;
-            width: 71%;
+            width: 81%;
             height: 51%;
             }
 
@@ -217,18 +217,18 @@
         </script>
         <div class="navbar">
             <form action="/myprofile">
-                <button type="submit" class="myprofile"><%= lang["My-Profile"] %></button>
+                <button type="submit" class="myprofile"><i class="fa-solid fa-user"></i>&nbsp;<%= lang["My-Profile"] %></button>
             </form>
             <form action="/myfiles", method="get">
-                <button type="submit" class="myfiles"><%= lang["My-Files"] %></button>
+                <button type="submit" class="myfiles"><i class="fa-solid fa-folder"></i>&nbsp;<%= lang["My-Files"] %></button>
             </form> 
             <% if (isAdmin == true) { %>  
             <form action="/admin", method="get">
-                <button type="submit" class="admin"><%= lang["Admin-Panel"] %></button>
+                <button type="submit" class="admin"><i class="fa-solid fa-hammer"></i>&nbsp;<%= lang["Admin-Panel"] %></button>
             </form> 
             <% } %>
             <form action="/logout?_method=DELETE" method="POST">
-                <button type="submit" class="logout"><%= lang["Log-Out"] %></button>
+                <button type="submit" class="logout"><i class="fa-solid fa-right-from-bracket"></i>&nbsp;<%= lang["Log-Out"] %></button>
             </form>
         </div>
     <div class="flex-container">
