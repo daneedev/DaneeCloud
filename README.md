@@ -36,11 +36,18 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 - [How to switch language](https://docs.daneeskripter.dev/daneecloud/change-language)
 - [I want to translate](https://crowdin.com/project/daneecloud)
 ### Translated languages
-| 🏳️ Language | 🙋 Translator |
-| ------------ | ------------- |
-| 🇨🇿 Czech     | DaneeSkripter |
-| 🇯🇵 Japanese  | Koichi MATSUMOTO |
-| 🇪🇸 Spanish   | chander1411 |
+- *This is list of languages, that we want to translate, if there isn't your language and you want to translate DaneeCloud to it, create an issue.*
+  
+| 🏳️ Language | Translated? | 🙋 Translator |
+| ------------ | ---------- | -------------- |
+| 🇨🇿 Czech     | ✅ 100%     | [@daneeskripter](https://github.com/daneeskripter) |
+| 🇫🇷 French      | 0%          | - |
+| 🇩🇪 German      | 0%          | - |
+| 🇯🇵 Japanese  | ✅ 100%     | [@mzch](https://github.com/mzch) |
+| 🇳🇴 Norwegian   | ✅ 100%     | [@WiredDesigns](https://www.github.com/WiredDesigns) |
+| 🇵🇱 Polish      | 0%          | - |
+| 🇸🇰 Slovak      | 0%          | - |
+| 🇪🇸 Spanish   | ✅ 100%     | [@chander1411](https://github.com/chander1411) |
 
 ## [🖼️ Addons & Themes](./addons.md)
 - *to show list of addons & themes click the link above*
