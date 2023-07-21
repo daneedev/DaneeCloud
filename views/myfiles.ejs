@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= cloudname %></title>
+    <title><%= cloudname %> | <%= lang["My-Files"] %></title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
@@ -167,7 +167,7 @@
     <div class="flex-container">
         <div class="files">
             <h1><%= cloudname %></h1>
-            <h2>My files</h2>
+            <h2><%= lang["My-Files"] %></h2>
             <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
             <h3 class="storage"><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
             <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
