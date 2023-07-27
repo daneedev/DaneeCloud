@@ -80,6 +80,19 @@
             text-decoration: none;
             background-color: transparent;
         }
+
+        .footer {
+            width: 40%;
+            height: 5%;
+            background-color: black;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
     </style>
     <div class="flex-container">
         <div class="verify">
@@ -92,6 +105,9 @@
                 <a href="/verifycode"><%= lang["Have-Code"] %></a>
             </form>
         </div>
+    </div>
+    <div class="footer">
+        <p><%= cloudname %> ©️ 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></p>
     </div>
 </body>
 </html>
