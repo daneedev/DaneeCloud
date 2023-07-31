@@ -32,6 +32,10 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
 | ----- | ---- | ----------- |
 | ![](https://img.shields.io/github/actions/workflow/status/DaneeSkripter/DaneeCloud/codeql.yml?label=CodeQL&logo=github) | CodeQL | Looking for vulnerabilities in code |
 
+## ❌ Website is down?
+- If you have any troubles with visiting the website, check my status page for maintenance message or something.
+- Status website: https://status.daneeskripter.dev
+
 ## 🌐 Translations [![Crowdin](https://badges.crowdin.net/daneecloud/localized.svg)](https://crowdin.com/project/daneecloud)
 - [How to switch language](https://docs.daneeskripter.dev/daneecloud/change-language)
 - [I want to translate](https://crowdin.com/project/daneecloud)
