@@ -11,9 +11,11 @@ const sanitize = require("sanitize-filename")
 const isimg = require("is-image")
 const isvid = require("is-video")
 const lang = require("../lang/default.json")
+const vidSubtitle = require("../models/vidsubtitles")
 
 router.get("/:username/:file", async function (req, res) {
     const user = await users.findOne({username: req.params.username})
+    const subtitles = await vidSubtitle.findOne({ filename: req.params.file}) || "None"
     if (!user) {
       res.render(__dirname + "/../views/message.ejs", { cloudname: config.cloudname, message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Username-Not-Exist"]}`, lang: lang})
     } else if (!user.sharedFiles.includes(req.params.file)) {
@@ -28,7 +30,7 @@ router.get("/:username/:file", async function (req, res) {
             res.send(data)
           } else if (isvid(__dirname + "/.." + config.uploadsfolder + `${sanitize(req.params.username)}/` + sanitize(req.params.file))) {
             const vidtag = req.params.file.split(".").pop()
-            res.render(__dirname + "/../views/video.ejs", {file: req.params.file, vidtag: vidtag, cloudname: config.cloudname, username: req.params.username, lang: lang})
+            res.render(__dirname + "/../views/video.ejs", {file: req.params.file, vidtag: vidtag, cloudname: config.cloudname, username: req.params.username, lang: lang, subtitles: subtitles})
           } else {
             res.contentType('application/octet-stream');
             res.send(data)
