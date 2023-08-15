@@ -48,7 +48,7 @@ router3.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) 
         res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Del-User"]}`,  cloudname: config.cloudname, lang: lang})
     } else {
         const deleteRole = await roles.findOneAndDelete({ name: req.body.role})
-        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Role-Deleted"].replace("${req.body.role", req.body.role)}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Role-Deleted"].replace("${req.body.role}", req.body.role)}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
