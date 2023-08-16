@@ -9,7 +9,7 @@ on:
 
 jobs:
  update:
-    runs-on: self-hosted
+    runs-on: [self-hosted, main]
     strategy:
       matrix:
         node-version: [16.x]
