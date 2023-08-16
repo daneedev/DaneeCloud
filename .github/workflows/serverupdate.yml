@@ -10,7 +10,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+ update:
     runs-on: self-hosted
     strategy:
       matrix:
@@ -18,6 +18,11 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Get new code
+    - run: git pull origin main
+    - name: Stop DaneeCloud
     - run: pm2 stop daneecloud
+    - name: Install NPM Packages
     - run: npm i
+    - name: Start DaneeCloud
     - run: pm2 start daneecloud
