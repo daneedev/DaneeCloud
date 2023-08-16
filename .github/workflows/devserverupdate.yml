@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - name: Get DEV code
-      run: git pull origin main
+      run: git pull origin dev
     - name: Stop DaneeCloud DEV
       run: pm2 stop daneecloud
     - name: Install NPM Packages
