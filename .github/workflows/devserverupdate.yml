@@ -6,6 +6,7 @@ name: "Update DEV server"
 on:
   push:
     branches: [ "dev" ]
+  workflow_dispatch:
 
 jobs:
  update:
