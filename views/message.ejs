@@ -24,8 +24,8 @@
             align-items: center;
         }
         .message {
-          width: 35%;
-            height: 15%;
+          width: 20%;
+            height: 10%;
             background-color: #111111;
             border-radius: 50px;
             align-items: center;
@@ -81,7 +81,20 @@
             color: white;
             font-family: 'Montserrat', sans-serif;
         }
-
+        /* Laptop support */
+        @media screen and (max-width: 1825px) {
+            .message {
+                width: 35%;
+                height: 15%;
+            }
+            .footer {
+                height: 5%;
+            }
+            .flex-container {
+                height: 94%;
+            }
+        }
+        /* Mobile support */
         @media screen and (max-width: 426px) {
             .message {
                 width: 70%;
