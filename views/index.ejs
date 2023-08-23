@@ -11,22 +11,23 @@
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
     body {
             background-image: linear-gradient(to right bottom, #1f74cc, #3c7ed1, #5087d6, #6291db, #729be0, #87a6e4, #9ab1e9, #acbced, #c5cbf1, #dadcf5, #eeedfa, #ffffff);
-            width: 98vw;
-            height: 98vh;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
         }
 
         .flex-container {
             display: flex;
             width: 100%;
-            height: 85%;
+            height: 88%;
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
         }
 
         .upload {
-            width: 35%;
-            height: 50%;
+            width: 25%;
+            height: 40%;
             background-color: #111111;
             border-radius: 50px;
             align-items: center;
@@ -95,7 +96,7 @@
 
                 .footer {
             width: 40%;
-            height: 5%;
+            height: 3%;
             background-color: black;
             border-radius: 50px;
             display: flex;
@@ -108,7 +109,7 @@
 
         .navbar {
             width: 60%;
-            height: 10%;
+            height: 7%;
             background-color: black;
             display: flex;
             border-radius: 50px;
@@ -126,7 +127,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 10% auto;
+            margin: 6% auto;
             width: 80%;
             height: 50%;
             background-color: #1f74cc;
@@ -150,8 +151,24 @@
             text-decoration: none;
             background-color: transparent;
         }
-
-        
+        .blankspace {
+            width: 100%;
+            height: 1%;
+        }
+        /* Laptop support */
+        @media screen and (max-width: 1825px) {
+            .upload {
+                width: 35%;
+                height: 50%;
+            }
+            .footer {
+                height: 5%;
+            }
+            .flex-container {
+                height: 90%;
+            }
+        }
+        /* Mobile support */
         @media screen and (max-width: 426px) {
             .upload {
                 width: 70%;
@@ -227,6 +244,7 @@
           _("status").innerHTML = "Upload Aborted";
         }
         </script>
+        <div class="blankspace"></div>
         <div class="navbar">
             <form action="/myprofile">
                 <button type="submit" class="myprofile"><i class="fa-solid fa-user"></i>&nbsp;<%= lang["My-Profile"] %></button>
