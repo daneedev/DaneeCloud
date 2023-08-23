@@ -19,15 +19,15 @@
         .flex-container {
             display: flex;
             width: 100%;
-            height: 85%;
+            height: 96%;
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
         }
 
         .profile {
-            width: 35%;
-            height: 50%;
+            width: 25%;
+            height: 30%;
             background-color: #111111;
             border-radius: 50px;
             align-items: center;
@@ -101,7 +101,20 @@
             color: white;
             font-family: 'Montserrat', sans-serif;
         }
-
+         /* Laptop support */
+         @media screen and (max-width: 1825px) {
+            .profile {
+                width: 35%;
+                height: 40%;
+            }
+            .footer {
+                height: 5%;
+            }
+            .flex-container {
+                height: 94%;
+            }
+        }
+        /* Mobile support */
         @media screen and (max-width: 426px) {
             .profile {
                 width: 70%;
