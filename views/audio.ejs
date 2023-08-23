@@ -12,22 +12,23 @@
 
 body {
   background-image: linear-gradient(to right bottom, #1f74cc, #3c7ed1, #5087d6, #6291db, #729be0, #87a6e4, #9ab1e9, #acbced, #c5cbf1, #dadcf5, #eeedfa, #ffffff);
-  width: 98vw;
-  height: 98vh;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
 }
 
 .flex-container {
   display: flex;
   width: 100%;
-  height: 95%;
+  height: 96%;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
 }
 
 .audioplayer {
-  width: 35%;
-  height: 25%;
+  width: 20%;
+  height: 15%;
   background-color: #111111;
   border-radius: 50px;
   display: flex;
@@ -66,7 +67,7 @@ button {
         }
         .footer {
             width: 40%;
-            height: 5%;
+            height: 3%;
             background-color: black;
             border-radius: 50px;
             display: flex;
@@ -82,7 +83,20 @@ button {
             text-decoration: none;
             background-color: transparent;
         }
-       
+        /* Laptop support */
+        @media screen and (max-width: 1825px) {
+            .audioplayer {
+                width: 35%;
+                height: 20%;
+            }
+            .footer {
+                height: 5%;
+            }
+            .flex-container {
+                height: 94%;
+            }
+        }
+        /* Mobile support */
         @media screen and (max-width: 426px) {
             .audioplayer {
                 width: 90%;
