@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - name: Stash current code
-      run: git stash
+      run: git stash origin dev
     - name: Get DEV code
       run: git pull origin dev
     - name: Stop DaneeCloud DEV
