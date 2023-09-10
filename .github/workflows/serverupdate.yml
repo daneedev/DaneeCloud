@@ -17,6 +17,8 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Stash current code
+      run: git stash
     - name: Get new code
       run: git pull origin main
     - name: Stop DaneeCloud
