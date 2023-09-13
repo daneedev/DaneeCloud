@@ -36,6 +36,6 @@
     "request": "^2.88.2",
     "sanitize-filename": "^1.6.3",
     "tiny-csrf": "^1.1.3",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.1"
   }
 }
