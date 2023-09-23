@@ -52,7 +52,7 @@ router2.get("/", checkAuth, checkVerify, async function (req, res) {
     if (user.role == "admin") {
         res.render(__dirname + "/../views/addapikey.ejs", {cloudname: config.cloudname, csrfToken: req.csrfToken(), lang: lang})
     } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
@@ -63,17 +63,17 @@ router2.post("/", checkAuth, checkVerify, async function (req, res) {
     if (user.role == "admin") {
         const findAPIKey = await apiKeys.findOne({ name: apiKeyName})
         if (findAPIKey) {
-            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["API-Key-Exist"]}`,  cloudname: config.cloudname, lang: lang})
+            res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["API-Key-Exist"]}`,  cloudname: config.cloudname, lang: lang})
         } else {
             const ApiKey = new apiKeys({
                 name: apiKeyName,
                 apiKey: apiKey.toString()
             })
             ApiKey.save()
-            res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["API-Key-Generated"].replace("${apiKeyName}", apiKeyName).replace("${apiKey.toString()}", apiKey.toString())}`,  cloudname: config.cloudname, lang: lang})
+            res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["API-Key-Generated"].replace("${apiKeyName}", apiKeyName).replace("${apiKey.toString()}", apiKey.toString())}`,  cloudname: config.cloudname, lang: lang})
         }
     } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
@@ -85,13 +85,13 @@ router3.get("/:name", checkAuth, checkVerify, async function (req, res) {
     const findApiKey = await apiKeys.findOne({name: apiKeyName})
     if (user.role == "admin") {
         if (!findApiKey) {
-            res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["API-Key-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
+            res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["API-Key-Not-Found"]}`,  cloudname: config.cloudname, lang: lang})
         } else {
                 const deleteApiKey = await apiKeys.findOneAndRemove({ name: apiKeyName})
-                res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["API-Key-Deleted"].replace("${apiKeyName}", apiKeyName)}`,  cloudname: config.cloudname, lang: lang})
+                res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["API-Key-Deleted"].replace("${apiKeyName}", apiKeyName)}`,  cloudname: config.cloudname, lang: lang})
             }
     } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 

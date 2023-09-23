@@ -1,266 +1,236 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= cloudname %> | <%= lang["My-Files"] %></title>
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
+<body>
     <style>
-        body {
-            background-color: #d2d3db;
-            padding: 0;
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+    body {
+            background-image: linear-gradient(to right bottom, #1f74cc, #3c7ed1, #5087d6, #6291db, #729be0, #87a6e4, #9ab1e9, #acbced, #c5cbf1, #dadcf5, #eeedfa, #ffffff);
+            width: 100vw;
+            height: 100vh;
             margin: 0;
         }
-               h1 {
-    color: #5D3FD3;
-    margin-top: 10%;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: xxx-large;
 
-}
-        h2 {
-            color: #5D3FD3;
-    margin-top: -5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: x-large;
-        
-        }
-        h3 {
-            color: #5D3FD3;
-    margin-top: -5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-        
+        .flex-container {
+            display: flex;
+            width: 100%;
+            height: 95%;
+            flex-flow: column nowrap;
+            justify-content: center;
+            align-items: center;
         }
 
-        button[type="submit"] {
-        color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 5px;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-    }
-    
-    button[type="submit"]:hover {
-        color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 5px;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-    }
-        .footer {
-          position: relative;
-    padding: 10px 0px 0px 0px;
-    margin-top: 10px;
-    bottom: 0;
-    width: 100%;
-    /* Height of the footer*/
-    height: 40px;
-    background: black;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-    text-align: center;
-}
-a {
-  color: #5D3FD3;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-    display: inline-block;
-}
+        .files {
+            width: auto;
+            height: auto;
+            background-color: #111111;
+            border-radius: 50px;
+            padding-bottom: 2%;
+            padding-right: 1%;
+            padding-left: 1%;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+        }
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  margin-left: auto;
-    margin-right: auto;
-}
+        .files > h1, .files > h2, .files > img, .files > h3, h3 {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            color: #1f74cc;
+            line-height: 30%;
+        }
+        
+        progress {
+            width: 50%;
+            height: 70px;
+            display: flex;
+            margin: auto;
+        }
+        progress::-webkit-progress-bar {
+            background-color: white;
+        }
+        progress::-webkit-progress-value {
+                    background-color: #1f74cc;
+                }
 
-td, th {
-  border: 1px solid #5D3FD3;
-  text-align: left;
-  padding: 8px;
-  text-align: center;
-  color: #5D3FD3;
-  font-family: "Montserrat", sans-serif;
-}
-img {
-  width:40px;
-  height: auto;
-}
+                .footer {
+            width: 40%;
+            height: 3%;
+            background-color: black;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
 
-progress {
-	display:block;
-	width:300px;
-	height:50px;
-	margin-top: 10px;
-	background:none;
-	border: 0;
-	border-radius:50px;
-	text-align: left;
-	position:relative;
-    font-family:"Montserrat", sans-serif;
-    font-size:15px;
-    margin-left: auto;
-    margin-right: auto;
-}
-progress::-webkit-progress-bar {
-	height:40px;
-	width:250px;
-	margin: auto;
-	background-color:whitesmoke;
-	border-radius:100px;
-}
-progress::-webkit-progress-value {
-	display:inline-block;
-	background: #5D3FD3;
-	border-radius:100px;
-}
+        a:link, a:visited, a:hover, a:active {
+            color: #1f74cc;
+            text-decoration: none;
+            background-color: transparent;
+            font-size: 20px;
+        }
 
-p {
-  color: #5D3FD3;
-  text-align: center;
-  font-family: "Montserrat", sans-serif;
-  font-size: 20px;
-  display: inline-block;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-right: auto;
-  margin-left: auto;
-}
+        table {
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid #555555;
+        }
 
-input[id="searchBar"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        td, th {
+            border: 2px solid #555555;
+            padding: 8px;
+            text-align: center;
+            color: #1f74cc;
+            font-family: "Montserrat", sans-serif;
+        }
+
+        img {
+            width:40px;
+            height: auto;
+        }
+
+        button {
+          display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10% auto;
+            width: 100%;
+            height: 60%;
+            background-color: #1f74cc;
+            border-radius: 20px;
+            font-size: 20px;
+            color: white;
+            border: none;
+            transition-duration: 0.4s;
+            font-family: "Montserrat", sans-serif;
+        }
+        button:hover {
+            height: 61%;
+            width: auto + 1%;
+            color:#1f74cc;
+            background-color: white;
+        }
+
+        input {
+          width: 40%;
+          height: 10%;
+          font-family: "Montserrat", sans-serif;
+          border-radius: 20px;
+          font-size: 20px;
+          border: none;
+          text-align: center;
+        }
+        @media screen and (max-width: 426px) {
+            .files {
+                width: 70%;
+                height: 45%;
+            }
+
+            .footer {
+                width: 100%;
+                font-size: 12px;
+            }
+            
+        }
     </style>
-    <script>
-      function searchBar() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("searchBar");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("files");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
+        <script>
+          function searchBar() {
+      // Declare variables
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("searchBar");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("files");
+      tr = table.getElementsByTagName("tr");
+    
+      // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }
       }
     }
-  }
-}
-    </script>
-    <h1><%= cloudname %> </h1>
-    <h2><%= lang["My-Files"] %></h2>
-    <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
-    <h3><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
-    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
-    <table id="files">
-      <thead>
-      <tr>
-        <th><%= lang["Preview"] %></th>
-        <th><%= lang["File-Name"] %></th>
-        <th><%= lang["Size"] %></th>
-        <th><%= lang["Created-On"] %></th>
-        <th><%= lang["Actions"] %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% files.forEach((file) => { %> 
-        <tr>
-        <% let link = "/delete/" + file + `/${folder}` %>
-        <% let link2 = "/rename/" + file + `/${folder}` %>
-        <% let link3 = "/downloadf/" + `${folder}/` + file %>
-        <% let link6 = "/playvideo/" + `${req.user.username}/` + file + `/${folder}` %> 
-        <% let link7 = "/playaudio/" + `${req.user.username}/` + file + `/${folder}` %>
-        <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
-        <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
-        <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).size / (1024 * 1024) %> 
-        <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).birthtime %>
-        <% let creationDate = `${fsDate.getDate()}.${fsDate.getMonth() + 1}.${fsDate.getFullYear()}` %>
-        <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder}/` + file)) { %> 
-          <td><img src=<%= "/files/" + req.user.username + `/${folder}/` + file%> ></td>
-        <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder}/` + file)) { %> 
-          <% if (file.split(".").pop() == "mkv") {%> 
-            <td><%= lang["Not-Supported"] %></td>
-          <% } else { %>
-          <td><a href=<%= link6 %> ><span class="material-icons">play_circle</span></a>&nbsp;<a href=<%= link8 %>><span class="material-icons">subtitles</span></a>&nbsp;<a href=<%= link9 %>><span class="material-icons">subtitles_off</span></a></td>
-          <% } %> 
-          <% } else if (isAudio(file)) { %>
-          <td><a href=<%= link7 %>><span class="material-icons">headphones</span></a></td>
-        <% } else { %> 
-          <td>-</td>
-        <% } %> 
-        <td><%= file %></td> 
-          <% if (size.toFixed(2) > 1024) { %>
-            <td><%= size.toFixed(2) / 1000 %> GB </td>
-          <% } else { %> 
-          <td><%= size.toFixed(2) %> MB </td>
-          <% } %>
-          <th><%= creationDate %></th>
-          <td><a href=<%= link3%>><span class="material-icons">cloud_download</span></a>&nbsp;<a href=<%= link2 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td> 
-        </tr>
-        <% }) %>
-    </tbody>
-    </table>
-      <form action="/">
-        <button type="submit" href="/"><%= lang["Back"] %></button>
+        </script>
+    <div class="flex-container">
+        <div class="files">
+            <h1><%= cloudname %></h1>
+            <h2><%= lang["My-Files"] %></h2>
+            <progress value=<%= usedStorage %> max=<%= maxStorage %> ></progress>
+            <h3 class="storage"><%= usedStorage %> MB / <%= maxStorage %> MB </h3>
+            <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-For-File"] %>>
+            <table id="files">
+              <thead>
+                <tr>
+                  <th><%= lang["Preview"] %></th>
+                  <th><%= lang["File-Name"] %></th>
+                  <th><%= lang["Size"] %></th>
+                  <th><%= lang["Created-On"] %></th>
+                  <th><%= lang["Actions"] %></th>
+                </tr>
+              </thead>
+              <tbody>
+            <% files.forEach((file) => { %>
+                <tr>
+                  <% let link = "/delete/" + file + `/${folder}` %>
+                  <% let link2 = "/rename/" + file + `/${folder}` %>
+                  <% let link3 = "/downloadf/" + `${folder}/` + file %>
+                  <% let link6 = "/playvideo/" + `${req.user.username}/` + file + `/${folder}` %> 
+                  <% let link7 = "/playaudio/" + `${req.user.username}/` + file + `/${folder}` %>
+                  <% let link8 = "/addsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
+                  <% let link9 = "/rmsubtitles/" + `${req.user.username}/` + file + `/${folder}` %>
+                  <% let size = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).size / (1024 * 1024) %> 
+                  <% let fsDate = fs.statSync(__dirname + "/.."  + config.uploadsfolder + `${req.user.username}/${folder}/` + file).birthtime %>
+                  <% let creationDate = `${fsDate.getDate()}.${fsDate.getMonth() + 1}.${fsDate.getFullYear()}` %>
+                  <% if (isImg(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder}/` + file)) { %> 
+                    <td><img src=<%= "/files/" + req.user.username + `/${folder}/` + file%> ></td>
+                  <% } else if (isVid(__dirname + "/.." + config.uploadsfolder + `${req.user.username}/${folder}/` + file)) { %> 
+                      <% if (file.split(".").pop() == "mkv") {%> 
+                        <td><%= lang["Not-Supported"] %></td>
+                      <% } else { %>
+                      <td><a href=<%= link6 %> ><i class="fa-solid fa-circle-play"></i></a>&nbsp;<a href=<%= link8 %>><i class="fa-solid fa-closed-captioning"></i></a>&nbsp;<a href=<%= link9 %>><i class="fa-regular fa-closed-captioning"></i></a></td>
+                      <% } %> 
+                      <% } else if (isAudio(file)) { %>
+                      <td><a href=<%= link7 %>><i class="fa-solid fa-headphones"></i></a></td>
+                    <% } else { %> 
+                      <td>-</td>
+                    <% } %> 
+                    <td><%= file %></td>  
+                      <% if (size.toFixed(2) > 1024) { %>
+                        <td><%= size.toFixed(2) / 1000 %> GB </td>
+                      <% } else { %> 
+                      <td><%= size.toFixed(2) %> MB </td>
+                      <% } %>
+                      <th><%= creationDate %></th>
+                      <% if (sharedFiles.includes(file)) { %> 
+                      <td><a href=<%= link3%>><i class="fa-solid fa-cloud-arrow-down"></i></a>&nbsp;<a href=<%= link2 %>><i class="fa-solid fa-pen-to-square"></i></a>&nbsp;<a href=<%= link %>><i class="fa-solid fa-trash"></i></a></td>
+                    <% } else { %>
+                      <td><a href=<%= link3%>><i class="fa-solid fa-cloud-arrow-down"></i></a>&nbsp;<a href=<%= link2 %>><i class="fa-solid fa-pen-to-square"></i></a>&nbsp;<a href=<%= link %>><i class="fa-solid fa-trash"></i></a></td> 
+                    <% } %> 
+                    </tr>
+                    <% }) %>
+        </tbody>
+          </table>
+        </div>
+        <form action="/">
+          <button type="submit"><i class="fa-solid fa-arrow-left-long"></i>&nbsp;<%= lang["Back"] %></button>
         </form>
-    <footer>
-             <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
-    
-    </footer>
-  </body>
+    </div>
+    <div class="footer">
+        <p><%= cloudname %> ©️ 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></p>
+    </div>
+</body>
 </html>

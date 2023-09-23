@@ -17,10 +17,10 @@ router.get("/:username/:file", checkAuth, checkVerify, function (req, res) {
           }
           res.send(requestedfile)
         } else {
-          res.render(__dirname + "/../views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
+          res.render(__dirname + "/../views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["File-Not-Found"].replace("${file}", file)}`,  cloudname: config.cloudname, lang: lang})
         }
       } else {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
       }
 })
 

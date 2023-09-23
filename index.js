@@ -89,7 +89,7 @@ app.use("/delapikey/", require("./routes/api").delkey)
 app.use("/files/", require("./routes/files"))
 
 app.use('/favicon.ico', express.static( __dirname + "/img/daneecloudfavicon.png"));
-
+app.use("/background", express.static( __dirname + "/img/background.png"));
 
 app.use("/files/", AuthLimiter, checkAuth, checkVerify, express.static(__dirname + "/uploads/"))
 app.set("view-engine", "ejs")
@@ -209,7 +209,7 @@ app.use("/folder/", require("./routes/filemgr").showfolder)
 // 404  PAGE
 
 app.get("/*", async function (req, res) {
-  res.render(__dirname + "/views/message.ejs", {message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error404"]}`,  cloudname: config.cloudname, lang: lang})
+  res.render(__dirname + "/views/message.ejs", {message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error404"]}`,  cloudname: config.cloudname, lang: lang})
 })
 
 // CHECK IF DEFAULT ROLES ARE IN DB

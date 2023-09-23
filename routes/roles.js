@@ -18,7 +18,7 @@ router.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
         const updateRole = await roles.findOneAndUpdate({name: role}, {maxStorage: parseInt(maxStorage), badge: req.body.badge})
         res.render(__dirname + "/../views/message.ejs", { message: lang["Role-Updated"].replace("${role}", role).replace("${maxStorage}", maxStorage),  cloudname: config.cloudname, lang: lang})
     } else {
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
@@ -33,7 +33,7 @@ router2.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) 
         badge: req.body.badge
     })
     newRole.save()
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Role-Added"].replace("${req.body.role}", req.body.role).replace("${req.body.storage}", req.body.storage)}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Role-Added"].replace("${req.body.role}", req.body.role).replace("${req.body.storage}", req.body.storage)}`,  cloudname: config.cloudname, lang: lang})
 })
 
 router3.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
@@ -43,12 +43,12 @@ router3.get("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
 
 router3.post("/", checkAuth, checkVerify, checkAdmin, async function (req, res) {
     if (req.body.role == "admin") {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Del-Admin"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Del-Admin"]}`,  cloudname: config.cloudname, lang: lang})
     } else if (req.body.role == "user") {
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_off</span>&nbsp;${lang["Del-User"]}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Del-User"]}`,  cloudname: config.cloudname, lang: lang})
     } else {
         const deleteRole = await roles.findOneAndDelete({ name: req.body.role})
-        res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Role-Deleted"].replace("${req.body.role", req.body.role)}`,  cloudname: config.cloudname, lang: lang})
+        res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Role-Deleted"].replace("${req.body.role}", req.body.role)}`,  cloudname: config.cloudname, lang: lang})
     }
 })
 
@@ -60,7 +60,7 @@ router4.get("/:username", checkAuth, checkVerify, checkAdmin, async function (re
 
 router4.post("/:username", checkAuth, checkVerify, checkAdmin, async function (req, res) {
     const changeUserRole = await users.findOneAndUpdate({username: req.params.username}, {role: req.body.role})
-    res.render(__dirname + "/../views/message.ejs", { message: `<span class="material-icons">cloud_done</span>&nbsp;${lang["Role-Changed"].replace("${req.params.username}", req.params.username).replace("${req.body.role}", req.body.role)}`,  cloudname: config.cloudname, lang: lang})
+    res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-check"></i>&nbsp;${lang["Role-Changed"].replace("${req.params.username}", req.params.username).replace("${req.body.role}", req.body.role)}`,  cloudname: config.cloudname, lang: lang})
 })
 module.exports.updaterole = router
 module.exports.addrole = router2

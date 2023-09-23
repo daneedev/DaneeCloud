@@ -2,221 +2,170 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/register.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <title><%= cloudname %> | <%= lang["Register"] %></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
         body {
-    background-color: #d2d3db;
-    padding: 0;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
+            background-image: linear-gradient(to right bottom, #1f74cc, #3c7ed1, #5087d6, #6291db, #729be0, #87a6e4, #9ab1e9, #acbced, #c5cbf1, #dadcf5, #eeedfa, #ffffff);
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+        }
 
-h1 {
-    color: #5D3FD3;
-    margin-top: 10%;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: xxx-large;
+        .flex-container {
+            display: flex;
+            width: 100%;
+            height: 96%;
+            flex-flow: column nowrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .register {
+            width: 20%;
+            height: 30%;
+            background-color: #111111;
+            border-radius: 50px;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .register > h1, .register > h2 {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            color: #1f74cc;
+            line-height: 50%;
+        }
 
-}
+        form {
+            width: 100%;
+            height: 50%;
+        }
 
-.subtitle {
-    color: #5D3FD3;
-    margin-top: -5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: x-large;
-}
+        .register > form > label {
+            display: flex;
+            justify-content: center;
+            color: #1f74cc;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 25px;
+        }
 
-.footer {
-    position: fixed;
-    padding: 10px 10px 0px 10px;
-    bottom: 0;
-    width: 100%;
-    /* Height of the footer*/
-    height: 40px;
-    background: black;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-    text-align: center;
-}
+        input {
+            height: 20%;
+            border-radius: 40px;
+            border: none;
+            display: flex;
+            justify-self: center;
+            margin: auto;
+            font-size: 100%;
+            padding-left: 2%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
 
-label[for="name"] {
-    color: #5D3FD3;
-    margin-top: 5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
+        button {
+            margin: auto;
+            height: 20%;
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1f74cc;
+            border-radius: 20px;
+            font-size: 20px;
+            color: white;
+            border: none;
+            transition-duration: 0.4s;
+        }
 
-}
+        button:hover {
+            height: 21%;
+            width: auto + 1%;
+            color:#1f74cc;
+            background-color: white;
+        }
 
-input[id="name"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-label[for="email"] {
-    color: #5D3FD3;
-    margin-top: 5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-}
-input[id="email"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-label[for="password"] {
-    color: #5D3FD3;
-    margin-top: 5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-}
-input[id="password"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        .footer {
+            width: 40%;
+            height: 3%;
+            background-color: black;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        a:link, a:visited, a:hover, a:active {
+            color: #1f74cc;
+            text-decoration: none;
+            background-color: transparent;
+        }
 
-button[id="register"] {
-    color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-button[id="register"]:hover {
-    color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-::-webkit-input-placeholder {
-    text-align: center;
-  }
-  
-  :-moz-placeholder {
-    text-align: center;
-  }
-  :-ms-input-placeholder {  
-    text-align: center; 
- }
-
- div {
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
- }
-
-    </style>
-    <h1><%= cloudname %></h1>
-    <h2 class="subtitle"><%= lang["Register"] %></h2>
-    <% if (config.enableRecaptcha) { %>
-    <script>
-        window.addEventListener('load', () => {
-            const $recaptcha = document.querySelector('#g-recaptcha-response');
-            if ($recaptcha) {
-                $recaptcha.setAttribute('required', 'required');
+        /* Laptop support */
+        @media screen and (max-width: 1825px) {
+            .register {
+                width: 35%;
+                height: 45%;
             }
-        })
-    </script>
-    <% } %>
-    <form action="/register" method="post">
-        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <label for="name"><span class="material-icons">account_circle</span>&nbsp;<%= lang["Username2"] %></label>
-        <input type="text", id="name", name="name" required></input>
-        <label for="email"><span class="material-icons">email</span>&nbsp;<%= lang["Email2"] %></label>
-        <input type="email", id="email", name="email" required></input>
-        <label for="password"><span class="material-icons">lock</span>&nbsp;<%= lang["Password"] %></label>
-        <input type="password", id="password", name="password" required></input>
+            .footer {
+                height: 5%;
+            }
+            .flex-container {
+                height: 94%;
+            }
+        }
+        /* Mobile support */
+        @media screen and (max-width: 426px) {
+            .register {
+                width: 70%;
+                height: 50%;
+            }
+            button {
+                margin-top: 2%;
+            }
+            .footer {
+                width: 100%;
+                font-size: 12px;
+            }
+        }
+    </style>
         <% if (config.enableRecaptcha) { %>
-        <div class="g-recaptcha" data-sitekey=<%= RCAPTCHA_SITE_KEY %>></div>
-        <br/>
-        <% } %>
-        <button type="submit" id="register"><span class="material-icons">how_to_reg</span>&nbsp;<%= lang["Register"] %></button>
-    </form>
-    <footer>
-               <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
-    
-    </footer>
+            <script>
+           function onSubmit(token) {
+             document.getElementById("registerform").submit();
+           }
+            </script>
+            <% } %>
+    <div class="flex-container">
+        <div class="register">
+            <h1><%= cloudname %></h1>
+            <h2><%= lang["Register"] %></h2>
+            <form action="/register" method="post" id="registerform">
+                <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
+                <label for="name"><i class="fa-solid fa-user"></i>&nbsp;<%= lang["Username2"] %></label>
+                <input type="text", id="name", name="name" required></input>
+                <label for="email"><i class="fa-solid fa-envelope"></i>&nbsp;<%= lang["Email2"] %></label>
+                <input type="email", id="email", name="email" required></input>
+                <label for="password"><i class="fa-solid fa-lock"></i>&nbsp;<%= lang["Password"] %></label>
+                <input type="password", id="password", name="password" required></input>
+                <% if (config.enableRecaptcha) { %>
+                <button type="submit" id="register" class="g-recaptcha" data-sitekey=<%= RCAPTCHA_SITE_KEY %> data-callback="onSubmit"><i class="fa-solid fa-user-plus"></i>&nbsp;<%= lang["Register"] %></button>
+                <% } else { %>
+                <button type="submit" id="register"><i class="fa-solid fa-user-plus"></i>&nbsp;<%= lang["Register"] %></button>
+                <% } %>
+            </form>
+        </div>
+    </div>
+    <div class="footer">
+        <p><%= cloudname %> ©️ 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></p>
+    </div>
 </body>
 </html>

@@ -1,413 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="../css/login.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title><%= cloudname %> | <%= lang["Admin-Panel"] %></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= cloudname %> | <%= lang["Admin-Panel"] %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 </head>
 <body>
-    <style>
-        body {
-            background-color: #d2d3db;
-            padding: 0;
-            margin: 0;
-        }
-               h1 {
-    color: #5D3FD3;
-    margin-top: 10%;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    font-size: xxx-large;
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
 
-}
-        h2 {
-            color: #5D3FD3;
-    margin-top: 5px;
-    text-align: left;
-    font-family: "Montserrat", sans-serif;
-    font-size: x-large;
-        
-        }
-    .subtitle {
-      text-align: center;
+    body {
+        background-image: linear-gradient(to right bottom, #1f74cc, #3c7ed1, #5087d6, #6291db, #729be0, #87a6e4, #9ab1e9, #acbced, #c5cbf1, #dadcf5, #eeedfa, #ffffff);
+        width: 100vw;
+        height: auto;
+        overflow-x: hidden;
     }
 
-    .stats {
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
+    .flex-container {
+        display: flex;
+        width: 100%;
+        height: 96%;
+        flex-flow: column nowrap;
+        justify-content: center;
+        align-items: center;
     }
 
-    .usr {
-      text-align: center;
-      margin-right: auto;
-      margin-top: 25px;
+    .admin {
+            width: 75% ;
+            padding: 1%;
+            height: auto;
+            background-color: #111111;
+            border-radius: 50px;
+            align-items: center;
+            justify-content: center;
     }
 
-        .back {
-        color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 30px;
-    display: block;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-    }
     
-    .back:hover {
-        color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 30px;
-    display: block;
-    justify-content: center;
-    align-items: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-    }
-        .footer {
-    position: relative;
-    padding: 10px 0px 0px 0px;
-    margin-top: 10px;
-    bottom: 0;
-    width: 100%;
-    /* Height of the footer*/
-    height: 40px;
-    background: black;
-    color: white;
-    font-family: "Montserrat", sans-serif;
-    text-align: center;
-}
-a {
-  color: #5D3FD3;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: inline-block;
-}
+    h1, h3, h2 {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+            color: #1f74cc;
+            line-height: 40%;
+        }
 
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  margin-left: 100px;
-    margin-top: 20px;
-}
+        table {
+            border-collapse: collapse;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid #555555;
+            margin-top: 10px;
+        }
 
-.usrtable {
-    margin-left: auto;
-    margin-right: auto;
-}
+        td, th {
+            border: 2px solid #555555;
+            padding: 3px;
+            text-align: center;
+            color: #1f74cc;
+            font-family: "Montserrat", sans-serif;
+        }
 
-.statstable {
-    margin-right: auto;
-    margin-left: auto;
-}
+        .user-managment {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-column-gap: 10px;
+          grid-row-gap: 10px;
+          overflow: auto; 
+          max-height: 450px;
+        }
 
-td, th {
-  border: 1px solid #5D3FD3;
-  text-align: left;
-  padding: 8px;
-  text-align: center;
-  color: #5D3FD3;
-  font-family: "Montserrat", sans-serif;
-}
+        .usercard {
+          width: auto;
+          height: auto;
+          background-color: #222222;
+          border-radius: 30px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-flow: column nowrap;
+        }
 
-.storageplans {
-  text-align: center;
-  margin-right: auto;
-  margin-top: 25px;
-}
+        ul {
+          color: #1f74cc;
+          font-family: "Montserrat", sans-serif;
+          font-weight: bold;
+        }
+        a:link, a:visited, a:hover, a:active {
+            color: #1f74cc;
+            text-decoration: none;
+            background-color: transparent;
+        }
+        .usercard-links {
+          margin-bottom: 10px;
+        }
 
-select {
-  background-color: #5D3FD3;
-  color: white;
-  border-radius: 24px;
-  height: 60px;
-  width: 250px;
-  font-family: "Montserrat", sans-serif;
-  text-align: center;
-  font-size: 20px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-}
-.add {
-  color: white;
-    height: 40px;
-    width: 200px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 5px;
-    display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        .username {
+          display: flex;
+          align-items: center;
+        }
 
-.add:hover {
-  color: #5D3FD3;
-    height: 40px;
-    width: 200px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 5px;
-    display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        
+        button {
+            margin: auto;
+            height: 30%;
+            width: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #1f74cc;
+            border-radius: 20px;
+            font-size: 20px;
+            color: white;
+            border: none;
+            transition-duration: 0.4s;
+            margin-top: 1%;
+        }
 
-.del {
-  color: white;
-    height: 40px;
-    width: 200px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 5px;
-    display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        button:hover {
+            height: 31%;
+            width: auto + 1%;
+            color:#1f74cc;
+            background-color: white;
+        }
 
-.del:hover {
-  color: #5D3FD3;
-    height: 40px;
-    width: 200px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 5px;
-    display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-.setasdefault {
-  color: white;
-    height: 60px;
-    width: 250px;
-    background-color: #5D3FD3;
-    font-size: 20px;
-    margin-top: 25px;
-    display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        form {
+            display: flex;
+            width: 100%;
+            height: 40%;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 5px;
+        }
+        
+        select {
+            width: 71%;
+            height: 21%;
+            display: flex;
+            margin: auto;
+            text-align: center;
+            border-radius: 20px;
+            font-size: 20px;
+            background-color: #1f74cc;
+            color: white;
+        } 
 
-.setasdefault:hover {
-  color: #5D3FD3;
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 25px;
-    display: block;
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        input {
+            height: 20%;
+            border-radius: 40px;
+            border: none;
+            display: flex;
+            justify-self: center;
+            margin: auto;
+            font-size: 100%;
+            padding-left: 2%;
+            margin-top: 1%;
+            margin-bottom: 1%;
+        }
 
-input[id="maxStorage"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
+        form > label {
+          display: flex;
+            justify-content: center;
+            color: #1f74cc;
+            font-family: 'Montserrat', sans-serif;
+        }
 
-.mb {
-  color: #5D3FD3;
-    margin-top: -40px;
-    text-align: center;
-    margin-left: 300px;
-    margin-right: auto;
-    font-family: "Montserrat", sans-serif;
-    font-size: 20px;
-}
+        .other {
+          display: flex;
+          width: 50%;
+          height: auto;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          justify-self: center;
+          margin: auto;
+          }
 
-label[for="badge"] {     
-  color: #5D3FD3;
-    margin-top: 5px;
-    text-align: center;
-    font-family: "Montserrat", sans-serif;
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-}
+          .footer {
+            width: 40%;
+            height: 3%;
+            background-color: black;
+            border-radius: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 5px auto auto auto;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+        @media screen and (max-width: 426px) {
+            .admin {
+                width: 95%;
+                height: 25%;
+            }
 
-input[id="badge"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-input[id="searchBar"] {
-    height: 60px;
-    width: 250px;
-    background-color: white;
-    font-size: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-    text-align: center;
-    cursor: pointer;
-    font-family: "Montserrat", sans-serif;
-    border-radius: 24px;
-    transition-duration: 0.4s;
-    border:0cm
-}
-
-
-.material-icons.md-36 { font-size: 36px;   margin-top: 20px;}
-    </style>
-    <h1><%= cloudname %></h1>
-    <h2 class="subtitle"><%= lang["Admin-Panel"] %></h2>
-    <h2 class="stats"><%= lang["Stats"] %></h2>
-    <table class="statstable">
-      <thead>
-        <th><%= lang["Name"] %></th>
-        <th><%= lang["Value"] %></th>
-      </thead>
-      <tbody>
-        <tr>
-          <td><%= lang["Ram-Usage"] %></td>
-          <td><%= Math.round(process.memoryUsage().heapUsed / 1024 / 1024) %> MB </td>
-        </tr>
-        <tr>
-          <td><%= lang["CPU-Usage"] %></td> 
-          <td><%= cpuUsage.toString() %> % </td> 
-        </tr>
-        <tr>
-          <td><%= lang["Uptime"] %></td>
-          <td><%= ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true}) %></td> 
-        </tr>
-        <tr>
-          <td><%= lang["Version"] %></td>
-          <% if (packages.version == stableVersion) { %> 
-          <td>v<%= packages.version %> </td>
-          <% } else { %>
-            <td>v<%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/v" + stableVersion %>>v<%= stableVersion %> <%= lang["Is-Available"] %>!</a></td> 
-        <% } %> 
-        </tr>
-      </tbody>
-    </table>
-    <h2 class="usr"><%= lang["User-Managment"] %></h2>
-    <script>
-      function searchBar() {
-  // Declare variables
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("searchBar");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("users");
-  tr = table.getElementsByTagName("tr");
-
-  // Loop through all table rows, and hide those who don't match the search query
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[1];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-}
-    </script>
-    <input type="text" id="searchBar" onkeyup="searchBar()" placeholder=<%= lang["Search-Username"] %>>
-    <table class="usrtable" id="users">
-        <thead>
-        <tr>
-          <th><%= lang["Profile-Picture"] %></th>
-          <th><%= lang["Username"] %></th>
-          <th><%= lang["Email"] %></th>
-          <th><%= lang["Is-Verified"] %></th>
-          <th><%= lang["IP"] %></th>
-          <th><%= lang["Created-At"] %></th>
-          <th><%= lang["Last-Seen"] %></th>
-          <th><%= lang["Role"] %></th>
-          <th><%= lang["Actions"] %></th>
-        </tr>
-      </thead>
-      <tbody>
-      
+            .footer {
+                width: 100%;
+                font-size: 12px;
+            }
+        }
+  </style>
+  <div class="flex-container">
+    <div class="admin">
+      <h1><%= cloudname %></h1>
+      <h2 class="subtitle"><%= lang["Admin-Panel"] %></h2>
+      <div class="stats">
+        <h3><%= lang["Stats"] %></h3>
+        <table class="statstable">
+          <thead>
+            <th><%= lang["Name"] %></th>
+            <th><%= lang["Value"] %></th>
+          </thead>
+          <tbody>
+            <tr>
+              <td><%= lang["Ram-Usage"] %></td>
+              <td><%= Math.round(process.memoryUsage().heapUsed / 1024 / 1024) %> MB </td>
+            </tr>
+            <tr>
+              <td><%= lang["CPU-Usage"] %></td> 
+              <td><%= cpuUsage.toString() %> % </td> 
+            </tr>
+            <tr>
+              <td><%= lang["Uptime"] %></td>
+              <td><%= ms(ms(Math.floor(process.uptime()).toString() + "s"), {long: true}) %></td> 
+            </tr>
+            <tr>
+              <td><%= lang["Version"] %></td>
+              <% if (packages.version == stableVersion) { %> 
+              <td>v<%= packages.version %> </td>
+              <% } else { %>
+                <td>v<%= packages.version %> | <a href=<%= "https://github.com/DaneeSkripter/DaneeCloud/releases/tag/v" + stableVersion %>>v<%= stableVersion %> <%= lang["Is-Available"] %>!</a></td> 
+            <% } %> 
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <h3><%= lang["User-Managment"] %></h3>
+      <div class="user-managment">
         <% for (let user of users) { %>
           <% let link = "/deleteaccount/" + user.username %>
           <% let link2 = "/editrole/" + user.username %> 
@@ -419,74 +247,77 @@ input[id="searchBar"] {
           <% } else { %>  
             <% isverified = lang["No"] %>
           <% } %>   
-          <tr>
             <% let badge = roles.filter((obj) => {return obj.name == user.role})[0].badge   %>
             <% let hashedemail = md5(user.email) %>
             <% let gravatar = `https://www.gravatar.com/avatar/${hashedemail}` %>
-            <td><img src=<%= gravatar %> width="40" height="auto"></td>
-            <td><%= user.username %> | <img title=<%= user.role %> src=<%= badge %> width="20" height="20"></img></td>
-            <td><%= user.email %> </td>
-            <td><%= isverified %> </td>
+        <div class="usercard">
+          <h2 class="username"><img src=<%= gravatar %> width="40" height="auto">&nbsp;<%= user.username %> | <img title=<%= user.role %> src=<%= badge %> width="20" height="20"></img></h2>
+          <ul>
+            <li>Email: <%= user.email %></li>
+            <li>Is verified: <%= isverified %></li>
             <% if (config.registerip) { %>
-            <td><%= user.ip %></td>
-            <% } else { %>
-              <td>-</td>
+            <li>IP address: <%= user.ip %></li>
             <% } %>
-            <td><%= user.createdAt %></td>
-            <td><%= moment.unix(parseInt(user.lastSeen)).fromNow() %></td>
-            <td><%= user.role %> </td> 
-            <td><a href=<%= link2 %>><span class="material-icons">contact_mail</span></a>&nbsp;<a href=<%= link4 %>><span class="material-icons">edit</span></a>&nbsp;<a href=<%= link %>><span class="material-icons">delete</span></a></td>            <% } %>
-            
-          </tr>
-          
-      </tbody>
-      </table>
-      <h2 class="storageplans"><%= lang["Roles"] %></h2>
-      <form action="/addrole/">
-      <button type="submit" class="add"><%= lang["Add-Role"] %></button>
-    </form>
-    <form action="/delrole/">
-      <button type="submit" class="del"><%= lang["Remove-Role"] %></button>
-    </form>
-      <form action="/updaterole/" method="post">
-        <select name="role">
-          <% for (let role of roles) { %>        
-          <option value=<%= role.name %>><%= role.name %> | <%= role.maxStorage %> MB</option>
-          <% } %>
-        </select>
-        <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
-        <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input><h2 class="mb">MB</h2>
-        <label for="badge"><span class="material-icons">verified</span>&nbsp;<%= lang["Badge-URL"] %></label>
-        <input type="text", id="badge", name="badge"></input>
-        <button type="submit" class="setasdefault"><%= lang["Update-Role"] %></button>
-      </form>
-      <h2 class="storageplans"><%= lang["API-Keys"] %></h2>
-      <form action="/addapikey/">
-        <button type="submit" class="back"><%= lang["Add-Api-Key"] %></button>
-      </form> 
-    <table class="usrtable">
-        <thead>
-          <tr>
-            <th><%= lang["API-Key-Name"] %></th>
-            <th><%= lang["Actions"] %></th>
-          </tr>
-        </thead>
-        <tbody>
-            <% for (let apiKey of apiKeys) { %>
-              <% let apiKeyLink = "/delapikey/" + apiKey.name %>
-              <tr>
-              <td><%= apiKey.name %></td>
-              <td><a href=<%= apiKeyLink %>><span class="material-icons">delete</span></a></td>
-            </tr>
-            <% } %>
-        </tbody>
-      </table>
-      <form action="/">
-        <button type="submit" class="back" href="/"><%= lang["Back"] %></button>
+            <li>Created at: <%= user.createdAt %></li>
+            <li>Last seen: <%= moment.unix(parseInt(user.lastSeen)).fromNow() %></li>
+            <li>Role: <%= user.role %></li>
+            </ul>
+          <div class="usercard-links">
+            <a href=<%= link2 %>><i class="fa-solid fa-address-card"></i></a>&nbsp;<a href=<%= link4 %>><i class="fa-solid fa-user-pen"></i></a>&nbsp;<a href=<%= link %>><i class="fa-solid fa-trash"></i></a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <div class="other">
+      <div class="roles">
+        <h3><%= lang["Roles"] %></h3>
+        <form action="/addrole/">
+          <button type="submit"><%= lang["Add-Role"] %></button>
         </form>
-    <footer>
-             <div class="footer"><%= cloudname %> © 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></div>
-    
-    </footer>
+        <form action="/delrole/">
+          <button type="submit"><%= lang["Remove-Role"] %></button>
+        </form>
+          <form action="/updaterole/" method="post">
+            <select name="role">
+              <% for (let role of roles) { %>        
+              <option value=<%= role.name %>><%= role.name %> | <%= role.maxStorage %> MB</option>
+              <% } %>
+            </select>
+            <input name="_csrf" value=<%= csrfToken %> type="hidden"/>
+            <input type="text" id="maxStorage" name="maxStorage" required placeholder="128 MB"></input>
+            <label for="badge"><i class="fa-solid fa-certificate"></i>&nbsp;<%= lang["Badge-URL"] %></label>
+            <input type="text", id="badge", name="badge"></input>
+            <button type="submit" class="setasdefault"><%= lang["Update-Role"] %></button>
+          </form>
+      </div>
+      <div class="apikeys">
+        <h3><%= lang["API-Keys"] %></h2>
+        <form action="/addapikey/">
+          <button type="submit" class="back"><%= lang["Add-Api-Key"] %></button>
+        </form> 
+        <table>
+          <thead>
+            <tr>
+              <th><%= lang["API-Key-Name"] %></th>
+              <th><%= lang["Actions"] %></th>
+            </tr>
+          </thead>
+          <tbody>
+              <% for (let apiKey of apiKeys) { %>
+                <% let apiKeyLink = "/delapikey/" + apiKey.name %>
+                <tr>
+                <td><%= apiKey.name %></td>
+                <td><a href=<%= apiKeyLink %>><i class="fa-solid fa-trash"></i></a></td>
+              </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="footer">
+    <p><%= cloudname %> ©️ 2022 - 2023 | Developed by <a href="https://github.com/DaneeSkripter">DaneeSkripter</a></p>
+</div>
 </body>
 </html>
