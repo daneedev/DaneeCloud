@@ -14,10 +14,9 @@ const rolesModel = require("../models/roles")
 const apiKeys = require("../models/apiKeys")
 const lang = require("../lang/default.json")
 const moment = require("moment")
-
+const axios = require("axios")
 
 router.get("/", checkAuth, checkVerify, async function (req, res) {
-    const request = require("request")
     const user = await users.findOne({ username: req.user.username})
     const allusers = await users.find()
     if (user.role == "admin") {
@@ -25,10 +24,9 @@ router.get("/", checkAuth, checkVerify, async function (req, res) {
       const allApiKeys = await apiKeys.find()
       const cpu = osu.cpu
       const md5 = require("md5")
+      const response = await axios.get("https://version.daneeskripter.dev/daneecloud/version.txt")
       cpu.usage().then((cpuUsage) => {
-        request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: body, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken(), md5: md5, lang: lang, moment: moment})
-        })
+        res.render(__dirname + "/../views/admin.ejs", {users: allusers,  cloudname: config.cloudname, cpuUsage: cpuUsage, packages: require("../package.json"), stableVersion: response.data, ms: ms, roles: roles, config: config, apiKeys: allApiKeys, csrfToken: req.csrfToken(), md5: md5, lang: lang, moment: moment})
       })
     } else {
       res.render(__dirname + "/../views/message.ejs", { message: `<i class="fa-solid fa-square-xmark"></i>&nbsp;${lang["Error401"]}`,  cloudname: config.cloudname, lang: lang})

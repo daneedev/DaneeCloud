@@ -1,11 +1,11 @@
-const request = require("request")
+const axios = require("axios")
 const currentversion = require("../package.json").version
 const logger = require("./logger")
 
-function checkForUpdates() {
-request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-        const stableVersion = body
+async function checkForUpdates() {
+const response = await axios.get("https://version.daneeskripter.dev/daneecloud/version.txt")
+    if (response.status == 200) {
+        const stableVersion = response.data
         if (currentversion == stableVersion) {
             logger.logInfo("You are using latest version!")
         } else {
@@ -14,7 +14,6 @@ request.get("https://version.daneeskripter.dev/daneecloud/version.txt", function
     } else {
         logger.logError("Can't check for updates.")
     }
-})
 }
 
 module.exports.checkForUpdates = checkForUpdates
