@@ -41,6 +41,13 @@ app.use(session({
 app.use(cookieParser(process.env.SESSION_SECRET));
 app.use(express.urlencoded({ extended: false}))
 
+app.use(csurf(
+  process.env.CSRF_TOKEN,
+  ["POST"],
+  ["/", "/api/", "/upload/"]
+  ));
+
+
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -68,9 +75,6 @@ app.use("/", require("./routes/home"))
 
 app.use("/upload/", require("./routes/upload"))
 
-app.use(csurf(
-  process.env.CSRF_TOKEN
-  ));
 
 // DATABASE
 
