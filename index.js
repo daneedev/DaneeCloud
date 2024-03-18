@@ -5,7 +5,7 @@ const config = require("./config.json")
 const mongoose = require("mongoose")
 const passport = require("passport")
 const flash = require("express-flash")
-const session = require("cookie-session")
+const session = require("express-session")
 const methodOverride = require("method-override")
 const logger = require("./handlers/logger")
 const updater = require("./handlers/updater")
@@ -25,15 +25,16 @@ const domain = config.cloudurl.split("//")
 const initializePassport = require("./handlers/passportconfig")
 initializePassport(passport)
 app.use(flash())
+let https;
+if (config.useHTTPS) https = true
+else https = false
 app.use(session({
-  name: "logincookie",
-  keys: [process.env.SESSION_SECRET],
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,
+    secure: https,
     httpOnly: true,
-    domain: domain[1],
     maxAge: 86400000
   }
 }))
