@@ -47,7 +47,7 @@ DaneeCloud is website, you can upload and download your files, manage your uploa
   
 | 🏳️ Language | Translated? | 🙋 Translator |
 | ------------ | ---------- | -------------- |
-| 🇨🇿 Czech     | ✅ 100%     | [@daneeskripter](https://github.com/daneeskripter) |
+| 🇨🇿 Czech     | ✅ 100%     | [@daneedev](https://github.com/daneedev) |
 | 🇫🇷 French      | 0%          | - |
 | 🇩🇪 German      | 0%          | - |
 | 🇯🇵 Japanese  | ✅ 100%     | [@mzch](https://github.com/mzch) |
