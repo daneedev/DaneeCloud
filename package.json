@@ -9,7 +9,7 @@
   "author": "DaneeSkripter",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "colors": "^1.4.0",
