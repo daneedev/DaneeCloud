@@ -9,6 +9,10 @@
 <img align="center" src="/img/js.svg"></img>
 <img align="center" src="/img/mongodb.svg"></img>
 
+# ⚠️ Project archived
+- The project DaneeCloud was completely archived and marked as abandoned
+- Article: https://docs.danee.dev/blog/daneecloud-archived
+
 ## 📃 About
 DaneeCloud is website, you can upload and download your files, manage your uploaded files. All features here:
 - Uploading & Downloading files
